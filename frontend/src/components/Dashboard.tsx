@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import AsociadosModule from './AsociadosModule';
 
 interface User {
-  username: string;
+  id: number;
   email: string;
-  nombre_completo: string;
+  nombre?: string;
   rol: string;
 }
 
@@ -13,12 +13,35 @@ interface DashboardProps {
   onLogout: () => void;
 }
 
+type ActiveModule = null | 'asociados' | 'usuarios' | 'reportes';
+
 const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
+<<<<<<< HEAD
+  const [activeModule, setActiveModule] = useState<ActiveModule>(null);
+
+  // Manejar navegación a módulos
+  const handleModuleClick = (module: ActiveModule) => {
+    setActiveModule(module);
+  };
+
+  // Volver al dashboard principal
+  const handleBackToDashboard = () => {
+    setActiveModule(null);
+  };
+
+  // Si hay un módulo activo, mostrar el componente correspondiente
+  if (activeModule === 'asociados') {
+    return <AsociadosModule onBack={handleBackToDashboard} />;
+  }
+
+  // Dashboard principal
+=======
   const [activeModule, setActiveModule] = useState<string | null>(null);
 
   if (activeModule === 'asociados') {
     return <AsociadosModule onBack={() => setActiveModule(null)} />;
   }
+>>>>>>> 203b4a3b922207689668e41f02c49ab005433562
   return (
     <div 
       className="min-h-screen bg-gray-50"
@@ -28,7 +51,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
       }}
     >
       {/* Header */}
-      <header 
+      <div 
         className="bg-white shadow-sm border-b"
         style={{
           backgroundColor: 'white',
@@ -37,22 +60,22 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
         }}
       >
         <div 
-          className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8"
+          className="max-w-7xl mx-auto px-4 py-4"
           style={{
             maxWidth: '80rem',
             margin: '0 auto',
-            padding: '0 1rem'
+            padding: '1rem'
           }}
         >
           <div 
-            className="flex justify-between items-center h-16"
+            className="flex items-center justify-between"
             style={{
               display: 'flex',
-              justifyContent: 'space-between',
               alignItems: 'center',
-              height: '4rem'
+              justifyContent: 'space-between'
             }}
           >
+            {/* Logo y título */}
             <div 
               className="flex items-center"
               style={{
@@ -60,27 +83,32 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                 alignItems: 'center'
               }}
             >
-              <img 
-                src="/assets/logo.svg" 
-                alt="Logo"
+              <img
+                src="/assets/logo-principal.jpg"
+                alt="Coopeenortol Logo"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' fill='%2316a34a'/%3E%3Ctext x='20' y='25' text-anchor='middle' fill='white' font-size='14' font-weight='bold'%3EC%3C/text%3E%3C/svg%3E";
+                }}
                 style={{
-                  height: '2.5rem',
-                  width: '2.5rem',
-                  marginRight: '0.75rem'
+                  height: '3rem',
+                  width: 'auto',
+                  marginRight: '1rem'
                 }}
               />
               <h1 
-                className="text-xl font-semibold text-gray-900"
+                className="text-2xl font-bold text-gray-900"
                 style={{
-                  fontSize: '1.25rem',
-                  fontWeight: '600',
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
                   color: '#111827'
                 }}
               >
-                Coopeenortol
+                Coopeenortol - Sistema de Gestión
               </h1>
             </div>
             
+            {/* Usuario y logout */}
             <div 
               className="flex items-center space-x-4"
               style={{
@@ -90,36 +118,25 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
               }}
             >
               <span 
-                className="text-sm text-gray-600"
+                className="text-gray-700"
                 style={{
-                  fontSize: '0.875rem',
-                  color: '#4b5563'
+                  color: '#374151'
                 }}
               >
-                {user.nombre_completo}
-              </span>
-              <span 
-                className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded"
-                style={{
-                  fontSize: '0.75rem',
-                  backgroundColor: '#dcfce7',
-                  color: '#166534',
-                  padding: '0.25rem 0.5rem',
-                  borderRadius: '0.25rem'
-                }}
-              >
-                {user.rol}
+                Bienvenido, {user.nombre || user.email}
               </span>
               <button
                 onClick={onLogout}
-                className="text-sm text-gray-600 hover:text-gray-900"
+                className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
                 style={{
-                  fontSize: '0.875rem',
-                  color: '#4b5563',
-                  background: 'none',
+                  backgroundColor: '#dc2626',
+                  color: 'white',
+                  padding: '0.5rem 1rem',
+                  borderRadius: '0.375rem',
                   border: 'none',
                   cursor: 'pointer',
-                  padding: '0.5rem'
+                  fontSize: '0.875rem',
+                  fontWeight: '500'
                 }}
               >
                 Cerrar Sesión
@@ -127,359 +144,408 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
             </div>
           </div>
         </div>
-      </header>
+      </div>
 
       {/* Main Content */}
-      <main 
-        className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8"
+      <div 
+        className="max-w-7xl mx-auto py-6 px-4"
         style={{
           maxWidth: '80rem',
           margin: '0 auto',
           padding: '1.5rem 1rem'
         }}
       >
+        {/* Tarjetas de módulos */}
         <div 
-          className="px-4 py-6 sm:px-0"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           style={{
-            padding: '1.5rem 1rem'
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+            gap: '1.5rem'
           }}
         >
-          <h2 
-            className="text-2xl font-bold text-gray-900 mb-6"
-            style={{
-              fontSize: '1.5rem',
-              fontWeight: 'bold',
-              color: '#111827',
-              marginBottom: '1.5rem'
-            }}
-          >
-            Panel Principal
-          </h2>
-          
-          {/* Navigation Cards */}
+          {/* Gestión de Asociados */}
           <div 
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
             style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(250px, 1fr))',
-              gap: '1.5rem'
+              backgroundColor: 'white',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              cursor: 'pointer',
+              transition: 'box-shadow 0.3s'
             }}
+            onClick={() => handleModuleClick('asociados')}
           >
-            {/* Card: Panel Principal */}
             <div 
-              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
+              className="p-6"
               style={{
-                backgroundColor: 'white',
-                borderRadius: '0.5rem',
-                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s'
+                padding: '1.5rem'
               }}
             >
               <div 
-                className="p-6"
+                className="flex items-center"
                 style={{
-                  padding: '1.5rem'
+                  display: 'flex',
+                  alignItems: 'center'
                 }}
               >
                 <div 
-                  className="flex items-center"
+                  className="bg-green-100 p-3 rounded-full"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center'
+                    backgroundColor: '#dcfce7',
+                    padding: '0.75rem',
+                    borderRadius: '50%',
+                    marginRight: '1rem'
                   }}
                 >
-                  <div 
-                    className="flex-shrink-0"
+                  <svg 
+                    className="w-6 h-6 text-green-600"
                     style={{
-                      flexShrink: '0'
+                      width: '1.5rem',
+                      height: '1.5rem',
+                      color: '#16a34a'
+                    }}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z" 
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 
+                    className="text-lg font-semibold text-gray-900"
+                    style={{
+                      fontSize: '1.125rem',
+                      fontWeight: '600',
+                      color: '#111827'
                     }}
                   >
-                    <svg 
-                      style={{
-                        height: '2rem',
-                        width: '2rem',
-                        color: '#16a34a'
-                      }}
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" 
-                      />
-                    </svg>
-                  </div>
-                  <div 
-                    className="ml-4"
+                    Gestión de Asociados
+                  </h3>
+                  <p 
+                    className="text-gray-600 text-sm"
                     style={{
-                      marginLeft: '1rem'
+                      color: '#4b5563',
+                      fontSize: '0.875rem',
+                      marginTop: '0.25rem'
                     }}
                   >
-                    <h3 
-                      className="text-lg font-medium text-gray-900"
-                      style={{
-                        fontSize: '1.125rem',
-                        fontWeight: '500',
-                        color: '#111827'
-                      }}
-                    >
-                      Panel Principal
-                    </h3>
-                    <p 
-                      className="text-sm text-gray-500"
-                      style={{
-                        fontSize: '0.875rem',
-                        color: '#6b7280'
-                      }}
-                    >
-                      Vista general del sistema
-                    </p>
-                  </div>
+                    Administrar miembros de la cooperativa
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Card: Gestión de Asociados */}
+          {/* Gestión de Usuarios */}
+          <div 
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              cursor: 'pointer',
+              transition: 'box-shadow 0.3s'
+            }}
+            onClick={() => handleModuleClick('usuarios')}
+          >
             <div 
+<<<<<<< HEAD
+              className="p-6"
+=======
               onClick={() => setActiveModule('asociados')}
               className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
+>>>>>>> 203b4a3b922207689668e41f02c49ab005433562
               style={{
-                backgroundColor: 'white',
-                borderRadius: '0.5rem',
-                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s'
+                padding: '1.5rem'
               }}
             >
               <div 
-                className="p-6"
+                className="flex items-center"
                 style={{
-                  padding: '1.5rem'
+                  display: 'flex',
+                  alignItems: 'center'
                 }}
               >
                 <div 
-                  className="flex items-center"
+                  className="bg-blue-100 p-3 rounded-full"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center'
+                    backgroundColor: '#dbeafe',
+                    padding: '0.75rem',
+                    borderRadius: '50%',
+                    marginRight: '1rem'
                   }}
                 >
-                  <div 
-                    className="flex-shrink-0"
+                  <svg 
+                    className="w-6 h-6 text-blue-600"
                     style={{
-                      flexShrink: '0'
+                      width: '1.5rem',
+                      height: '1.5rem',
+                      color: '#2563eb'
+                    }}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <h3 
+                    className="text-lg font-semibold text-gray-900"
+                    style={{
+                      fontSize: '1.125rem',
+                      fontWeight: '600',
+                      color: '#111827'
                     }}
                   >
-                    <svg 
-                      style={{
-                        height: '2rem',
-                        width: '2rem',
-                        color: '#16a34a'
-                      }}
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" 
-                      />
-                    </svg>
-                  </div>
-                  <div 
-                    className="ml-4"
+                    Gestión de Usuarios
+                  </h3>
+                  <p 
+                    className="text-gray-600 text-sm"
                     style={{
-                      marginLeft: '1rem'
+                      color: '#4b5563',
+                      fontSize: '0.875rem',
+                      marginTop: '0.25rem'
                     }}
                   >
-                    <h3 
-                      className="text-lg font-medium text-gray-900"
-                      style={{
-                        fontSize: '1.125rem',
-                        fontWeight: '500',
-                        color: '#111827'
-                      }}
-                    >
-                      Gestión de Asociados
-                    </h3>
-                    <p 
-                      className="text-sm text-gray-500"
-                      style={{
-                        fontSize: '0.875rem',
-                        color: '#6b7280'
-                      }}
-                    >
-                      Administrar miembros
-                    </p>
-                  </div>
+                    Administrar acceso al sistema
+                  </p>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Card: Gestión de Usuarios */}
+          {/* Reportes */}
+          <div 
+            className="bg-white rounded-lg shadow-md hover:shadow-lg transition-shadow cursor-pointer"
+            style={{
+              backgroundColor: 'white',
+              borderRadius: '0.5rem',
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              cursor: 'pointer',
+              transition: 'box-shadow 0.3s'
+            }}
+            onClick={() => handleModuleClick('reportes')}
+          >
             <div 
-              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
+              className="p-6"
               style={{
-                backgroundColor: 'white',
-                borderRadius: '0.5rem',
-                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s'
+                padding: '1.5rem'
               }}
             >
               <div 
-                className="p-6"
+                className="flex items-center"
                 style={{
-                  padding: '1.5rem'
+                  display: 'flex',
+                  alignItems: 'center'
                 }}
               >
                 <div 
-                  className="flex items-center"
+                  className="bg-purple-100 p-3 rounded-full"
                   style={{
-                    display: 'flex',
-                    alignItems: 'center'
+                    backgroundColor: '#f3e8ff',
+                    padding: '0.75rem',
+                    borderRadius: '50%',
+                    marginRight: '1rem'
                   }}
                 >
-                  <div 
-                    className="flex-shrink-0"
+                  <svg 
+                    className="w-6 h-6 text-purple-600"
                     style={{
-                      flexShrink: '0'
+                      width: '1.5rem',
+                      height: '1.5rem',
+                      color: '#9333ea'
                     }}
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
                   >
-                    <svg 
-                      style={{
-                        height: '2rem',
-                        width: '2rem',
-                        color: '#16a34a'
-                      }}
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" 
-                      />
-                    </svg>
-                  </div>
-                  <div 
-                    className="ml-4"
-                    style={{
-                      marginLeft: '1rem'
-                    }}
-                  >
-                    <h3 
-                      className="text-lg font-medium text-gray-900"
-                      style={{
-                        fontSize: '1.125rem',
-                        fontWeight: '500',
-                        color: '#111827'
-                      }}
-                    >
-                      Gestión de Usuarios
-                    </h3>
-                    <p 
-                      className="text-sm text-gray-500"
-                      style={{
-                        fontSize: '0.875rem',
-                        color: '#6b7280'
-                      }}
-                    >
-                      Administrar accesos
-                    </p>
-                  </div>
+                    <path 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round" 
+                      strokeWidth={2} 
+                      d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" 
+                    />
+                  </svg>
                 </div>
-              </div>
-            </div>
-
-            {/* Card: Reportes */}
-            <div 
-              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
-              style={{
-                backgroundColor: 'white',
-                borderRadius: '0.5rem',
-                boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)',
-                cursor: 'pointer',
-                transition: 'box-shadow 0.2s'
-              }}
-            >
-              <div 
-                className="p-6"
-                style={{
-                  padding: '1.5rem'
-                }}
-              >
-                <div 
-                  className="flex items-center"
-                  style={{
-                    display: 'flex',
-                    alignItems: 'center'
-                  }}
-                >
-                  <div 
-                    className="flex-shrink-0"
+                <div>
+                  <h3 
+                    className="text-lg font-semibold text-gray-900"
                     style={{
-                      flexShrink: '0'
+                      fontSize: '1.125rem',
+                      fontWeight: '600',
+                      color: '#111827'
                     }}
                   >
-                    <svg 
-                      style={{
-                        height: '2rem',
-                        width: '2rem',
-                        color: '#16a34a'
-                      }}
-                      fill="none" 
-                      stroke="currentColor" 
-                      viewBox="0 0 24 24"
-                    >
-                      <path 
-                        strokeLinecap="round" 
-                        strokeLinejoin="round" 
-                        strokeWidth={2} 
-                        d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" 
-                      />
-                    </svg>
-                  </div>
-                  <div 
-                    className="ml-4"
+                    Reportes
+                  </h3>
+                  <p 
+                    className="text-gray-600 text-sm"
                     style={{
-                      marginLeft: '1rem'
+                      color: '#4b5563',
+                      fontSize: '0.875rem',
+                      marginTop: '0.25rem'
                     }}
                   >
-                    <h3 
-                      className="text-lg font-medium text-gray-900"
-                      style={{
-                        fontSize: '1.125rem',
-                        fontWeight: '500',
-                        color: '#111827'
-                      }}
-                    >
-                      Reportes
-                    </h3>
-                    <p 
-                      className="text-sm text-gray-500"
-                      style={{
-                        fontSize: '0.875rem',
-                        color: '#6b7280'
-                      }}
-                    >
-                      Informes y estadísticas
-                    </p>
-                  </div>
+                    Generar informes y estadísticas
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </main>
+
+        {/* Estadísticas rápidas */}
+        <div 
+          className="mt-8 grid grid-cols-1 md:grid-cols-4 gap-4"
+          style={{
+            marginTop: '2rem',
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))',
+            gap: '1rem'
+          }}
+        >
+          <div 
+            className="bg-white p-4 rounded-lg shadow"
+            style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <h4 
+              className="text-sm font-medium text-gray-500"
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#6b7280'
+              }}
+            >
+              Total Asociados
+            </h4>
+            <p 
+              className="text-2xl font-bold text-gray-900"
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#111827',
+                marginTop: '0.25rem'
+              }}
+            >
+              0
+            </p>
+          </div>
+          
+          <div 
+            className="bg-white p-4 rounded-lg shadow"
+            style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <h4 
+              className="text-sm font-medium text-gray-500"
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#6b7280'
+              }}
+            >
+              Asociados Activos
+            </h4>
+            <p 
+              className="text-2xl font-bold text-green-600"
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#16a34a',
+                marginTop: '0.25rem'
+              }}
+            >
+              0
+            </p>
+          </div>
+          
+          <div 
+            className="bg-white p-4 rounded-lg shadow"
+            style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <h4 
+              className="text-sm font-medium text-gray-500"
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#6b7280'
+              }}
+            >
+              Usuarios del Sistema
+            </h4>
+            <p 
+              className="text-2xl font-bold text-blue-600"
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#2563eb',
+                marginTop: '0.25rem'
+              }}
+            >
+              1
+            </p>
+          </div>
+          
+          <div 
+            className="bg-white p-4 rounded-lg shadow"
+            style={{
+              backgroundColor: 'white',
+              padding: '1rem',
+              borderRadius: '0.5rem',
+              boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)'
+            }}
+          >
+            <h4 
+              className="text-sm font-medium text-gray-500"
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: '500',
+                color: '#6b7280'
+              }}
+            >
+              Reportes Generados
+            </h4>
+            <p 
+              className="text-2xl font-bold text-purple-600"
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+                color: '#9333ea',
+                marginTop: '0.25rem'
+              }}
+            >
+              0
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
