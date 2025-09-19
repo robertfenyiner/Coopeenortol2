@@ -75,33 +75,40 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
           boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)'
         }}
       >
-        <div className="text-center">
+        {/* Logo y título centrados */}
+        <div 
+          className="text-center"
+          style={{
+            textAlign: 'center'
+          }}
+        >
+          {/* Logo principal */}
           <div 
-            className="mx-auto h-24 w-24 flex items-center justify-center mb-4"
+            className="mx-auto mb-6"
             style={{
-              margin: '0 auto 1rem auto',
-              height: '6rem',
-              width: '6rem',
+              margin: '0 auto 1.5rem auto',
               display: 'flex',
-              alignItems: 'center',
               justifyContent: 'center'
             }}
           >
             <img 
-              src="/assets/logo.svg" 
+              src="/assets/logo-principal.jpg" 
               alt="Logo Coopeenortol"
               style={{
-                height: '6rem',
-                width: '6rem'
+                height: '8rem',
+                width: 'auto',
+                maxWidth: '12rem',
+                borderRadius: '0.75rem',
+                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
               }}
               onError={(e) => {
-                // Fallback al icono SVG si no se puede cargar el logo
+                // Fallback al logo SVG si no se puede cargar la imagen
                 const target = e.target as HTMLImageElement;
                 target.style.display = 'none';
                 target.parentElement!.innerHTML = `
                   <div style="
-                    height: 4rem; 
-                    width: 4rem; 
+                    height: 6rem; 
+                    width: 6rem; 
                     display: flex; 
                     align-items: center; 
                     justify-content: center; 
@@ -109,36 +116,42 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                     background-color: #dcfce7;
                     margin: 0 auto;
                   ">
-                    <svg style="height: 2rem; width: 2rem; color: #16a34a;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                    </svg>
+                    <img src="/assets/logo.svg" alt="Logo Coopeenortol" style="height: 6rem; width: 6rem;" />
                   </div>
                 `;
               }}
             />
           </div>
-          <h2 
-            className="text-3xl font-bold text-gray-900 mb-2"
+          
+          {/* Nombre de la cooperativa */}
+          <h1 
+            className="text-4xl font-bold text-gray-900 mb-2"
             style={{
-              fontSize: '1.875rem',
+              fontSize: '2.25rem',
               fontWeight: 'bold',
               color: '#111827',
-              marginBottom: '0.5rem'
+              marginBottom: '0.5rem',
+              textAlign: 'center'
             }}
           >
             Coopeenortol
-          </h2>
+          </h1>
+          
+          {/* Subtítulo */}
           <p 
-            className="text-gray-600"
+            className="text-lg text-gray-600 mb-8"
             style={{
-              color: '#4b5563'
+              fontSize: '1.125rem',
+              color: '#4b5563',
+              marginBottom: '2rem',
+              textAlign: 'center'
             }}
           >
             Sistema de Gestión de Asociados
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6">
           <div className="space-y-4">
             <div>
               <label 
@@ -167,7 +180,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                   padding: '0.5rem 0.75rem',
                   border: '1px solid #d1d5db',
                   borderRadius: '0.375rem',
-                  color: '#111827'
+                  color: '#111827',
+                  fontSize: '1rem'
                 }}
                 placeholder="Ingrese su usuario"
               />
@@ -200,7 +214,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                   padding: '0.5rem 0.75rem',
                   border: '1px solid #d1d5db',
                   borderRadius: '0.375rem',
-                  color: '#111827'
+                  color: '#111827',
+                  fontSize: '1rem'
                 }}
                 placeholder="Ingrese su contraseña"
               />
@@ -213,7 +228,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
               style={{
                 color: '#dc2626',
                 fontSize: '0.875rem',
-                textAlign: 'center'
+                textAlign: 'center',
+                padding: '0.75rem',
+                backgroundColor: '#fef2f2',
+                borderRadius: '0.375rem',
+                border: '1px solid #fecaca'
               }}
             >
               {error}
@@ -231,20 +250,77 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
                 justifyContent: 'center',
                 padding: '0.75rem 1rem',
                 border: 'none',
-                fontSize: '0.875rem',
-                fontWeight: '500',
+                fontSize: '1rem',
+                fontWeight: '600',
                 borderRadius: '0.375rem',
                 color: 'white',
-                backgroundColor: '#16a34a',
+                backgroundColor: isLoading ? '#9ca3af' : '#16a34a',
                 cursor: isLoading ? 'not-allowed' : 'pointer',
-                opacity: isLoading ? 0.5 : 1
+                opacity: isLoading ? 0.7 : 1,
+                transition: 'all 0.2s'
+              }}
+              onMouseEnter={(e) => {
+                if (!isLoading) {
+                  (e.target as HTMLButtonElement).style.backgroundColor = '#15803d';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isLoading) {
+                  (e.target as HTMLButtonElement).style.backgroundColor = '#16a34a';
+                }
               }}
             >
-              {isLoading ? 'Iniciando sesión...' : 'Iniciar Sesión'}
+              {isLoading ? (
+                <>
+                  <svg 
+                    style={{
+                      animation: 'spin 1s linear infinite',
+                      marginRight: '0.5rem',
+                      height: '1rem',
+                      width: '1rem'
+                    }}
+                    fill="none" 
+                    viewBox="0 0 24 24"
+                  >
+                    <circle 
+                      style={{
+                        opacity: 0.25
+                      }}
+                      cx="12" 
+                      cy="12" 
+                      r="10" 
+                      stroke="currentColor" 
+                      strokeWidth="4"
+                    />
+                    <path 
+                      style={{
+                        opacity: 0.75
+                      }}
+                      fill="currentColor" 
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    />
+                  </svg>
+                  Iniciando sesión...
+                </>
+              ) : (
+                'Iniciar Sesión'
+              )}
             </button>
           </div>
         </form>
       </div>
+      
+      {/* CSS para la animación de carga */}
+      <style>{`
+        @keyframes spin {
+          from {
+            transform: rotate(0deg);
+          }
+          to {
+            transform: rotate(360deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };
