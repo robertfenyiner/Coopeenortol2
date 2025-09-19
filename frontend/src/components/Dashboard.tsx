@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import AsociadosModule from './AsociadosModule';
 
 interface User {
   username: string;
@@ -13,6 +14,11 @@ interface DashboardProps {
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
+  const [activeModule, setActiveModule] = useState<string | null>(null);
+
+  if (activeModule === 'asociados') {
+    return <AsociadosModule onBack={() => setActiveModule(null)} />;
+  }
   return (
     <div 
       className="min-h-screen bg-gray-50"
@@ -239,6 +245,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
 
             {/* Card: Gestión de Asociados */}
             <div 
+              onClick={() => setActiveModule('asociados')}
               className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
               style={{
                 backgroundColor: 'white',
