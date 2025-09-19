@@ -111,3 +111,32 @@ class AsociadoEnDB(AsociadoBase):
 
     class Config:
         orm_mode = True
+
+
+class InfoPaginacion(BaseModel):
+    """Información de paginación para listados"""
+    total: int = Field(description="Total de registros")
+    pagina_actual: int = Field(description="Página actual")
+    por_pagina: int = Field(description="Registros por página")
+    total_paginas: int = Field(description="Total de páginas")
+    tiene_siguiente: bool = Field(description="Existe página siguiente")
+    tiene_anterior: bool = Field(description="Existe página anterior")
+
+
+class AsociadosListResponse(BaseModel):
+    """Respuesta para listado de asociados con paginación"""
+    datos: List[AsociadoEnDB] = Field(description="Lista de asociados")
+    paginacion: InfoPaginacion = Field(description="Información de paginación")
+
+
+class EstadisticasAsociados(BaseModel):
+    """Estadísticas generales de asociados"""
+    total_asociados: int
+    activos: int
+    inactivos: int
+    retirados: int
+    nuevos_este_mes: int
+    distribucion_por_ano: dict
+    promedio_edad: Optional[float] = None
+    distribucion_por_estado_civil: dict
+    distribucion_por_genero: dict
