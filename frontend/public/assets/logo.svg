@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Círculo de fondo verde -->
+  <circle cx="50" cy="50" r="45" fill="#16a34a" stroke="#15803d" stroke-width="2"/>
+  
+  <!-- Símbolo de cooperación/unión en el centro -->
+  <g transform="translate(50,50)">
+    <!-- Tres círculos entrelazados representando unión -->
+    <circle cx="-10" cy="-8" r="8" fill="none" stroke="white" stroke-width="2.5"/>
+    <circle cx="10" cy="-8" r="8" fill="none" stroke="white" stroke-width="2.5"/>
+    <circle cx="0" cy="5" r="8" fill="none" stroke="white" stroke-width="2.5"/>
+    
+    <!-- Texto "C" estilizada en el centro -->
+    <text x="0" y="3" text-anchor="middle" font-family="Arial, sans-serif" 
+          font-size="14" font-weight="bold" fill="white">C</text>
+  </g>
+  
+  <!-- Texto alrededor del borde (opcional, se puede quitar si es muy pequeño) -->
+  <path id="circle-text" d="M 50,50 m -35,0 A 35,35 0 1,1 50,15 A 35,35 0 1,1 50,85" 
+        fill="none" stroke="none"/>
+  <text font-family="Arial, sans-serif" font-size="8" fill="#065f46">
+    <textPath href="#circle-text" startOffset="5%">COOPEENORTOL</textPath>
+  </text>
+</svg>

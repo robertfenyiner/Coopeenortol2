@@ -1,24 +1,28 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+    "./src/**/*.{vue,svelte}",
   ],
-  prefix: "",
+  safelist: [
+    // Tamaños necesarios
+    'w-4', 'h-4', 'w-5', 'h-5', 'w-6', 'h-6', 'w-8', 'h-8', 
+    'w-10', 'h-10', 'w-12', 'h-12', 'w-16', 'h-16',
+    // Colores
+    'bg-green-600', 'bg-green-700', 'hover:bg-green-700',
+    'text-green-100', 'text-green-600', 'text-green-700',
+    'bg-blue-50', 'bg-blue-500', 'bg-yellow-500', 'bg-red-50',
+    'border-green-500', 'ring-green-500', 'focus:ring-green-500',
+    // Layouts
+    'rounded-lg', 'rounded-xl', 'shadow-lg', 'min-h-screen',
+    'max-w-md', 'space-y-6', 'space-y-4', 'flex-shrink-0',
+    // Gradientes
+    'bg-gradient-to-br', 'from-blue-50', 'to-green-50'
+  ],
   theme: {
-    container: {
-      center: true,
-      padding: "2rem",
-      screens: {
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
-        // Colores corporativos de Coopeenortol
         primary: {
           50: '#f0f9f0',
           100: '#dcf2dc',
@@ -43,52 +47,8 @@ export default {
           800: '#881e2e',
           900: '#701a25',
         },
-        border: "hsl(var(--border))",
-        input: "hsl(var(--input))",
-        ring: "hsl(var(--ring))",
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        destructive: {
-          DEFAULT: "hsl(var(--destructive))",
-          foreground: "hsl(var(--destructive-foreground))",
-        },
-        muted: {
-          DEFAULT: "hsl(var(--muted))",
-          foreground: "hsl(var(--muted-foreground))",
-        },
-        accent: {
-          DEFAULT: "hsl(var(--accent))",
-          foreground: "hsl(var(--accent-foreground))",
-        },
-        popover: {
-          DEFAULT: "hsl(var(--popover))",
-          foreground: "hsl(var(--popover-foreground))",
-        },
-        card: {
-          DEFAULT: "hsl(var(--card))",
-          foreground: "hsl(var(--card-foreground))",
-        },
-      },
-      borderRadius: {
-        lg: "var(--radius)",
-        md: "calc(var(--radius) - 2px)",
-        sm: "calc(var(--radius) - 4px)",
-      },
-      keyframes: {
-        "accordion-down": {
-          from: { height: "0" },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: "0" },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [],
 }
