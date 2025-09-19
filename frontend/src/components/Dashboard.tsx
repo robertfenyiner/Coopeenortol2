@@ -16,7 +16,6 @@ interface DashboardProps {
 type ActiveModule = null | 'asociados' | 'usuarios' | 'reportes';
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
-<<<<<<< HEAD
   const [activeModule, setActiveModule] = useState<ActiveModule>(null);
 
   // Manejar navegación a módulos
@@ -35,13 +34,6 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   }
 
   // Dashboard principal
-=======
-  const [activeModule, setActiveModule] = useState<string | null>(null);
-
-  if (activeModule === 'asociados') {
-    return <AsociadosModule onBack={() => setActiveModule(null)} />;
-  }
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
   return (
     <div 
       className="min-h-screen bg-gray-50"
@@ -256,12 +248,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
             onClick={() => handleModuleClick('usuarios')}
           >
             <div 
-<<<<<<< HEAD
               className="p-6"
-=======
-              onClick={() => setActiveModule('asociados')}
-              className="bg-white overflow-hidden shadow rounded-lg cursor-pointer hover:shadow-md transition-shadow"
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
               style={{
                 padding: '1.5rem'
               }}

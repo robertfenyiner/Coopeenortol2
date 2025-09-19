@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 interface Asociado {
   id: number;
-<<<<<<< HEAD
   numero_asociado: string;
   nombre: string;
   apellido: string;
@@ -13,19 +12,6 @@ interface Asociado {
   fecha_ingreso: string;
   estado: 'activo' | 'inactivo' | 'suspendido';
   informacion_adicional?: any;
-=======
-  tipo_documento: string;
-  numero_documento: string;
-  nombres: string;
-  apellidos: string;
-  correo_electronico: string;
-  telefono_principal?: string;
-  estado: 'activo' | 'inactivo' | 'retirado';
-  fecha_ingreso: string;
-  observaciones?: string;
-  created_at: string;
-  updated_at: string;
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
 }
 
 interface AsociadosModuleProps {
@@ -39,7 +25,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-<<<<<<< HEAD
   // Formulario state
   const [formData, setFormData] = useState({
     numero_asociado: '',
@@ -50,43 +35,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     email: '',
     direccion: '',
     estado: 'activo' as 'activo' | 'inactivo' | 'suspendido'
-=======
-  // Formulario state - versión simplificada
-  const [formData, setFormData] = useState({
-    tipo_documento: 'CC',
-    numero_documento: '',
-    nombres: '',
-    apellidos: '',
-    correo_electronico: '',
-    telefono_principal: '',
-    estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
-    fecha_ingreso: new Date().toISOString().split('T')[0],
-    observaciones: '',
-    // Datos mínimos requeridos por el backend
-    datos_personales: {
-      fecha_nacimiento: '1990-01-01',
-      direccion: '',
-      ciudad: 'Bogotá',
-      departamento: 'Cundinamarca',
-      pais: 'Colombia'
-    },
-    datos_laborales: {
-      institucion_educativa: 'Coopeenortol',
-      cargo: '',
-      tipo_contrato: 'Indefinido',
-      fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
-    },
-    informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
-    },
-    informacion_financiera: {
-      ingresos_mensuales: 0,
-      egresos_mensuales: 0,
-      obligaciones: []
-    }
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
   });
 
   // Cargar asociados
@@ -100,13 +48,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       });
       if (response.ok) {
         const data = await response.json();
-<<<<<<< HEAD
         setAsociados(data);
-=======
-        // Si viene paginado, extraer los datos
-        const asociadosData = data.datos || data;
-        setAsociados(asociadosData);
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
       }
     } catch (error) {
       console.error('Error al cargar asociados:', error);
@@ -121,17 +63,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
 
   // Filtrar asociados
   const filteredAsociados = asociados.filter(asociado =>
-<<<<<<< HEAD
     asociado.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
     asociado.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
     asociado.cedula.includes(searchTerm) ||
     asociado.numero_asociado.includes(searchTerm)
-=======
-    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento.includes(searchTerm) ||
-    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
   );
 
   // Manejar envío del formulario
@@ -145,41 +80,19 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       
       const method = editingAsociado ? 'PUT' : 'POST';
       
-<<<<<<< HEAD
-=======
-      // Preparar los datos con estructura completa requerida por el backend
-      const submitData = {
-        ...formData,
-        datos_laborales: {
-          ...formData.datos_laborales,
-          salario_basico: Number(formData.datos_laborales.salario_basico) || 0
-        },
-        informacion_financiera: {
-          ...formData.informacion_financiera,
-          ingresos_mensuales: Number(formData.informacion_financiera.ingresos_mensuales) || 0,
-          egresos_mensuales: Number(formData.informacion_financiera.egresos_mensuales) || 0
-        }
-      };
-      
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-<<<<<<< HEAD
         body: JSON.stringify(formData),
-=======
-        body: JSON.stringify(submitData),
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
       });
 
       if (response.ok) {
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
-<<<<<<< HEAD
         setFormData({
           numero_asociado: '',
           nombre: '',
@@ -196,62 +109,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     }
   };
 
-=======
-        resetForm();
-        alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
-      } else {
-        const errorData = await response.json();
-        alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
-      }
-    } catch (error) {
-      console.error('Error al guardar asociado:', error);
-      alert('Error al guardar el asociado');
-    }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      tipo_documento: 'CC',
-      numero_documento: '',
-      nombres: '',
-      apellidos: '',
-      correo_electronico: '',
-      telefono_principal: '',
-      estado: 'activo',
-      fecha_ingreso: new Date().toISOString().split('T')[0],
-      observaciones: '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
-    });
-  };
-
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
   // Editar asociado
   const handleEdit = (asociado: Asociado) => {
     setEditingAsociado(asociado);
     setFormData({
-<<<<<<< HEAD
       numero_asociado: asociado.numero_asociado,
       nombre: asociado.nombre,
       apellido: asociado.apellido,
@@ -260,40 +121,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       email: asociado.email || '',
       direccion: asociado.direccion || '',
       estado: asociado.estado
-=======
-      tipo_documento: asociado.tipo_documento,
-      numero_documento: asociado.numero_documento,
-      nombres: asociado.nombres,
-      apellidos: asociado.apellidos,
-      correo_electronico: asociado.correo_electronico,
-      telefono_principal: asociado.telefono_principal || '',
-      estado: asociado.estado,
-      fecha_ingreso: asociado.fecha_ingreso,
-      observaciones: asociado.observaciones || '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
     });
     setShowForm(true);
   };
@@ -311,19 +138,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         });
         if (response.ok) {
           await fetchAsociados();
-<<<<<<< HEAD
         }
       } catch (error) {
         console.error('Error al eliminar asociado:', error);
-=======
-          alert('Asociado eliminado correctamente');
-        } else {
-          alert('Error al eliminar el asociado');
-        }
-      } catch (error) {
-        console.error('Error al eliminar asociado:', error);
-        alert('Error al eliminar el asociado');
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
       }
     }
   };
@@ -441,11 +258,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
             >
               <input
                 type="text"
-<<<<<<< HEAD
                 placeholder="Buscar por nombre, apellido, cédula o número de asociado..."
-=======
-                placeholder="Buscar por nombres, apellidos, documento o email..."
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
@@ -500,11 +313,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       color: '#6b7280'
                     }}
                   >
-<<<<<<< HEAD
                     No se encontraron asociados
-=======
-                    {searchTerm ? 'No se encontraron asociados que coincidan con la búsqueda' : 'No hay asociados registrados'}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                   </div>
                 </div>
               ) : (
@@ -539,11 +348,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
-<<<<<<< HEAD
                           No. Asociado
-=======
-                          Documento
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                         </th>
                         <th 
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -569,11 +374,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
-<<<<<<< HEAD
                           Cédula
-=======
-                          Email
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                         </th>
                         <th 
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -620,11 +421,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-<<<<<<< HEAD
                             {asociado.numero_asociado}
-=======
-                            {asociado.tipo_documento} {asociado.numero_documento}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
@@ -634,11 +431,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-<<<<<<< HEAD
                             {asociado.nombre} {asociado.apellido}
-=======
-                            {asociado.nombres} {asociado.apellidos}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
@@ -648,11 +441,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-<<<<<<< HEAD
                             {asociado.cedula}
-=======
-                            {asociado.correo_electronico}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap"
@@ -724,11 +513,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
             </div>
           </>
         ) : (
-<<<<<<< HEAD
           /* Formulario */
-=======
-          /* Formulario Simplificado */
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
           <div 
             className="bg-white shadow sm:rounded-md"
             style={{
@@ -777,55 +562,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Número de Asociado *
-=======
-                    Tipo de Documento *
-                  </label>
-                  <select
-                    required
-                    value={formData.tipo_documento}
-                    onChange={(e) => setFormData({...formData, tipo_documento: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  >
-                    <option value="CC">Cédula de Ciudadanía</option>
-                    <option value="CE">Cédula de Extranjería</option>
-                    <option value="TI">Tarjeta de Identidad</option>
-                    <option value="PAS">Pasaporte</option>
-                  </select>
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Número de Documento *
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                   </label>
                   <input
                     type="text"
                     required
-<<<<<<< HEAD
                     value={formData.numero_asociado}
                     onChange={(e) => setFormData({...formData, numero_asociado: e.target.value})}
-=======
-                    value={formData.numero_documento}
-                    onChange={(e) => setFormData({...formData, numero_documento: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -848,22 +591,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Nombre *
-=======
-                    Nombres *
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                   </label>
                   <input
                     type="text"
                     required
-<<<<<<< HEAD
                     value={formData.nombre}
                     onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-=======
-                    value={formData.nombres}
-                    onChange={(e) => setFormData({...formData, nombres: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -886,22 +620,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Apellido *
-=======
-                    Apellidos *
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                   </label>
                   <input
                     type="text"
                     required
-<<<<<<< HEAD
                     value={formData.apellido}
                     onChange={(e) => setFormData({...formData, apellido: e.target.value})}
-=======
-                    value={formData.apellidos}
-                    onChange={(e) => setFormData({...formData, apellidos: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -924,7 +649,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Cédula *
                   </label>
                   <input
@@ -932,15 +656,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                     required
                     value={formData.cedula}
                     onChange={(e) => setFormData({...formData, cedula: e.target.value})}
-=======
-                    Email *
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={formData.correo_electronico}
-                    onChange={(e) => setFormData({...formData, correo_electronico: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -967,13 +682,8 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                   </label>
                   <input
                     type="text"
-<<<<<<< HEAD
                     value={formData.telefono}
                     onChange={(e) => setFormData({...formData, telefono: e.target.value})}
-=======
-                    value={formData.telefono_principal}
-                    onChange={(e) => setFormData({...formData, telefono_principal: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -996,161 +706,12 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Email
                   </label>
                   <input
                     type="email"
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-=======
-                    Fecha de Ingreso *
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={formData.fecha_ingreso}
-                    onChange={(e) => setFormData({...formData, fecha_ingreso: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Estado
-                  </label>
-                  <select
-                    value={formData.estado}
-                    onChange={(e) => setFormData({...formData, estado: e.target.value as 'activo' | 'inactivo' | 'retirado'})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  >
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
-                    <option value="retirado">Retirado</option>
-                  </select>
-                </div>
-
-                <div 
-                  className="md:col-span-2"
-                  style={{
-                    gridColumn: 'span 2'
-                  }}
-                >
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Dirección
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_personales.direccion}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_personales: {
-                        ...formData.datos_personales,
-                        direccion: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Cargo
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_laborales.cargo}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        cargo: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Salario Básico
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.datos_laborales.salario_basico}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        salario_basico: Number(e.target.value)
-                      }
-                    })}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -1178,19 +739,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-<<<<<<< HEAD
                     Dirección
                   </label>
                   <textarea
                     value={formData.direccion}
                     onChange={(e) => setFormData({...formData, direccion: e.target.value})}
-=======
-                    Observaciones
-                  </label>
-                  <textarea
-                    value={formData.observaciones}
-                    onChange={(e) => setFormData({...formData, observaciones: e.target.value})}
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
@@ -1203,7 +756,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                     }}
                   />
                 </div>
-<<<<<<< HEAD
 
                 <div>
                   <label 
@@ -1235,8 +787,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                     <option value="suspendido">Suspendido</option>
                   </select>
                 </div>
-=======
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
               </div>
 
               <div 
@@ -1252,7 +802,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                   onClick={() => {
                     setShowForm(false);
                     setEditingAsociado(null);
-<<<<<<< HEAD
                     setFormData({
                       numero_asociado: '',
                       nombre: '',
@@ -1263,9 +812,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       direccion: '',
                       estado: 'activo'
                     });
-=======
-                    resetForm();
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
                   }}
                   className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   style={{
@@ -1305,8 +851,4 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   );
 };
 
-<<<<<<< HEAD
 export default AsociadosModule;
-=======
-export default AsociadosModule;
->>>>>>> 203b4a3b922207689668e41f02c49ab005433562
