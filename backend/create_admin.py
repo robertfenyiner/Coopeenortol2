@@ -16,7 +16,8 @@ from sqlalchemy.orm import Session
 
 from app.core.config import settings
 from app.database import SessionLocal, engine
-from app.models import Base, Usuario
+from app.database import Base
+from app.models import Usuario
 from app.services.usuarios import create_superuser, get_user_by_username
 
 

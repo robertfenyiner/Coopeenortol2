@@ -1,4 +1,4 @@
 """Aplicación backend para Coopeenortol."""
 
-import sitecustomize  # noqa: F401
+#import sitecustomize  # noqa: F401
 
