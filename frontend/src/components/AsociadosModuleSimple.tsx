@@ -162,7 +162,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       }
     } catch (error) {
       console.error('💥 Error al guardar asociado:', error);
-      alert('Error al guardar el asociado: ' + error.message);
+      alert('Error al guardar el asociado: ' + (error instanceof Error ? error.message : String(error)));
     }
   };
 
