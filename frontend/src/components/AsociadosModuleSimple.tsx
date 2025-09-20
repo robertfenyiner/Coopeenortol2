@@ -100,8 +100,17 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    console.log('🚀 Iniciando envío de formulario...');
+    console.log('📝 Datos del formulario:', formData);
+    
     try {
       const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Error: No hay token de autenticación. Por favor, inicia sesión nuevamente.');
+        return;
+      }
+      
       const url = editingAsociado 
         ? `/api/v1/asociados/${editingAsociado.id}`
         : '/api/v1/asociados';
@@ -122,6 +131,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         }
       };
       
+      console.log('🌐 URL de envío:', url);
+      console.log('📤 Método HTTP:', method);
+      console.log('📦 Datos a enviar:', submitData);
+      
       const response = await fetch(url, {
         method,
         headers: {
@@ -131,7 +144,12 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         body: JSON.stringify(submitData),
       });
 
+      console.log('📨 Respuesta del servidor:', response.status, response.statusText);
+
       if (response.ok) {
+        const responseData = await response.json();
+        console.log('✅ Datos de respuesta:', responseData);
+        
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
@@ -139,11 +157,12 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
       } else {
         const errorData = await response.json();
+        console.error('❌ Error del servidor:', errorData);
         alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
       }
     } catch (error) {
-      console.error('Error al guardar asociado:', error);
-      alert('Error al guardar el asociado');
+      console.error('💥 Error al guardar asociado:', error);
+      alert('Error al guardar el asociado: ' + error.message);
     }
   };
 
@@ -451,6 +470,19 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
+                          ID Asociado
+                        </th>
+                        <th 
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          style={{
+                            padding: '0.75rem 1.5rem',
+                            textAlign: 'left',
+                            fontSize: '0.75rem',
+                            fontWeight: '500',
+                            color: '#6b7280',
+                            textTransform: 'uppercase'
+                          }}
+                        >
                           Documento
                         </th>
                         <th 
@@ -521,6 +553,16 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               padding: '1rem 1.5rem',
                               fontSize: '0.875rem',
                               fontWeight: '500',
+                              color: '#111827'
+                            }}
+                          >
+                            #{asociado.id}
+                          </td>
+                          <td 
+                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                            style={{
+                              padding: '1rem 1.5rem',
+                              fontSize: '0.875rem',
                               color: '#111827'
                             }}
                           >
