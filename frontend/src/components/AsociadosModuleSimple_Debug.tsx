@@ -25,6 +25,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  const [error, setError] = useState<string | null>(null);
 
   // Formulario state - versión simplificada
   const [formData, setFormData] = useState({
@@ -63,25 +64,33 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     }
   });
 
-  // Cargar asociados
+  // Cargar asociados con debugging completo
   const fetchAsociados = async () => {
     console.log('🔄 Iniciando carga de asociados...');
-    console.log('🌐 API URL desde entorno:', import.meta.env.VITE_API_URL);
-    console.log('🔗 URL completa que se usará:', `${import.meta.env.VITE_API_URL}/api/v1/asociados`);
+    console.log('🌐 Configuración de entorno VITE_API_URL:', (window as any).location?.origin);
+    
+    setError(null);
     
     try {
       const token = localStorage.getItem('token');
       console.log('🔑 Token encontrado:', token ? 'Sí' : 'No');
       console.log('🔑 Token (primeros 20 chars):', token ? token.substring(0, 20) + '...' : 'null');
       
-      // Usar URL completa con VITE_API_URL
-      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/asociados`;
+      if (!token) {
+        throw new Error('No hay token de autenticación');
+      }
+      
+      // Usar URL completa para debug
+      const baseUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
+      const apiUrl = `${baseUrl}/api/v1/asociados`;
       console.log('📡 Haciendo petición a:', apiUrl);
       
       const response = await fetch(apiUrl, {
+        method: 'GET',
         headers: {
           'Authorization': `Bearer ${token}`,
           'Content-Type': 'application/json',
+          'Accept': 'application/json'
         },
       });
       
@@ -109,45 +118,36 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         console.error('❌ Error en la respuesta:', response.status, response.statusText);
         const errorText = await response.text();
         console.error('❌ Contenido del error:', errorText);
+        setError(`Error ${response.status}: ${response.statusText}`);
         setAsociados([]);
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('💥 Error al cargar asociados:', error);
       console.error('💥 Tipo de error:', error.name);
       console.error('💥 Mensaje de error:', error.message);
+      setError(error.message || 'Error desconocido');
       setAsociados([]);
     } finally {
       console.log('✅ Finalizando carga, loading = false');
       setLoading(false);
     }
   };
-        }
-        
-        console.log('📋 Asociados procesados:', asociadosData);
-        setAsociados(asociadosData);
-      } else {
-        console.error('❌ Error en la respuesta:', response.status, response.statusText);
-        setAsociados([]);
-      }
-    } catch (error) {
-      console.error('💥 Error al cargar asociados:', error);
-      setAsociados([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
+    console.log('🎯 Componente montado, iniciando carga...');
     fetchAsociados();
   }, []);
 
-  // Filtrar asociados
-  const filteredAsociados = (Array.isArray(asociados) ? asociados : []).filter(asociado =>
-    asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento?.includes(searchTerm) ||
-    asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Filtrar asociados con validación robusta
+  const filteredAsociados = (Array.isArray(asociados) ? asociados : []).filter(asociado => {
+    if (!asociado) return false;
+    return (
+      asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      asociado.numero_documento?.includes(searchTerm) ||
+      asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  });
 
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
@@ -163,9 +163,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         return;
       }
       
+      const baseUrl = window.location.protocol + '//' + window.location.hostname + ':8000';
       const url = editingAsociado 
-        ? `/api/v1/asociados/${editingAsociado.id}`
-        : '/api/v1/asociados';
+        ? `${baseUrl}/api/v1/asociados/${editingAsociado.id}`
+        : `${baseUrl}/api/v1/asociados`;
       
       const method = editingAsociado ? 'PUT' : 'POST';
       
@@ -183,9 +184,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         }
       };
       
-      console.log('🌐 URL de envío:', url);
-      console.log('📤 Método HTTP:', method);
-      console.log('📦 Datos a enviar:', submitData);
+      console.log('📤 Enviando datos:', submitData);
       
       const response = await fetch(url, {
         method,
@@ -196,12 +195,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         body: JSON.stringify(submitData),
       });
 
-      console.log('📨 Respuesta del servidor:', response.status, response.statusText);
-
       if (response.ok) {
-        const responseData = await response.json();
-        console.log('✅ Datos de respuesta:', responseData);
-        
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
@@ -209,12 +203,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
       } else {
         const errorData = await response.json();
-        console.error('❌ Error del servidor:', errorData);
         alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
       }
     } catch (error) {
-      console.error('💥 Error al guardar asociado:', error);
-      alert('Error al guardar el asociado: ' + (error instanceof Error ? error.message : String(error)));
+      console.error('Error al guardar asociado:', error);
+      alert('Error al guardar el asociado');
     }
   };
 
@@ -255,69 +248,79 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     });
   };
 
-  // Editar asociado
-  const handleEdit = (asociado: Asociado) => {
-    setEditingAsociado(asociado);
-    setFormData({
-      tipo_documento: asociado.tipo_documento,
-      numero_documento: asociado.numero_documento,
-      nombres: asociado.nombres,
-      apellidos: asociado.apellidos,
-      correo_electronico: asociado.correo_electronico,
-      telefono_principal: asociado.telefono_principal || '',
-      estado: asociado.estado,
-      fecha_ingreso: asociado.fecha_ingreso,
-      observaciones: asociado.observaciones || '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
-    });
-    setShowForm(true);
-  };
+  // Renderizado con mejor manejo de estados de error
+  if (loading) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        fontSize: '1.2rem',
+        color: '#6b7280'
+      }}>
+        🔄 Cargando asociados...
+      </div>
+    );
+  }
 
-  // Eliminar asociado
-  const handleDelete = async (id: number) => {
-    if (confirm('¿Está seguro de eliminar este asociado?')) {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`/api/v1/asociados/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          await fetchAsociados();
-          alert('Asociado eliminado correctamente');
-        } else {
-          alert('Error al eliminar el asociado');
-        }
-      } catch (error) {
-        console.error('Error al eliminar asociado:', error);
-        alert('Error al eliminar el asociado');
-      }
-    }
-  };
+  if (error) {
+    return (
+      <div style={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh',
+        padding: '2rem'
+      }}>
+        <div style={{ 
+          backgroundColor: '#fee2e2',
+          color: '#991b1b',
+          padding: '1rem 2rem',
+          borderRadius: '0.5rem',
+          marginBottom: '1rem',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ margin: 0, marginBottom: '0.5rem' }}>❌ Error al cargar</h3>
+          <p style={{ margin: 0 }}>{error}</p>
+        </div>
+        <button
+          onClick={() => {
+            setError(null);
+            setLoading(true);
+            fetchAsociados();
+          }}
+          style={{
+            backgroundColor: '#16a34a',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '0.375rem',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '0.875rem'
+          }}
+        >
+          🔄 Reintentar
+        </button>
+        <button
+          onClick={onBack}
+          style={{
+            backgroundColor: '#6b7280',
+            color: 'white',
+            padding: '0.5rem 1rem',
+            borderRadius: '0.375rem',
+            border: 'none',
+            cursor: 'pointer',
+            fontSize: '0.875rem',
+            marginTop: '0.5rem'
+          }}
+        >
+          ← Volver al Dashboard
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div 
@@ -456,24 +459,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                 overflow: 'hidden'
               }}
             >
-              {loading ? (
-                <div 
-                  className="p-6 text-center"
-                  style={{
-                    padding: '1.5rem',
-                    textAlign: 'center'
-                  }}
-                >
-                  <div 
-                    className="text-gray-500"
-                    style={{
-                      color: '#6b7280'
-                    }}
-                  >
-                    Cargando asociados...
-                  </div>
-                </div>
-              ) : filteredAsociados.length === 0 ? (
+              {filteredAsociados.length === 0 ? (
                 <div 
                   className="p-6 text-center"
                   style={{
@@ -489,6 +475,21 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                   >
                     {searchTerm ? 'No se encontraron asociados que coincidan con la búsqueda' : 'No hay asociados registrados'}
                   </div>
+                  <button
+                    onClick={() => setShowForm(true)}
+                    style={{
+                      backgroundColor: '#16a34a',
+                      color: 'white',
+                      padding: '0.5rem 1rem',
+                      borderRadius: '0.375rem',
+                      border: 'none',
+                      cursor: 'pointer',
+                      fontSize: '0.875rem',
+                      marginTop: '1rem'
+                    }}
+                  >
+                    Crear primer asociado
+                  </button>
                 </div>
               ) : (
                 <div 
@@ -511,19 +512,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       }}
                     >
                       <tr>
-                        <th 
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          style={{
-                            padding: '0.75rem 1.5rem',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            fontWeight: '500',
-                            color: '#6b7280',
-                            textTransform: 'uppercase'
-                          }}
-                        >
-                          ID Asociado
-                        </th>
                         <th 
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
                           style={{
@@ -608,16 +596,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-                            #{asociado.id}
-                          </td>
-                          <td 
-                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                            style={{
-                              padding: '1rem 1.5rem',
-                              fontSize: '0.875rem',
-                              color: '#111827'
-                            }}
-                          >
                             {asociado.tipo_documento} {asociado.numero_documento}
                           </td>
                           <td 
@@ -676,7 +654,44 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             }}
                           >
                             <button
-                              onClick={() => handleEdit(asociado)}
+                              onClick={() => {
+                                setEditingAsociado(asociado);
+                                setFormData({
+                                  tipo_documento: asociado.tipo_documento,
+                                  numero_documento: asociado.numero_documento,
+                                  nombres: asociado.nombres,
+                                  apellidos: asociado.apellidos,
+                                  correo_electronico: asociado.correo_electronico,
+                                  telefono_principal: asociado.telefono_principal || '',
+                                  estado: asociado.estado,
+                                  fecha_ingreso: asociado.fecha_ingreso,
+                                  observaciones: asociado.observaciones || '',
+                                  datos_personales: {
+                                    fecha_nacimiento: '1990-01-01',
+                                    direccion: '',
+                                    ciudad: 'Bogotá',
+                                    departamento: 'Cundinamarca',
+                                    pais: 'Colombia'
+                                  },
+                                  datos_laborales: {
+                                    institucion_educativa: 'Coopeenortol',
+                                    cargo: '',
+                                    tipo_contrato: 'Indefinido',
+                                    fecha_vinculacion: new Date().toISOString().split('T')[0],
+                                    salario_basico: 0
+                                  },
+                                  informacion_familiar: {
+                                    familiares: [],
+                                    contactos_emergencia: []
+                                  },
+                                  informacion_financiera: {
+                                    ingresos_mensuales: 0,
+                                    egresos_mensuales: 0,
+                                    obligaciones: []
+                                  }
+                                });
+                                setShowForm(true);
+                              }}
                               className="text-indigo-600 hover:text-indigo-900 mr-4"
                               style={{
                                 color: '#4f46e5',
@@ -688,18 +703,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             >
                               Editar
                             </button>
-                            <button
-                              onClick={() => handleDelete(asociado.id)}
-                              className="text-red-600 hover:text-red-900"
-                              style={{
-                                color: '#dc2626',
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer'
-                              }}
-                            >
-                              Eliminar
-                            </button>
                           </td>
                         </tr>
                       ))}
@@ -710,7 +713,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
             </div>
           </>
         ) : (
-          /* Formulario Simplificado */
+          /* Formulario simplificado */
           <div 
             className="bg-white shadow sm:rounded-md"
             style={{
@@ -774,10 +777,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       fontSize: '0.875rem'
                     }}
                   >
-                    <option value="">Seleccione tipo de documento</option>
-                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="CC">Cédula de Ciudadanía</option>
                     <option value="CE">Cédula de Extranjería</option>
+                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="PAS">Pasaporte</option>
                   </select>
                 </div>
@@ -984,148 +986,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                     <option value="inactivo">Inactivo</option>
                     <option value="retirado">Retirado</option>
                   </select>
-                </div>
-
-                <div 
-                  className="md:col-span-2"
-                  style={{
-                    gridColumn: 'span 2'
-                  }}
-                >
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Dirección
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_personales.direccion}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_personales: {
-                        ...formData.datos_personales,
-                        direccion: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Cargo
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_laborales.cargo}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        cargo: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Salario Básico
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.datos_laborales.salario_basico}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        salario_basico: Number(e.target.value)
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div 
-                  className="md:col-span-2"
-                  style={{
-                    gridColumn: 'span 2'
-                  }}
-                >
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Observaciones
-                  </label>
-                  <textarea
-                    value={formData.observaciones}
-                    onChange={(e) => setFormData({...formData, observaciones: e.target.value})}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem',
-                      resize: 'vertical'
-                    }}
-                  />
                 </div>
               </div>
 
