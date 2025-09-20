@@ -65,6 +65,44 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
 
   // Cargar asociados
   const fetchAsociados = async () => {
+    try {
+      const token = localStorage.getItem('token');
+      const response = await fetch('/api/v1/asociados', {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        // Si viene paginado, extraer los datos
+        const asociadosData = data.datos || data;
+        setAsociados(Array.isArray(asociadosData) ? asociadosData : []);
+      } else {
+        setAsociados([]);
+      }
+    } catch (error) {
+      console.error('Error al cargar asociados:', error);
+      setAsociados([]);
+    } finally {
+      setLoading(false);
+    }
+      tipo_contrato: 'Indefinido',
+      fecha_vinculacion: new Date().toISOString().split('T')[0],
+      salario_basico: 0
+    },
+    informacion_familiar: {
+      familiares: [],
+      contactos_emergencia: []
+    },
+    informacion_financiera: {
+      ingresos_mensuales: 0,
+      egresos_mensuales: 0,
+      obligaciones: []
+    }
+  });
+
+  // Cargar asociados
+  const fetchAsociados = async () => {
     console.log('🔄 Iniciando carga de asociados...');
     console.log('🌐 API URL desde entorno:', import.meta.env.VITE_API_URL);
     console.log('🔗 URL completa que se usará:', `${import.meta.env.VITE_API_URL}/api/v1/asociados`);
@@ -121,23 +159,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       setLoading(false);
     }
   };
-        }
-        
-        console.log('📋 Asociados procesados:', asociadosData);
-        setAsociados(asociadosData);
-      } else {
-        console.error('❌ Error en la respuesta:', response.status, response.statusText);
-        setAsociados([]);
-      }
-    } catch (error) {
-      console.error('💥 Error al cargar asociados:', error);
-      setAsociados([]);
-    } finally {
-      setLoading(false);
-    }
-  };
 
   useEffect(() => {
+    fetchAsociados();
+  }, []);
     fetchAsociados();
   }, []);
 
