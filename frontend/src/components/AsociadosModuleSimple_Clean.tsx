@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AsociadoFormExpanded from './AsociadoFormExpanded';
 
 interface Asociado {
   id: number;
@@ -13,6 +14,126 @@ interface Asociado {
   observaciones?: string;
   created_at: string;
   updated_at: string;
+  foto_url?: string;
+  
+  // Datos expandidos opcionales
+  datos_personales?: {
+    fecha_nacimiento: string;
+    lugar_nacimiento?: string;
+    direccion: string;
+    barrio?: string;
+    ciudad: string;
+    departamento: string;
+    pais: string;
+    codigo_postal?: string;
+    telefono_secundario?: string;
+    estado_civil?: 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo';
+    genero?: 'masculino' | 'femenino' | 'otro';
+    grupo_sanguineo?: string;
+    eps?: string;
+    arl?: string;
+  };
+
+  informacion_academica?: {
+    nivel_educativo: 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado';
+    institucion?: string;
+    titulo_obtenido?: string;
+    ano_graduacion?: number;
+    en_estudio?: boolean;
+    programa_actual?: string;
+    institucion_actual?: string;
+    semestre_actual?: number;
+    certificaciones?: Array<{
+      nombre: string;
+      institucion: string;
+      fecha_obtencion: string;
+      vigencia?: string;
+    }>;
+  };
+
+  datos_laborales?: {
+    institucion_educativa: string;
+    cargo: string;
+    area_trabajo?: string;
+    tipo_contrato: string;
+    fecha_vinculacion: string;
+    salario_basico: number;
+    bonificaciones?: number;
+    jefe_inmediato?: string;
+    telefono_jefe?: string;
+    email_jefe?: string;
+    sede_trabajo?: string;
+    horario_trabajo?: string;
+    experiencia_laboral?: Array<{
+      empresa: string;
+      cargo: string;
+      fecha_inicio: string;
+      fecha_fin?: string;
+      motivo_retiro?: string;
+      funciones?: string;
+    }>;
+  };
+
+  informacion_familiar?: {
+    familiares: Array<{
+      nombre: string;
+      parentesco: string;
+      fecha_nacimiento?: string;
+      documento?: string;
+      telefono?: string;
+      ocupacion?: string;
+      depende_economicamente?: boolean;
+    }>;
+    contactos_emergencia: Array<{
+      nombre: string;
+      parentesco: string;
+      telefono: string;
+      direccion?: string;
+      es_principal?: boolean;
+    }>;
+    personas_autorizadas?: Array<{
+      nombre: string;
+      documento: string;
+      telefono: string;
+      parentesco?: string;
+      puede_recoger_hijo?: boolean;
+    }>;
+  };
+
+  informacion_financiera?: {
+    ingresos_mensuales: number;
+    ingresos_adicionales?: number;
+    egresos_mensuales: number;
+    obligaciones: Array<{
+      tipo: string;
+      entidad: string;
+      valor_cuota: number;
+      saldo_actual?: number;
+      fecha_vencimiento?: string;
+    }>;
+    referencias_comerciales?: Array<{
+      entidad: string;
+      tipo_producto: string;
+      telefono: string;
+      tiempo_relacion?: string;
+    }>;
+    ingresos_familiares?: number;
+    gastos_familiares?: number;
+    activos?: Array<{
+      tipo: string;
+      descripcion: string;
+      valor_estimado: number;
+    }>;
+  };
+
+  informacion_vivienda?: {
+    tipo_vivienda: 'casa' | 'apartamento' | 'finca' | 'otro';
+    tenencia: 'propia' | 'arrendada' | 'familiar' | 'otro';
+    valor_arriendo?: number;
+    tiempo_residencia?: number;
+    servicios_publicos?: string[];
+    estrato?: number;
+  };
 }
 
 interface AsociadosModuleProps {
@@ -25,43 +146,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-
-  // Formulario state - versión simplificada
-  const [formData, setFormData] = useState({
-    tipo_documento: 'CC',
-    numero_documento: '',
-    nombres: '',
-    apellidos: '',
-    correo_electronico: '',
-    telefono_principal: '',
-    estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
-    fecha_ingreso: new Date().toISOString().split('T')[0],
-    observaciones: '',
-    // Datos mínimos requeridos por el backend
-    datos_personales: {
-      fecha_nacimiento: '1990-01-01',
-      direccion: '',
-      ciudad: 'Bogotá',
-      departamento: 'Cundinamarca',
-      pais: 'Colombia'
-    },
-    datos_laborales: {
-      institucion_educativa: 'Coopeenortol',
-      cargo: '',
-      tipo_contrato: 'Indefinido',
-      fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
-    },
-    informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
-    },
-    informacion_financiera: {
-      ingresos_mensuales: 0,
-      egresos_mensuales: 0,
-      obligaciones: []
-    }
-  });
 
   // Cargar asociados
   const fetchAsociados = async () => {
@@ -89,164 +173,103 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     fetchAsociados();
   }, []);
 
-  // Filtrar asociados
-  const filteredAsociados = asociados.filter(asociado =>
-    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento.includes(searchTerm) ||
-    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
-  // Manejar envío del formulario
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleFormSubmit = async (formData: any) => {
     try {
       const token = localStorage.getItem('token');
-      const url = editingAsociado 
+      if (!token) {
+        alert('Error: No hay token de autenticación');
+        return;
+      }
+
+      const url = editingAsociado
         ? `/api/v1/asociados/${editingAsociado.id}`
         : '/api/v1/asociados';
       
       const method = editingAsociado ? 'PUT' : 'POST';
-      
-      // Preparar los datos con estructura completa requerida por el backend
-      const submitData = {
-        ...formData,
-        datos_laborales: {
-          ...formData.datos_laborales,
-          salario_basico: Number(formData.datos_laborales.salario_basico) || 0
-        },
-        informacion_financiera: {
-          ...formData.informacion_financiera,
-          ingresos_mensuales: Number(formData.informacion_financiera.ingresos_mensuales) || 0,
-          egresos_mensuales: Number(formData.informacion_financiera.egresos_mensuales) || 0
-        }
-      };
-      
+
       const response = await fetch(url, {
         method,
         headers: {
-          'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(submitData),
+        body: JSON.stringify(formData)
       });
 
-      if (response.ok) {
-        await fetchAsociados();
-        setShowForm(false);
-        setEditingAsociado(null);
-        resetForm();
-        alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
-      } else {
-        const errorData = await response.json();
-        alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Error del servidor: ${response.status} - ${errorText}`);
       }
-    } catch (error) {
+
+      alert(editingAsociado ? 'Asociado actualizado exitosamente' : 'Asociado creado exitosamente');
+      
+      setShowForm(false);
+      setEditingAsociado(null);
+      await fetchAsociados();
+      
+    } catch (error: any) {
       console.error('Error al guardar asociado:', error);
-      alert('Error al guardar el asociado');
+      alert(`Error al guardar el asociado: ${error.message}`);
     }
   };
 
-  const resetForm = () => {
-    setFormData({
-      tipo_documento: 'CC',
-      numero_documento: '',
-      nombres: '',
-      apellidos: '',
-      correo_electronico: '',
-      telefono_principal: '',
-      estado: 'activo',
-      fecha_ingreso: new Date().toISOString().split('T')[0],
-      observaciones: '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
-    });
-  };
-
-  // Editar asociado
   const handleEdit = (asociado: Asociado) => {
     setEditingAsociado(asociado);
-    setFormData({
-      tipo_documento: asociado.tipo_documento,
-      numero_documento: asociado.numero_documento,
-      nombres: asociado.nombres,
-      apellidos: asociado.apellidos,
-      correo_electronico: asociado.correo_electronico,
-      telefono_principal: asociado.telefono_principal || '',
-      estado: asociado.estado,
-      fecha_ingreso: asociado.fecha_ingreso,
-      observaciones: asociado.observaciones || '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
-    });
     setShowForm(true);
   };
 
-  // Eliminar asociado
   const handleDelete = async (id: number) => {
-    if (confirm('¿Está seguro de eliminar este asociado?')) {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch(`/api/v1/asociados/${id}`, {
-          method: 'DELETE',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-        if (response.ok) {
-          await fetchAsociados();
-          alert('Asociado eliminado correctamente');
-        } else {
-          alert('Error al eliminar el asociado');
-        }
-      } catch (error) {
-        console.error('Error al eliminar asociado:', error);
-        alert('Error al eliminar el asociado');
+    if (!confirm('¿Estás seguro de que quieres eliminar este asociado?')) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        alert('Error: No hay token de autenticación');
+        return;
       }
+
+      const response = await fetch(`/api/v1/asociados/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error ${response.status}: ${response.statusText}`);
+      }
+
+      alert('Asociado eliminado exitosamente');
+      await fetchAsociados();
+    } catch (error: any) {
+      console.error('Error al eliminar asociado:', error);
+      alert(`Error al eliminar el asociado: ${error.message}`);
     }
   };
+
+  const filteredAsociados = asociados.filter(asociado =>
+    asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.numero_documento?.includes(searchTerm) ||
+    asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  if (showForm) {
+    return (
+      <AsociadoFormExpanded 
+        onClose={() => {
+          setShowForm(false);
+          setEditingAsociado(null);
+        }}
+        onSubmit={handleFormSubmit}
+        initialData={editingAsociado}
+        isEditing={!!editingAsociado}
+      />
+    );
+  }
 
   return (
     <div 

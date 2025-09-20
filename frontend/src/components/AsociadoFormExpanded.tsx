@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 // Interfaces para el formulario expandido
 interface FormDataExpanded {

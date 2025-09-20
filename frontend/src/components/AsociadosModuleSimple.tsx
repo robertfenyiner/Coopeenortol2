@@ -1,5 +1,24 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import AsociadoFormExpanded from './AsociadoFormExpanded';
+
+interface AsociadosModuleProps {
+  onBack: () => void;
+}
+
+const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
+  return (
+    <div>
+      <h1>Gestión de Asociados</h1>
+      <button onClick={onBack}>Volver</button>
+      <AsociadoFormExpanded 
+        onClose={() => {}}
+        onSubmit={() => {}}
+      />
+    </div>
+  );
+};
+
+export default AsociadosModule;
 
 interface Asociado {
   id: number;
@@ -152,10 +171,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
   
-  // Estados para el formulario multi-paso
-  const [currentStep, setCurrentStep] = useState(0);
-  const [photoFile, setPhotoFile] = useState<File | null>(null);
-  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
+
 
   // Formulario state - versión expandida
   const [formData, setFormData] = useState({
@@ -331,89 +347,8 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  // Manejar foto del asociado
-  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Validar tipo de archivo
-      if (!file.type.startsWith('image/')) {
-        alert('Por favor selecciona un archivo de imagen válido');
-        return;
-      }
-      
-      // Validar tamaño (máximo 5MB)
-      if (file.size > 5 * 1024 * 1024) {
-        alert('La imagen debe ser menor a 5MB');
-        return;
-      }
-      
-      setPhotoFile(file);
-      
-      // Crear preview
-      const reader = new FileReader();
-      reader.onload = (event) => {
-        setPhotoPreview(event.target?.result as string);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Eliminar foto
-  const removePhoto = () => {
-    setPhotoFile(null);
-    setPhotoPreview(null);
-  };
-
-  // Definir los pasos del formulario
-  const formSteps = [
-    { id: 0, title: 'Datos Básicos', icon: '👤' },
-    { id: 1, title: 'Información Personal', icon: '📋' },
-    { id: 2, title: 'Información Académica', icon: '🎓' },
-    { id: 3, title: 'Información Laboral', icon: '💼' },
-    { id: 4, title: 'Información Familiar', icon: '👨‍👩‍👧‍👦' },
-    { id: 5, title: 'Información Financiera', icon: '💰' },
-    { id: 6, title: 'Información de Vivienda', icon: '🏠' },
-    { id: 7, title: 'Foto y Revisión', icon: '📸' }
-  ];
-
-  // Navegar entre pasos
-  const nextStep = () => {
-    if (currentStep < formSteps.length - 1) {
-      setCurrentStep(currentStep + 1);
-    }
-  };
-
-  const prevStep = () => {
-    if (currentStep > 0) {
-      setCurrentStep(currentStep - 1);
-    }
-  };
-
-  const goToStep = (step: number) => {
-    setCurrentStep(step);
-  };
-
-  // Validar paso actual
-  const validateCurrentStep = (): boolean => {
-    switch (currentStep) {
-      case 0: // Datos Básicos
-        return !!(formData.tipo_documento && formData.numero_documento && formData.nombres && formData.apellidos);
-      case 1: // Información Personal
-        return !!(formData.correo_electronico && formData.datos_personales.fecha_nacimiento);
-      case 2: // Información Académica
-        return !!formData.informacion_academica.nivel_educativo;
-      case 3: // Información Laboral
-        return !!(formData.datos_laborales.cargo && formData.datos_laborales.salario_basico > 0);
-      default:
-        return true;
-    }
-  };
-
   // Resetear formulario
   const resetForm = () => {
-    setCurrentStep(0);
-    setPhotoFile(null);
-    setPhotoPreview(null);
     setFormData({
       tipo_documento: 'CC',
       numero_documento: '',
@@ -575,27 +510,74 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       fecha_ingreso: asociado.fecha_ingreso,
       observaciones: asociado.observaciones || '',
       datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
+        fecha_nacimiento: asociado.datos_personales?.fecha_nacimiento || '1990-01-01',
+        lugar_nacimiento: asociado.datos_personales?.lugar_nacimiento || '',
+        direccion: asociado.datos_personales?.direccion || '',
+        barrio: asociado.datos_personales?.barrio || '',
+        ciudad: asociado.datos_personales?.ciudad || 'Bogotá',
+        departamento: asociado.datos_personales?.departamento || 'Cundinamarca',
+        pais: asociado.datos_personales?.pais || 'Colombia',
+        codigo_postal: asociado.datos_personales?.codigo_postal || '',
+        telefono_secundario: asociado.datos_personales?.telefono_secundario || '',
+        estado_civil: asociado.datos_personales?.estado_civil || '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
+        genero: asociado.datos_personales?.genero || '' as '' | 'masculino' | 'femenino' | 'otro',
+        grupo_sanguineo: asociado.datos_personales?.grupo_sanguineo || '',
+        eps: asociado.datos_personales?.eps || '',
+        arl: asociado.datos_personales?.arl || ''
       },
+      
+      informacion_academica: {
+        nivel_educativo: asociado.informacion_academica?.nivel_educativo || '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
+        institucion: asociado.informacion_academica?.institucion || '',
+        titulo_obtenido: asociado.informacion_academica?.titulo_obtenido || '',
+        ano_graduacion: asociado.informacion_academica?.ano_graduacion || new Date().getFullYear(),
+        en_estudio: asociado.informacion_academica?.en_estudio || false,
+        programa_actual: asociado.informacion_academica?.programa_actual || '',
+        institucion_actual: asociado.informacion_academica?.institucion_actual || '',
+        semestre_actual: asociado.informacion_academica?.semestre_actual || 1,
+        certificaciones: asociado.informacion_academica?.certificaciones || []
+      },
+      
       datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
+        institucion_educativa: asociado.datos_laborales?.institucion_educativa || 'Coopeenortol',
+        cargo: asociado.datos_laborales?.cargo || '',
+        area_trabajo: asociado.datos_laborales?.area_trabajo || '',
+        tipo_contrato: asociado.datos_laborales?.tipo_contrato || 'Indefinido',
+        fecha_vinculacion: asociado.datos_laborales?.fecha_vinculacion || new Date().toISOString().split('T')[0],
+        salario_basico: asociado.datos_laborales?.salario_basico || 0,
+        bonificaciones: asociado.datos_laborales?.bonificaciones || 0,
+        jefe_inmediato: asociado.datos_laborales?.jefe_inmediato || '',
+        telefono_jefe: asociado.datos_laborales?.telefono_jefe || '',
+        email_jefe: asociado.datos_laborales?.email_jefe || '',
+        sede_trabajo: asociado.datos_laborales?.sede_trabajo || '',
+        horario_trabajo: asociado.datos_laborales?.horario_trabajo || '',
+        experiencia_laboral: asociado.datos_laborales?.experiencia_laboral || []
       },
+      
       informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
+        familiares: asociado.informacion_familiar?.familiares || [],
+        contactos_emergencia: asociado.informacion_familiar?.contactos_emergencia || [],
+        personas_autorizadas: asociado.informacion_familiar?.personas_autorizadas || []
       },
+      
       informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
+        ingresos_mensuales: asociado.informacion_financiera?.ingresos_mensuales || 0,
+        ingresos_adicionales: asociado.informacion_financiera?.ingresos_adicionales || 0,
+        egresos_mensuales: asociado.informacion_financiera?.egresos_mensuales || 0,
+        obligaciones: asociado.informacion_financiera?.obligaciones || [],
+        referencias_comerciales: asociado.informacion_financiera?.referencias_comerciales || [],
+        ingresos_familiares: asociado.informacion_financiera?.ingresos_familiares || 0,
+        gastos_familiares: asociado.informacion_financiera?.gastos_familiares || 0,
+        activos: asociado.informacion_financiera?.activos || []
+      },
+      
+      informacion_vivienda: {
+        tipo_vivienda: asociado.informacion_vivienda?.tipo_vivienda || '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
+        tenencia: asociado.informacion_vivienda?.tenencia || '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
+        valor_arriendo: asociado.informacion_vivienda?.valor_arriendo || 0,
+        tiempo_residencia: asociado.informacion_vivienda?.tiempo_residencia || 0,
+        servicios_publicos: asociado.informacion_vivienda?.servicios_publicos || [],
+        estrato: asociado.informacion_vivienda?.estrato || 1
       }
     });
     setShowForm(true);
