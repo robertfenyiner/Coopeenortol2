@@ -14,12 +14,6 @@ interface Asociado {
   created_at: string;
   updated_at: string;
 }
-  estado: 'activo' | 'inactivo' | 'retirado';
-  fecha_ingreso: string;
-  observaciones?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 interface AsociadosModuleProps {
   onBack: () => void;
@@ -92,83 +86,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     } finally {
       setLoading(false);
     }
-      tipo_contrato: 'Indefinido',
-      fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
-    },
-    informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
-    },
-    informacion_financiera: {
-      ingresos_mensuales: 0,
-      egresos_mensuales: 0,
-      obligaciones: []
-    }
-  });
-
-  // Cargar asociados
-  const fetchAsociados = async () => {
-    console.log('🔄 Iniciando carga de asociados...');
-    console.log('🌐 API URL desde entorno:', import.meta.env.VITE_API_URL);
-    console.log('🔗 URL completa que se usará:', `${import.meta.env.VITE_API_URL}/api/v1/asociados`);
-    
-    try {
-      const token = localStorage.getItem('token');
-      console.log('🔑 Token encontrado:', token ? 'Sí' : 'No');
-      console.log('🔑 Token (primeros 20 chars):', token ? token.substring(0, 20) + '...' : 'null');
-      
-      // Usar URL completa con VITE_API_URL
-      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/asociados`;
-      console.log('📡 Haciendo petición a:', apiUrl);
-      
-      const response = await fetch(apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      console.log('📊 Respuesta recibida - Status:', response.status);
-      console.log('📊 Respuesta recibida - OK:', response.ok);
-      console.log('📊 Headers de respuesta:', Object.fromEntries(response.headers.entries()));
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log('📥 Datos recibidos del backend:', data);
-        
-        // Si viene paginado, extraer los datos
-        let asociadosData = data.datos || data;
-        
-        // Validar que sea un array
-        if (!Array.isArray(asociadosData)) {
-          console.warn('⚠️ Los datos no son un array:', asociadosData);
-          asociadosData = [];
-        }
-        
-        console.log('📋 Asociados procesados:', asociadosData);
-        console.log('📊 Cantidad de asociados:', asociadosData.length);
-        setAsociados(asociadosData);
-      } else {
-        console.error('❌ Error en la respuesta:', response.status, response.statusText);
-        const errorText = await response.text();
-        console.error('❌ Contenido del error:', errorText);
-        setAsociados([]);
-      }
-    } catch (error) {
-      console.error('💥 Error al cargar asociados:', error);
-      console.error('💥 Tipo de error:', error.name);
-      console.error('💥 Mensaje de error:', error.message);
-      setAsociados([]);
-    } finally {
-      console.log('✅ Finalizando carga, loading = false');
-      setLoading(false);
-    }
   };
 
   useEffect(() => {
-    fetchAsociados();
-  }, []);
     fetchAsociados();
   }, []);
 
