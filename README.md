@@ -34,19 +34,26 @@ La plataforma seguirá una arquitectura modular conformada por:
 └── README.md          # Resumen general del proyecto
 ```
 
-## 🚀 Instalación Rápida en VPS
+## 🚀 Instalación en VPS Ubuntu 22.04
 
-Para desplegar en un VPS Ubuntu 22.04:
+**Instalación completa en 3 comandos:**
 
 ```bash
-# Instalación automatizada en una línea
+# 1. Configurar entorno (Docker, dependencias, repositorio)
 curl -fsSL https://raw.githubusercontent.com/robertfenyiner/Coopeenortol2/main/infra/scripts/setup-vps.sh | bash
 
-# Después del reinicio de sesión
+# 2. Desplegar aplicación
 cd /opt/coopeenortol
 ./infra/scripts/deploy.sh
+
+# 3. Crear usuario administrador
 docker compose exec backend python create_admin_simple.py
 ```
+
+**¡Listo!** Tu aplicación estará disponible en:
+- **Frontend**: http://tu-ip:3000
+- **API**: http://tu-ip:8000  
+- **Documentación**: http://tu-ip:8000/docs
 
 **Características del despliegue:**
 - ✅ Resolución automática de conflictos de puertos
@@ -55,7 +62,9 @@ docker compose exec backend python create_admin_simple.py
 - ✅ Backups automáticos configurados
 - ✅ Logs rotativos y monitoreo básico
 
-Ver [documentación completa de instalación](docs/instalacion_vps.md) para más detalles.
+Ver [**INSTALACIÓN RÁPIDA**](docs/INSTALACION_RAPIDA.md) para la guía completa de 3 comandos.
+
+Ver [documentación detallada de instalación](docs/instalacion_vps.md) para troubleshooting.
 
 ## Primeros pasos
 
