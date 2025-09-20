@@ -14,12 +14,6 @@ interface Asociado {
   created_at: string;
   updated_at: string;
 }
-  estado: 'activo' | 'inactivo' | 'retirado';
-  fecha_ingreso: string;
-  observaciones?: string;
-  created_at: string;
-  updated_at: string;
-}
 
 interface AsociadosModuleProps {
   onBack: () => void;
@@ -82,86 +76,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         const data = await response.json();
         // Si viene paginado, extraer los datos
         const asociadosData = data.datos || data;
-        setAsociados(Array.isArray(asociadosData) ? asociadosData : []);
-      } else {
-        setAsociados([]);
+        setAsociados(asociadosData);
       }
     } catch (error) {
       console.error('Error al cargar asociados:', error);
-      setAsociados([]);
     } finally {
-      setLoading(false);
-    }
-      tipo_contrato: 'Indefinido',
-      fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
-    },
-    informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
-    },
-    informacion_financiera: {
-      ingresos_mensuales: 0,
-      egresos_mensuales: 0,
-      obligaciones: []
-    }
-  });
-
-  // Cargar asociados
-  const fetchAsociados = async () => {
-    console.log('🔄 Iniciando carga de asociados...');
-    console.log('🌐 API URL desde entorno:', import.meta.env.VITE_API_URL);
-    console.log('🔗 URL completa que se usará:', `${import.meta.env.VITE_API_URL}/api/v1/asociados`);
-    
-    try {
-      const token = localStorage.getItem('token');
-      console.log('🔑 Token encontrado:', token ? 'Sí' : 'No');
-      console.log('🔑 Token (primeros 20 chars):', token ? token.substring(0, 20) + '...' : 'null');
-      
-      // Usar URL completa con VITE_API_URL
-      const apiUrl = `${import.meta.env.VITE_API_URL}/api/v1/asociados`;
-      console.log('📡 Haciendo petición a:', apiUrl);
-      
-      const response = await fetch(apiUrl, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-      });
-      
-      console.log('📊 Respuesta recibida - Status:', response.status);
-      console.log('📊 Respuesta recibida - OK:', response.ok);
-      console.log('📊 Headers de respuesta:', Object.fromEntries(response.headers.entries()));
-      
-      if (response.ok) {
-        const data = await response.json();
-        console.log('📥 Datos recibidos del backend:', data);
-        
-        // Si viene paginado, extraer los datos
-        let asociadosData = data.datos || data;
-        
-        // Validar que sea un array
-        if (!Array.isArray(asociadosData)) {
-          console.warn('⚠️ Los datos no son un array:', asociadosData);
-          asociadosData = [];
-        }
-        
-        console.log('📋 Asociados procesados:', asociadosData);
-        console.log('📊 Cantidad de asociados:', asociadosData.length);
-        setAsociados(asociadosData);
-      } else {
-        console.error('❌ Error en la respuesta:', response.status, response.statusText);
-        const errorText = await response.text();
-        console.error('❌ Contenido del error:', errorText);
-        setAsociados([]);
-      }
-    } catch (error) {
-      console.error('💥 Error al cargar asociados:', error);
-      console.error('💥 Tipo de error:', error.name);
-      console.error('💥 Mensaje de error:', error.message);
-      setAsociados([]);
-    } finally {
-      console.log('✅ Finalizando carga, loading = false');
       setLoading(false);
     }
   };
@@ -169,31 +88,20 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   useEffect(() => {
     fetchAsociados();
   }, []);
-    fetchAsociados();
-  }, []);
 
   // Filtrar asociados
-  const filteredAsociados = (Array.isArray(asociados) ? asociados : []).filter(asociado =>
-    asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento?.includes(searchTerm) ||
-    asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAsociados = asociados.filter(asociado =>
+    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.numero_documento.includes(searchTerm) ||
+    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    console.log('🚀 Iniciando envío de formulario...');
-    console.log('📝 Datos del formulario:', formData);
-    
     try {
       const token = localStorage.getItem('token');
-      if (!token) {
-        alert('Error: No hay token de autenticación. Por favor, inicia sesión nuevamente.');
-        return;
-      }
-      
       const url = editingAsociado 
         ? `/api/v1/asociados/${editingAsociado.id}`
         : '/api/v1/asociados';
@@ -214,10 +122,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         }
       };
       
-      console.log('🌐 URL de envío:', url);
-      console.log('📤 Método HTTP:', method);
-      console.log('📦 Datos a enviar:', submitData);
-      
       const response = await fetch(url, {
         method,
         headers: {
@@ -227,12 +131,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         body: JSON.stringify(submitData),
       });
 
-      console.log('📨 Respuesta del servidor:', response.status, response.statusText);
-
       if (response.ok) {
-        const responseData = await response.json();
-        console.log('✅ Datos de respuesta:', responseData);
-        
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
@@ -240,12 +139,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
       } else {
         const errorData = await response.json();
-        console.error('❌ Error del servidor:', errorData);
         alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
       }
     } catch (error) {
-      console.error('💥 Error al guardar asociado:', error);
-      alert('Error al guardar el asociado: ' + (error instanceof Error ? error.message : String(error)));
+      console.error('Error al guardar asociado:', error);
+      alert('Error al guardar el asociado');
     }
   };
 
@@ -553,19 +451,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
-                          ID Asociado
-                        </th>
-                        <th 
-                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-                          style={{
-                            padding: '0.75rem 1.5rem',
-                            textAlign: 'left',
-                            fontSize: '0.75rem',
-                            fontWeight: '500',
-                            color: '#6b7280',
-                            textTransform: 'uppercase'
-                          }}
-                        >
                           Documento
                         </th>
                         <th 
@@ -636,16 +521,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               padding: '1rem 1.5rem',
                               fontSize: '0.875rem',
                               fontWeight: '500',
-                              color: '#111827'
-                            }}
-                          >
-                            #{asociado.id}
-                          </td>
-                          <td 
-                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-                            style={{
-                              padding: '1rem 1.5rem',
-                              fontSize: '0.875rem',
                               color: '#111827'
                             }}
                           >
@@ -805,10 +680,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       fontSize: '0.875rem'
                     }}
                   >
-                    <option value="">Seleccione tipo de documento</option>
-                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="CC">Cédula de Ciudadanía</option>
                     <option value="CE">Cédula de Extranjería</option>
+                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="PAS">Pasaporte</option>
                   </select>
                 </div>
@@ -1015,148 +889,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                     <option value="inactivo">Inactivo</option>
                     <option value="retirado">Retirado</option>
                   </select>
-                </div>
-
-                <div 
-                  className="md:col-span-2"
-                  style={{
-                    gridColumn: 'span 2'
-                  }}
-                >
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Dirección
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_personales.direccion}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_personales: {
-                        ...formData.datos_personales,
-                        direccion: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Cargo
-                  </label>
-                  <input
-                    type="text"
-                    value={formData.datos_laborales.cargo}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        cargo: e.target.value
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Salario Básico
-                  </label>
-                  <input
-                    type="number"
-                    min="0"
-                    value={formData.datos_laborales.salario_basico}
-                    onChange={(e) => setFormData({
-                      ...formData, 
-                      datos_laborales: {
-                        ...formData.datos_laborales,
-                        salario_basico: Number(e.target.value)
-                      }
-                    })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  />
-                </div>
-
-                <div 
-                  className="md:col-span-2"
-                  style={{
-                    gridColumn: 'span 2'
-                  }}
-                >
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Observaciones
-                  </label>
-                  <textarea
-                    value={formData.observaciones}
-                    onChange={(e) => setFormData({...formData, observaciones: e.target.value})}
-                    rows={3}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem',
-                      resize: 'vertical'
-                    }}
-                  />
                 </div>
               </div>
 
