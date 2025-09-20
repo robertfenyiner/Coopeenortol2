@@ -150,7 +150,6 @@ const AsociadoFormExpanded: React.FC<AsociadoFormExpandedProps> = ({
   setFormData,
   currentStep,
   setCurrentStep,
-  photoFile,
   setPhotoFile,
   photoPreview,
   setPhotoPreview,
@@ -235,66 +234,6 @@ const AsociadoFormExpanded: React.FC<AsociadoFormExpandedProps> = ({
       default:
         return true;
     }
-  };
-
-  // Agregar familiar
-  const agregarFamiliar = () => {
-    setFormData({
-      ...formData,
-      informacion_familiar: {
-        ...formData.informacion_familiar,
-        familiares: [...formData.informacion_familiar.familiares, {
-          nombre: '',
-          parentesco: '',
-          fecha_nacimiento: '',
-          documento: '',
-          telefono: '',
-          ocupacion: '',
-          depende_economicamente: false
-        }]
-      }
-    });
-  };
-
-  // Eliminar familiar
-  const eliminarFamiliar = (index: number) => {
-    const nuevosFamiliares = formData.informacion_familiar.familiares.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      informacion_familiar: {
-        ...formData.informacion_familiar,
-        familiares: nuevosFamiliares
-      }
-    });
-  };
-
-  // Agregar contacto de emergencia
-  const agregarContactoEmergencia = () => {
-    setFormData({
-      ...formData,
-      informacion_familiar: {
-        ...formData.informacion_familiar,
-        contactos_emergencia: [...formData.informacion_familiar.contactos_emergencia, {
-          nombre: '',
-          parentesco: '',
-          telefono: '',
-          direccion: '',
-          es_principal: false
-        }]
-      }
-    });
-  };
-
-  // Eliminar contacto de emergencia
-  const eliminarContactoEmergencia = (index: number) => {
-    const nuevosContactos = formData.informacion_familiar.contactos_emergencia.filter((_, i) => i !== index);
-    setFormData({
-      ...formData,
-      informacion_familiar: {
-        ...formData.informacion_familiar,
-        contactos_emergencia: nuevosContactos
-      }
-    });
   };
 
   return (

@@ -1,24 +1,4 @@
-import React from 'react';
-import AsociadoFormExpanded from './AsociadoFormExpanded';
-
-interface AsociadosModuleProps {
-  onBack: () => void;
-}
-
-const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
-  return (
-    <div>
-      <h1>Gestión de Asociados</h1>
-      <button onClick={onBack}>Volver</button>
-      <AsociadoFormExpanded 
-        onClose={() => {}}
-        onSubmit={() => {}}
-      />
-    </div>
-  );
-};
-
-export default AsociadosModule;
+import React, { useState, useEffect } from 'react';
 
 interface Asociado {
   id: number;
@@ -33,147 +13,20 @@ interface Asociado {
   observaciones?: string;
   created_at: string;
   updated_at: string;
-  foto_url?: string; // URL de la foto del asociado
-  
-  // Datos personales expandidos
-  datos_personales?: {
-    fecha_nacimiento: string;
-    lugar_nacimiento?: string;
-    direccion: string;
-    barrio?: string;
-    ciudad: string;
-    departamento: string;
-    pais: string;
-    codigo_postal?: string;
-    telefono_secundario?: string;
-    estado_civil?: 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo';
-    genero?: 'masculino' | 'femenino' | 'otro';
-    grupo_sanguineo?: string;
-    eps?: string;
-    arl?: string;
-  };
-
-  // Información académica
-  informacion_academica?: {
-    nivel_educativo: 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado';
-    institucion?: string;
-    titulo_obtenido?: string;
-    ano_graduacion?: number;
-    en_estudio?: boolean;
-    programa_actual?: string;
-    institucion_actual?: string;
-    semestre_actual?: number;
-    certificaciones?: Array<{
-      nombre: string;
-      institucion: string;
-      fecha_obtencion: string;
-      vigencia?: string;
-    }>;
-  };
-
-  // Información laboral expandida
-  datos_laborales?: {
-    institucion_educativa: string;
-    cargo: string;
-    area_trabajo?: string;
-    tipo_contrato: string;
-    fecha_vinculacion: string;
-    salario_basico: number;
-    bonificaciones?: number;
-    jefe_inmediato?: string;
-    telefono_jefe?: string;
-    email_jefe?: string;
-    sede_trabajo?: string;
-    horario_trabajo?: string;
-    experiencia_laboral?: Array<{
-      empresa: string;
-      cargo: string;
-      fecha_inicio: string;
-      fecha_fin?: string;
-      motivo_retiro?: string;
-      funciones?: string;
-    }>;
-  };
-
-  // Información familiar expandida
-  informacion_familiar?: {
-    familiares: Array<{
-      nombre: string;
-      parentesco: string;
-      fecha_nacimiento?: string;
-      documento?: string;
-      telefono?: string;
-      ocupacion?: string;
-      depende_economicamente?: boolean;
-    }>;
-    contactos_emergencia: Array<{
-      nombre: string;
-      parentesco: string;
-      telefono: string;
-      direccion?: string;
-      es_principal?: boolean;
-    }>;
-    personas_autorizadas?: Array<{
-      nombre: string;
-      documento: string;
-      telefono: string;
-      parentesco?: string;
-      puede_recoger_hijo?: boolean;
-    }>;
-  };
-
-  // Información financiera expandida
-  informacion_financiera?: {
-    ingresos_mensuales: number;
-    ingresos_adicionales?: number;
-    egresos_mensuales: number;
-    obligaciones: Array<{
-      tipo: string;
-      entidad: string;
-      valor_cuota: number;
-      saldo_actual?: number;
-      fecha_vencimiento?: string;
-    }>;
-    referencias_comerciales?: Array<{
-      entidad: string;
-      tipo_producto: string;
-      telefono?: string;
-      comportamiento?: 'excelente' | 'bueno' | 'regular' | 'malo';
-    }>;
-    ingresos_familiares?: number;
-    gastos_familiares?: number;
-    activos?: Array<{
-      tipo: 'inmueble' | 'vehiculo' | 'inversion' | 'otro';
-      descripcion: string;
-      valor_estimado?: number;
-    }>;
-  };
-
-  // Información de vivienda
-  informacion_vivienda?: {
-    tipo_vivienda?: 'casa' | 'apartamento' | 'finca' | 'otro';
-    tenencia?: 'propia' | 'arrendada' | 'familiar' | 'otro';
-    valor_arriendo?: number;
-    tiempo_residencia?: number;
-    servicios_publicos?: Array<string>;
-    estrato?: number;
-  };
 }
 
 interface AsociadosModuleProps {
   onBack: () => void;
 }
 
-const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
+const AsociadosModuleSimple: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [asociados, setAsociados] = useState<Asociado[]>([]);
   const [loading, setLoading] = useState(true);
   const [showForm, setShowForm] = useState(false);
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
-  
 
-
-  // Formulario state - versión expandida
+  // Formulario state - versión simplificada
   const [formData, setFormData] = useState({
     tipo_documento: 'CC',
     numero_documento: '',
@@ -184,132 +37,31 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
     fecha_ingreso: new Date().toISOString().split('T')[0],
     observaciones: '',
-    
-    // Datos personales expandidos
+    // Datos mínimos requeridos por el backend
     datos_personales: {
       fecha_nacimiento: '1990-01-01',
-      lugar_nacimiento: '',
       direccion: '',
-      barrio: '',
       ciudad: 'Bogotá',
       departamento: 'Cundinamarca',
-      pais: 'Colombia',
-      codigo_postal: '',
-      telefono_secundario: '',
-      estado_civil: '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
-      genero: '' as '' | 'masculino' | 'femenino' | 'otro',
-      grupo_sanguineo: '',
-      eps: '',
-      arl: ''
+      pais: 'Colombia'
     },
-    
-    // Información académica
-    informacion_academica: {
-      nivel_educativo: '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
-      institucion: '',
-      titulo_obtenido: '',
-      ano_graduacion: new Date().getFullYear(),
-      en_estudio: false,
-      programa_actual: '',
-      institucion_actual: '',
-      semestre_actual: 1,
-      certificaciones: [] as Array<{
-        nombre: string;
-        institucion: string;
-        fecha_obtencion: string;
-        vigencia?: string;
-      }>
-    },
-    
-    // Datos laborales expandidos
     datos_laborales: {
       institucion_educativa: 'Coopeenortol',
       cargo: '',
-      area_trabajo: '',
       tipo_contrato: 'Indefinido',
       fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0,
-      bonificaciones: 0,
-      jefe_inmediato: '',
-      telefono_jefe: '',
-      email_jefe: '',
-      sede_trabajo: '',
-      horario_trabajo: '',
-      experiencia_laboral: [] as Array<{
-        empresa: string;
-        cargo: string;
-        fecha_inicio: string;
-        fecha_fin?: string;
-        motivo_retiro?: string;
-        funciones?: string;
-      }>
+      salario_basico: 0
     },
-    
-    // Información familiar expandida
     informacion_familiar: {
-      familiares: [] as Array<{
-        nombre: string;
-        parentesco: string;
-        fecha_nacimiento?: string;
-        documento?: string;
-        telefono?: string;
-        ocupacion?: string;
-        depende_economicamente?: boolean;
-      }>,
-      contactos_emergencia: [] as Array<{
-        nombre: string;
-        parentesco: string;
-        telefono: string;
-        direccion?: string;
-        es_principal?: boolean;
-      }>,
-      personas_autorizadas: [] as Array<{
-        nombre: string;
-        documento: string;
-        telefono: string;
-        parentesco?: string;
-        puede_recoger_hijo?: boolean;
-      }>
+      familiares: [],
+      contactos_emergencia: []
     },
-    
-    // Información financiera expandida
     informacion_financiera: {
       ingresos_mensuales: 0,
-      ingresos_adicionales: 0,
       egresos_mensuales: 0,
-      obligaciones: [] as Array<{
-        tipo: string;
-        entidad: string;
-        valor_cuota: number;
-        saldo_actual?: number;
-        fecha_vencimiento?: string;
-      }>,
-      referencias_comerciales: [] as Array<{
-        entidad: string;
-        tipo_producto: string;
-        telefono?: string;
-        comportamiento?: 'excelente' | 'bueno' | 'regular' | 'malo';
-      }>,
-      ingresos_familiares: 0,
-      gastos_familiares: 0,
-      activos: [] as Array<{
-        tipo: 'inmueble' | 'vehiculo' | 'inversion' | 'otro';
-        descripcion: string;
-        valor_estimado?: number;
-      }>
-    },
-    
-    // Información de vivienda
-    informacion_vivienda: {
-      tipo_vivienda: '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
-      tenencia: '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
-      valor_arriendo: 0,
-      tiempo_residencia: 0,
-      servicios_publicos: [] as Array<string>,
-      estrato: 1
+      obligaciones: []
     }
   });
-
   // Cargar asociados
   const fetchAsociados = async () => {
     try {
@@ -323,13 +75,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         const data = await response.json();
         // Si viene paginado, extraer los datos
         const asociadosData = data.datos || data;
-        setAsociados(Array.isArray(asociadosData) ? asociadosData : []);
-      } else {
-        setAsociados([]);
+        setAsociados(asociadosData);
       }
     } catch (error) {
       console.error('Error al cargar asociados:', error);
-      setAsociados([]);
     } finally {
       setLoading(false);
     }
@@ -340,107 +89,18 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   }, []);
 
   // Filtrar asociados
-  const filteredAsociados = (Array.isArray(asociados) ? asociados : []).filter(asociado =>
-    asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento?.includes(searchTerm) ||
-    asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAsociados = asociados.filter((asociado: Asociado) =>
+    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.numero_documento.includes(searchTerm) ||
+    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  // Resetear formulario
-  const resetForm = () => {
-    setFormData({
-      tipo_documento: 'CC',
-      numero_documento: '',
-      nombres: '',
-      apellidos: '',
-      correo_electronico: '',
-      telefono_principal: '',
-      estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
-      fecha_ingreso: new Date().toISOString().split('T')[0],
-      observaciones: '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        lugar_nacimiento: '',
-        direccion: '',
-        barrio: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia',
-        codigo_postal: '',
-        telefono_secundario: '',
-        estado_civil: '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
-        genero: '' as '' | 'masculino' | 'femenino' | 'otro',
-        grupo_sanguineo: '',
-        eps: '',
-        arl: ''
-      },
-      informacion_academica: {
-        nivel_educativo: '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
-        institucion: '',
-        titulo_obtenido: '',
-        ano_graduacion: new Date().getFullYear(),
-        en_estudio: false,
-        programa_actual: '',
-        institucion_actual: '',
-        semestre_actual: 1,
-        certificaciones: []
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        area_trabajo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0,
-        bonificaciones: 0,
-        jefe_inmediato: '',
-        telefono_jefe: '',
-        email_jefe: '',
-        sede_trabajo: '',
-        horario_trabajo: '',
-        experiencia_laboral: []
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: [],
-        personas_autorizadas: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        ingresos_adicionales: 0,
-        egresos_mensuales: 0,
-        obligaciones: [],
-        referencias_comerciales: [],
-        ingresos_familiares: 0,
-        gastos_familiares: 0,
-        activos: []
-      },
-      informacion_vivienda: {
-        tipo_vivienda: '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
-        tenencia: '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
-        valor_arriendo: 0,
-        tiempo_residencia: 0,
-        servicios_publicos: [],
-        estrato: 1
-      }
-    });
-  };
 
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    console.log('🚀 Iniciando envío de formulario...');
-    console.log('📝 Datos del formulario:', formData);
-    
     try {
       const token = localStorage.getItem('token');
-      if (!token) {
-        alert('Error: No hay token de autenticación. Por favor, inicia sesión nuevamente.');
-        return;
-      }
-      
       const url = editingAsociado 
         ? `/api/v1/asociados/${editingAsociado.id}`
         : '/api/v1/asociados';
@@ -461,10 +121,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         }
       };
       
-      console.log('🌐 URL de envío:', url);
-      console.log('📤 Método HTTP:', method);
-      console.log('📦 Datos a enviar:', submitData);
-      
       const response = await fetch(url, {
         method,
         headers: {
@@ -474,12 +130,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         body: JSON.stringify(submitData),
       });
 
-      console.log('📨 Respuesta del servidor:', response.status, response.statusText);
-
       if (response.ok) {
-        const responseData = await response.json();
-        console.log('✅ Datos de respuesta:', responseData);
-        
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
@@ -487,13 +138,49 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
       } else {
         const errorData = await response.json();
-        console.error('❌ Error del servidor:', errorData);
         alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
       }
     } catch (error) {
-      console.error('💥 Error al guardar asociado:', error);
-      alert('Error al guardar el asociado: ' + (error instanceof Error ? error.message : String(error)));
+      console.error('Error al guardar asociado:', error);
+      alert('Error al guardar el asociado');
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      tipo_documento: 'CC',
+      numero_documento: '',
+      nombres: '',
+      apellidos: '',
+      correo_electronico: '',
+      telefono_principal: '',
+      estado: 'activo',
+      fecha_ingreso: new Date().toISOString().split('T')[0],
+      observaciones: '',
+      datos_personales: {
+        fecha_nacimiento: '1990-01-01',
+        direccion: '',
+        ciudad: 'Bogotá',
+        departamento: 'Cundinamarca',
+        pais: 'Colombia'
+      },
+      datos_laborales: {
+        institucion_educativa: 'Coopeenortol',
+        cargo: '',
+        tipo_contrato: 'Indefinido',
+        fecha_vinculacion: new Date().toISOString().split('T')[0],
+        salario_basico: 0
+      },
+      informacion_familiar: {
+        familiares: [],
+        contactos_emergencia: []
+      },
+      informacion_financiera: {
+        ingresos_mensuales: 0,
+        egresos_mensuales: 0,
+        obligaciones: []
+      }
+    });
   };
 
   // Editar asociado
@@ -510,74 +197,27 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       fecha_ingreso: asociado.fecha_ingreso,
       observaciones: asociado.observaciones || '',
       datos_personales: {
-        fecha_nacimiento: asociado.datos_personales?.fecha_nacimiento || '1990-01-01',
-        lugar_nacimiento: asociado.datos_personales?.lugar_nacimiento || '',
-        direccion: asociado.datos_personales?.direccion || '',
-        barrio: asociado.datos_personales?.barrio || '',
-        ciudad: asociado.datos_personales?.ciudad || 'Bogotá',
-        departamento: asociado.datos_personales?.departamento || 'Cundinamarca',
-        pais: asociado.datos_personales?.pais || 'Colombia',
-        codigo_postal: asociado.datos_personales?.codigo_postal || '',
-        telefono_secundario: asociado.datos_personales?.telefono_secundario || '',
-        estado_civil: asociado.datos_personales?.estado_civil || '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
-        genero: asociado.datos_personales?.genero || '' as '' | 'masculino' | 'femenino' | 'otro',
-        grupo_sanguineo: asociado.datos_personales?.grupo_sanguineo || '',
-        eps: asociado.datos_personales?.eps || '',
-        arl: asociado.datos_personales?.arl || ''
+        fecha_nacimiento: '1990-01-01',
+        direccion: '',
+        ciudad: 'Bogotá',
+        departamento: 'Cundinamarca',
+        pais: 'Colombia'
       },
-      
-      informacion_academica: {
-        nivel_educativo: asociado.informacion_academica?.nivel_educativo || '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
-        institucion: asociado.informacion_academica?.institucion || '',
-        titulo_obtenido: asociado.informacion_academica?.titulo_obtenido || '',
-        ano_graduacion: asociado.informacion_academica?.ano_graduacion || new Date().getFullYear(),
-        en_estudio: asociado.informacion_academica?.en_estudio || false,
-        programa_actual: asociado.informacion_academica?.programa_actual || '',
-        institucion_actual: asociado.informacion_academica?.institucion_actual || '',
-        semestre_actual: asociado.informacion_academica?.semestre_actual || 1,
-        certificaciones: asociado.informacion_academica?.certificaciones || []
-      },
-      
       datos_laborales: {
-        institucion_educativa: asociado.datos_laborales?.institucion_educativa || 'Coopeenortol',
-        cargo: asociado.datos_laborales?.cargo || '',
-        area_trabajo: asociado.datos_laborales?.area_trabajo || '',
-        tipo_contrato: asociado.datos_laborales?.tipo_contrato || 'Indefinido',
-        fecha_vinculacion: asociado.datos_laborales?.fecha_vinculacion || new Date().toISOString().split('T')[0],
-        salario_basico: asociado.datos_laborales?.salario_basico || 0,
-        bonificaciones: asociado.datos_laborales?.bonificaciones || 0,
-        jefe_inmediato: asociado.datos_laborales?.jefe_inmediato || '',
-        telefono_jefe: asociado.datos_laborales?.telefono_jefe || '',
-        email_jefe: asociado.datos_laborales?.email_jefe || '',
-        sede_trabajo: asociado.datos_laborales?.sede_trabajo || '',
-        horario_trabajo: asociado.datos_laborales?.horario_trabajo || '',
-        experiencia_laboral: asociado.datos_laborales?.experiencia_laboral || []
+        institucion_educativa: 'Coopeenortol',
+        cargo: '',
+        tipo_contrato: 'Indefinido',
+        fecha_vinculacion: new Date().toISOString().split('T')[0],
+        salario_basico: 0
       },
-      
       informacion_familiar: {
-        familiares: asociado.informacion_familiar?.familiares || [],
-        contactos_emergencia: asociado.informacion_familiar?.contactos_emergencia || [],
-        personas_autorizadas: asociado.informacion_familiar?.personas_autorizadas || []
+        familiares: [],
+        contactos_emergencia: []
       },
-      
       informacion_financiera: {
-        ingresos_mensuales: asociado.informacion_financiera?.ingresos_mensuales || 0,
-        ingresos_adicionales: asociado.informacion_financiera?.ingresos_adicionales || 0,
-        egresos_mensuales: asociado.informacion_financiera?.egresos_mensuales || 0,
-        obligaciones: asociado.informacion_financiera?.obligaciones || [],
-        referencias_comerciales: asociado.informacion_financiera?.referencias_comerciales || [],
-        ingresos_familiares: asociado.informacion_financiera?.ingresos_familiares || 0,
-        gastos_familiares: asociado.informacion_financiera?.gastos_familiares || 0,
-        activos: asociado.informacion_financiera?.activos || []
-      },
-      
-      informacion_vivienda: {
-        tipo_vivienda: asociado.informacion_vivienda?.tipo_vivienda || '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
-        tenencia: asociado.informacion_vivienda?.tenencia || '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
-        valor_arriendo: asociado.informacion_vivienda?.valor_arriendo || 0,
-        tiempo_residencia: asociado.informacion_vivienda?.tiempo_residencia || 0,
-        servicios_publicos: asociado.informacion_vivienda?.servicios_publicos || [],
-        estrato: asociado.informacion_vivienda?.estrato || 1
+        ingresos_mensuales: 0,
+        egresos_mensuales: 0,
+        obligaciones: []
       }
     });
     setShowForm(true);
@@ -722,7 +362,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                 type="text"
                 placeholder="Buscar por nombres, apellidos, documento o email..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 style={{
                   width: '100%',
@@ -1470,4 +1110,4 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   );
 };
 
-export default AsociadosModule;
+export default AsociadosModuleSimple;
