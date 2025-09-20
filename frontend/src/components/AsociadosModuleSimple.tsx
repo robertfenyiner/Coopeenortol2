@@ -74,12 +74,26 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       });
       if (response.ok) {
         const data = await response.json();
+        console.log('📥 Datos recibidos del backend:', data);
+        
         // Si viene paginado, extraer los datos
-        const asociadosData = data.datos || data;
+        let asociadosData = data.datos || data;
+        
+        // Validar que sea un array
+        if (!Array.isArray(asociadosData)) {
+          console.warn('⚠️ Los datos no son un array:', asociadosData);
+          asociadosData = [];
+        }
+        
+        console.log('📋 Asociados procesados:', asociadosData);
         setAsociados(asociadosData);
+      } else {
+        console.error('❌ Error en la respuesta:', response.status, response.statusText);
+        setAsociados([]);
       }
     } catch (error) {
-      console.error('Error al cargar asociados:', error);
+      console.error('💥 Error al cargar asociados:', error);
+      setAsociados([]);
     } finally {
       setLoading(false);
     }
@@ -90,11 +104,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   }, []);
 
   // Filtrar asociados
-  const filteredAsociados = asociados.filter(asociado =>
-    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.numero_documento.includes(searchTerm) ||
-    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredAsociados = (Array.isArray(asociados) ? asociados : []).filter(asociado =>
+    asociado.nombres?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.apellidos?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.numero_documento?.includes(searchTerm) ||
+    asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Manejar envío del formulario
