@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import AsociadoFormExpanded from './AsociadoFormExpanded';
 
 interface Asociado {
   id: number;
@@ -13,6 +14,131 @@ interface Asociado {
   observaciones?: string;
   created_at: string;
   updated_at: string;
+  foto_url?: string; // URL de la foto del asociado
+  
+  // Datos personales expandidos
+  datos_personales?: {
+    fecha_nacimiento: string;
+    lugar_nacimiento?: string;
+    direccion: string;
+    barrio?: string;
+    ciudad: string;
+    departamento: string;
+    pais: string;
+    codigo_postal?: string;
+    telefono_secundario?: string;
+    estado_civil?: 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo';
+    genero?: 'masculino' | 'femenino' | 'otro';
+    grupo_sanguineo?: string;
+    eps?: string;
+    arl?: string;
+  };
+
+  // Información académica
+  informacion_academica?: {
+    nivel_educativo: 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado';
+    institucion?: string;
+    titulo_obtenido?: string;
+    ano_graduacion?: number;
+    en_estudio?: boolean;
+    programa_actual?: string;
+    institucion_actual?: string;
+    semestre_actual?: number;
+    certificaciones?: Array<{
+      nombre: string;
+      institucion: string;
+      fecha_obtencion: string;
+      vigencia?: string;
+    }>;
+  };
+
+  // Información laboral expandida
+  datos_laborales?: {
+    institucion_educativa: string;
+    cargo: string;
+    area_trabajo?: string;
+    tipo_contrato: string;
+    fecha_vinculacion: string;
+    salario_basico: number;
+    bonificaciones?: number;
+    jefe_inmediato?: string;
+    telefono_jefe?: string;
+    email_jefe?: string;
+    sede_trabajo?: string;
+    horario_trabajo?: string;
+    experiencia_laboral?: Array<{
+      empresa: string;
+      cargo: string;
+      fecha_inicio: string;
+      fecha_fin?: string;
+      motivo_retiro?: string;
+      funciones?: string;
+    }>;
+  };
+
+  // Información familiar expandida
+  informacion_familiar?: {
+    familiares: Array<{
+      nombre: string;
+      parentesco: string;
+      fecha_nacimiento?: string;
+      documento?: string;
+      telefono?: string;
+      ocupacion?: string;
+      depende_economicamente?: boolean;
+    }>;
+    contactos_emergencia: Array<{
+      nombre: string;
+      parentesco: string;
+      telefono: string;
+      direccion?: string;
+      es_principal?: boolean;
+    }>;
+    personas_autorizadas?: Array<{
+      nombre: string;
+      documento: string;
+      telefono: string;
+      parentesco?: string;
+      puede_recoger_hijo?: boolean;
+    }>;
+  };
+
+  // Información financiera expandida
+  informacion_financiera?: {
+    ingresos_mensuales: number;
+    ingresos_adicionales?: number;
+    egresos_mensuales: number;
+    obligaciones: Array<{
+      tipo: string;
+      entidad: string;
+      valor_cuota: number;
+      saldo_actual?: number;
+      fecha_vencimiento?: string;
+    }>;
+    referencias_comerciales?: Array<{
+      entidad: string;
+      tipo_producto: string;
+      telefono?: string;
+      comportamiento?: 'excelente' | 'bueno' | 'regular' | 'malo';
+    }>;
+    ingresos_familiares?: number;
+    gastos_familiares?: number;
+    activos?: Array<{
+      tipo: 'inmueble' | 'vehiculo' | 'inversion' | 'otro';
+      descripcion: string;
+      valor_estimado?: number;
+    }>;
+  };
+
+  // Información de vivienda
+  informacion_vivienda?: {
+    tipo_vivienda?: 'casa' | 'apartamento' | 'finca' | 'otro';
+    tenencia?: 'propia' | 'arrendada' | 'familiar' | 'otro';
+    valor_arriendo?: number;
+    tiempo_residencia?: number;
+    servicios_publicos?: Array<string>;
+    estrato?: number;
+  };
 }
 
 interface AsociadosModuleProps {
@@ -25,8 +151,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [showForm, setShowForm] = useState(false);
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
+  
+  // Estados para el formulario multi-paso
+  const [currentStep, setCurrentStep] = useState(0);
+  const [photoFile, setPhotoFile] = useState<File | null>(null);
+  const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
-  // Formulario state - versión simplificada
+  // Formulario state - versión expandida
   const [formData, setFormData] = useState({
     tipo_documento: 'CC',
     numero_documento: '',
@@ -37,29 +168,129 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
     fecha_ingreso: new Date().toISOString().split('T')[0],
     observaciones: '',
-    // Datos mínimos requeridos por el backend
+    
+    // Datos personales expandidos
     datos_personales: {
       fecha_nacimiento: '1990-01-01',
+      lugar_nacimiento: '',
       direccion: '',
+      barrio: '',
       ciudad: 'Bogotá',
       departamento: 'Cundinamarca',
-      pais: 'Colombia'
+      pais: 'Colombia',
+      codigo_postal: '',
+      telefono_secundario: '',
+      estado_civil: '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
+      genero: '' as '' | 'masculino' | 'femenino' | 'otro',
+      grupo_sanguineo: '',
+      eps: '',
+      arl: ''
     },
+    
+    // Información académica
+    informacion_academica: {
+      nivel_educativo: '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
+      institucion: '',
+      titulo_obtenido: '',
+      ano_graduacion: new Date().getFullYear(),
+      en_estudio: false,
+      programa_actual: '',
+      institucion_actual: '',
+      semestre_actual: 1,
+      certificaciones: [] as Array<{
+        nombre: string;
+        institucion: string;
+        fecha_obtencion: string;
+        vigencia?: string;
+      }>
+    },
+    
+    // Datos laborales expandidos
     datos_laborales: {
       institucion_educativa: 'Coopeenortol',
       cargo: '',
+      area_trabajo: '',
       tipo_contrato: 'Indefinido',
       fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
+      salario_basico: 0,
+      bonificaciones: 0,
+      jefe_inmediato: '',
+      telefono_jefe: '',
+      email_jefe: '',
+      sede_trabajo: '',
+      horario_trabajo: '',
+      experiencia_laboral: [] as Array<{
+        empresa: string;
+        cargo: string;
+        fecha_inicio: string;
+        fecha_fin?: string;
+        motivo_retiro?: string;
+        funciones?: string;
+      }>
     },
+    
+    // Información familiar expandida
     informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
+      familiares: [] as Array<{
+        nombre: string;
+        parentesco: string;
+        fecha_nacimiento?: string;
+        documento?: string;
+        telefono?: string;
+        ocupacion?: string;
+        depende_economicamente?: boolean;
+      }>,
+      contactos_emergencia: [] as Array<{
+        nombre: string;
+        parentesco: string;
+        telefono: string;
+        direccion?: string;
+        es_principal?: boolean;
+      }>,
+      personas_autorizadas: [] as Array<{
+        nombre: string;
+        documento: string;
+        telefono: string;
+        parentesco?: string;
+        puede_recoger_hijo?: boolean;
+      }>
     },
+    
+    // Información financiera expandida
     informacion_financiera: {
       ingresos_mensuales: 0,
+      ingresos_adicionales: 0,
       egresos_mensuales: 0,
-      obligaciones: []
+      obligaciones: [] as Array<{
+        tipo: string;
+        entidad: string;
+        valor_cuota: number;
+        saldo_actual?: number;
+        fecha_vencimiento?: string;
+      }>,
+      referencias_comerciales: [] as Array<{
+        entidad: string;
+        tipo_producto: string;
+        telefono?: string;
+        comportamiento?: 'excelente' | 'bueno' | 'regular' | 'malo';
+      }>,
+      ingresos_familiares: 0,
+      gastos_familiares: 0,
+      activos: [] as Array<{
+        tipo: 'inmueble' | 'vehiculo' | 'inversion' | 'otro';
+        descripcion: string;
+        valor_estimado?: number;
+      }>
+    },
+    
+    // Información de vivienda
+    informacion_vivienda: {
+      tipo_vivienda: '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
+      tenencia: '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
+      valor_arriendo: 0,
+      tiempo_residencia: 0,
+      servicios_publicos: [] as Array<string>,
+      estrato: 1
     }
   });
 
@@ -99,6 +330,167 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
     asociado.numero_documento?.includes(searchTerm) ||
     asociado.correo_electronico?.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
+  // Manejar foto del asociado
+  const handlePhotoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validar tipo de archivo
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor selecciona un archivo de imagen válido');
+        return;
+      }
+      
+      // Validar tamaño (máximo 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('La imagen debe ser menor a 5MB');
+        return;
+      }
+      
+      setPhotoFile(file);
+      
+      // Crear preview
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        setPhotoPreview(event.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Eliminar foto
+  const removePhoto = () => {
+    setPhotoFile(null);
+    setPhotoPreview(null);
+  };
+
+  // Definir los pasos del formulario
+  const formSteps = [
+    { id: 0, title: 'Datos Básicos', icon: '👤' },
+    { id: 1, title: 'Información Personal', icon: '📋' },
+    { id: 2, title: 'Información Académica', icon: '🎓' },
+    { id: 3, title: 'Información Laboral', icon: '💼' },
+    { id: 4, title: 'Información Familiar', icon: '👨‍👩‍👧‍👦' },
+    { id: 5, title: 'Información Financiera', icon: '💰' },
+    { id: 6, title: 'Información de Vivienda', icon: '🏠' },
+    { id: 7, title: 'Foto y Revisión', icon: '📸' }
+  ];
+
+  // Navegar entre pasos
+  const nextStep = () => {
+    if (currentStep < formSteps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const prevStep = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const goToStep = (step: number) => {
+    setCurrentStep(step);
+  };
+
+  // Validar paso actual
+  const validateCurrentStep = (): boolean => {
+    switch (currentStep) {
+      case 0: // Datos Básicos
+        return !!(formData.tipo_documento && formData.numero_documento && formData.nombres && formData.apellidos);
+      case 1: // Información Personal
+        return !!(formData.correo_electronico && formData.datos_personales.fecha_nacimiento);
+      case 2: // Información Académica
+        return !!formData.informacion_academica.nivel_educativo;
+      case 3: // Información Laboral
+        return !!(formData.datos_laborales.cargo && formData.datos_laborales.salario_basico > 0);
+      default:
+        return true;
+    }
+  };
+
+  // Resetear formulario
+  const resetForm = () => {
+    setCurrentStep(0);
+    setPhotoFile(null);
+    setPhotoPreview(null);
+    setFormData({
+      tipo_documento: 'CC',
+      numero_documento: '',
+      nombres: '',
+      apellidos: '',
+      correo_electronico: '',
+      telefono_principal: '',
+      estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
+      fecha_ingreso: new Date().toISOString().split('T')[0],
+      observaciones: '',
+      datos_personales: {
+        fecha_nacimiento: '1990-01-01',
+        lugar_nacimiento: '',
+        direccion: '',
+        barrio: '',
+        ciudad: 'Bogotá',
+        departamento: 'Cundinamarca',
+        pais: 'Colombia',
+        codigo_postal: '',
+        telefono_secundario: '',
+        estado_civil: '' as '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo',
+        genero: '' as '' | 'masculino' | 'femenino' | 'otro',
+        grupo_sanguineo: '',
+        eps: '',
+        arl: ''
+      },
+      informacion_academica: {
+        nivel_educativo: '' as '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado',
+        institucion: '',
+        titulo_obtenido: '',
+        ano_graduacion: new Date().getFullYear(),
+        en_estudio: false,
+        programa_actual: '',
+        institucion_actual: '',
+        semestre_actual: 1,
+        certificaciones: []
+      },
+      datos_laborales: {
+        institucion_educativa: 'Coopeenortol',
+        cargo: '',
+        area_trabajo: '',
+        tipo_contrato: 'Indefinido',
+        fecha_vinculacion: new Date().toISOString().split('T')[0],
+        salario_basico: 0,
+        bonificaciones: 0,
+        jefe_inmediato: '',
+        telefono_jefe: '',
+        email_jefe: '',
+        sede_trabajo: '',
+        horario_trabajo: '',
+        experiencia_laboral: []
+      },
+      informacion_familiar: {
+        familiares: [],
+        contactos_emergencia: [],
+        personas_autorizadas: []
+      },
+      informacion_financiera: {
+        ingresos_mensuales: 0,
+        ingresos_adicionales: 0,
+        egresos_mensuales: 0,
+        obligaciones: [],
+        referencias_comerciales: [],
+        ingresos_familiares: 0,
+        gastos_familiares: 0,
+        activos: []
+      },
+      informacion_vivienda: {
+        tipo_vivienda: '' as '' | 'casa' | 'apartamento' | 'finca' | 'otro',
+        tenencia: '' as '' | 'propia' | 'arrendada' | 'familiar' | 'otro',
+        valor_arriendo: 0,
+        tiempo_residencia: 0,
+        servicios_publicos: [],
+        estrato: 1
+      }
+    });
+  };
 
   // Manejar envío del formulario
   const handleSubmit = async (e: React.FormEvent) => {
@@ -167,43 +559,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       console.error('💥 Error al guardar asociado:', error);
       alert('Error al guardar el asociado: ' + (error instanceof Error ? error.message : String(error)));
     }
-  };
-
-  const resetForm = () => {
-    setFormData({
-      tipo_documento: 'CC',
-      numero_documento: '',
-      nombres: '',
-      apellidos: '',
-      correo_electronico: '',
-      telefono_principal: '',
-      estado: 'activo',
-      fecha_ingreso: new Date().toISOString().split('T')[0],
-      observaciones: '',
-      datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
-      },
-      datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
-      },
-      informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
-      },
-      informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
-      }
-    });
   };
 
   // Editar asociado
