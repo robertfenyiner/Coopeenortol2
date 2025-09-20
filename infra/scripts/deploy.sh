@@ -52,19 +52,19 @@ fi
 
 # Detener servicios anteriores si existen
 echo "🛑 Deteniendo servicios anteriores..."
-docker-compose down 2>/dev/null || true
+docker compose down 2>/dev/null || true
 
 # Construir imágenes
 echo "🔨 Construyendo imágenes Docker..."
-docker-compose build --no-cache
+docker compose build --no-cache
 
 # Ejecutar migraciones de base de datos
 echo "💾 Ejecutando migraciones..."
-docker-compose run --rm backend python -m alembic upgrade head || echo "⚠️  Migraciones pendientes - verificar manualmente"
+docker compose run --rm backend python -m alembic upgrade head || echo "⚠️  Migraciones pendientes - verificar manualmente"
 
 # Iniciar servicios
 echo "🚀 Iniciando servicios..."
-docker-compose up -d
+docker compose up -d
 
 # Verificar que los servicios estén funcionando
 echo "🔍 Verificando servicios..."
@@ -85,13 +85,13 @@ fi
 
 # Mostrar estado de los contenedores
 echo "📊 Estado de los servicios:"
-docker-compose ps
+docker compose ps
 
 echo ""
 echo "✅ ¡Deployment completado!"
 echo "🌐 Aplicación disponible en: https://$DOMAIN"
-echo "📊 Monitoreo: docker-compose logs -f"
-echo "🔧 Para detener: docker-compose down"
+echo "📊 Monitoreo: docker compose logs -f"
+echo "🔧 Para detener: docker compose down"
 
 # Configurar monitoreo básico
 echo "📈 Configurando monitoreo básico..."
