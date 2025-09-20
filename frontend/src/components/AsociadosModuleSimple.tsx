@@ -80,23 +80,37 @@ const AsociadosModuleSimple: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       direccion: '',
       ciudad: 'Bogotá',
       departamento: 'Cundinamarca',
-      pais: 'Colombia'
+      pais: 'Colombia',
+      estado_civil: '',
+      genero: '',
+      nivel_academico: '',
+      profesion: '',
+      tipo_vivienda: '',
+      telefono_alternativo: ''
     },
     datos_laborales: {
       institucion_educativa: 'Coopeenortol',
       cargo: '',
       tipo_contrato: 'Indefinido',
       fecha_vinculacion: new Date().toISOString().split('T')[0],
-      salario_basico: 0
+      salario_basico: 0,
+      horario: '',
+      dependencia: ''
     },
     informacion_familiar: {
-      familiares: [],
-      contactos_emergencia: []
+      estado_civil: '',
+      numero_hijos: 0,
+      personas_a_cargo: 0,
+      familiares: [] as any[],
+      contactos_emergencia: [] as any[]
     },
     informacion_financiera: {
       ingresos_mensuales: 0,
       egresos_mensuales: 0,
-      obligaciones: []
+      endeudamiento: 0,
+      obligaciones: [] as any[],
+      calificacion_riesgo: '',
+      observaciones: ''
     }
   });
   // Cargar asociados
@@ -199,23 +213,37 @@ const AsociadosModuleSimple: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         direccion: '',
         ciudad: 'Bogotá',
         departamento: 'Cundinamarca',
-        pais: 'Colombia'
+        pais: 'Colombia',
+        estado_civil: '',
+        genero: '',
+        nivel_academico: '',
+        profesion: '',
+        tipo_vivienda: '',
+        telefono_alternativo: ''
       },
       datos_laborales: {
         institucion_educativa: 'Coopeenortol',
         cargo: '',
         tipo_contrato: 'Indefinido',
         fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
+        salario_basico: 0,
+        horario: '',
+        dependencia: ''
       },
       informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
+        estado_civil: '',
+        numero_hijos: 0,
+        personas_a_cargo: 0,
+        familiares: [] as any[],
+        contactos_emergencia: [] as any[]
       },
       informacion_financiera: {
         ingresos_mensuales: 0,
         egresos_mensuales: 0,
-        obligaciones: []
+        endeudamiento: 0,
+        obligaciones: [] as any[],
+        calificacion_riesgo: '',
+        observaciones: ''
       }
     });
   };
