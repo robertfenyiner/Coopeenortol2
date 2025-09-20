@@ -3,6 +3,7 @@ import LoginForm from './components/LoginForm';
 import Dashboard from './components/Dashboard';
 
 interface User {
+  id?: number;
   username: string;
   email: string;
   nombre_completo: string;

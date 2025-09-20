@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import AsociadosModule from './AsociadosModule';
 
 interface User {
-  id: number;
+  id?: number;
+  username: string;
   email: string;
-  nombre?: string;
+  nombre_completo: string;
   rol: string;
 }
 
@@ -115,7 +116,7 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
                   color: '#374151'
                 }}
               >
-                Bienvenido, {user.nombre || user.email}
+                Bienvenido, {user.nombre_completo || user.email}
               </span>
               <button
                 onClick={onLogout}
