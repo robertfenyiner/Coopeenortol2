@@ -24,10 +24,38 @@ La plataforma seguirá una arquitectura modular conformada por:
 
 ```
 ├── backend/           # Código fuente del API y pruebas automatizadas
+├── frontend/          # Aplicación web React con TypeScript
+├── infra/             # Scripts de infraestructura y despliegue
+│   ├── scripts/       # Scripts automatizados (setup-vps.sh, deploy.sh, check-ports.sh)
+│   ├── docker/        # Configuraciones Docker adicionales
+│   └── nginx/         # Configuraciones de proxy reverso
 ├── docs/              # Documentación funcional y técnica
 ├── backend/data/      # Archivos de datos locales (excluye bases reales)
 └── README.md          # Resumen general del proyecto
 ```
+
+## 🚀 Instalación Rápida en VPS
+
+Para desplegar en un VPS Ubuntu 22.04:
+
+```bash
+# Instalación automatizada en una línea
+curl -fsSL https://raw.githubusercontent.com/robertfenyiner/Coopeenortol2/main/infra/scripts/setup-vps.sh | bash
+
+# Después del reinicio de sesión
+cd /opt/coopeenortol
+./infra/scripts/deploy.sh
+docker compose exec backend python create_admin_simple.py
+```
+
+**Características del despliegue:**
+- ✅ Resolución automática de conflictos de puertos
+- ✅ Configuración completa de Docker y dependencias
+- ✅ Scripts de verificación y diagnóstico
+- ✅ Backups automáticos configurados
+- ✅ Logs rotativos y monitoreo básico
+
+Ver [documentación completa de instalación](docs/instalacion_vps.md) para más detalles.
 
 ## Primeros pasos
 

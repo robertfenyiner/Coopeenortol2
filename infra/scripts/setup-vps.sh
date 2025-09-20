@@ -26,6 +26,36 @@ sudo usermod -aG docker $USER
 echo "🛠️  Instalando herramientas adicionales..."
 sudo apt install -y git curl wget unzip htop nginx certbot python3-certbot-nginx
 
+# Resolver conflictos de puertos comunes
+echo "🔧 Resolviendo conflictos de puertos..."
+echo "   • Detectando servicios en puertos 80 y 443..."
+
+# Detener y deshabilitar nginx del sistema para evitar conflictos con Docker
+if systemctl is-active --quiet nginx; then
+    echo "   • Deteniendo nginx del sistema..."
+    sudo systemctl stop nginx
+    sudo systemctl disable nginx
+    echo "   • Nginx del sistema deshabilitado (se usará nginx en Docker)"
+fi
+
+# Detener Apache2 si está corriendo
+if systemctl is-active --quiet apache2; then
+    echo "   • Deteniendo Apache2..."
+    sudo systemctl stop apache2
+    sudo systemctl disable apache2
+    echo "   • Apache2 deshabilitado"
+fi
+
+# Verificar que los puertos estén libres
+PORTS_IN_USE=$(sudo lsof -i :80 -i :443 -t 2>/dev/null || true)
+if [ ! -z "$PORTS_IN_USE" ]; then
+    echo "   • Liberando puertos 80 y 443..."
+    sudo fuser -k 80/tcp 443/tcp 2>/dev/null || true
+    sleep 2
+fi
+
+echo "   ✅ Puertos 80 y 443 libres para Docker"
+
 # Configurar firewall
 echo "� Configurando firewall..."
 sudo ufw allow ssh

@@ -7,7 +7,48 @@
 - **Proveedor**: Contabo
 - **Usuario**: root
 
-## 🔧 Proceso de Instalación Paso a Paso
+## � Instalación Automatizada (Recomendado)
+
+### Opción 1: Script Completo de Instalación
+
+```bash
+# 1. Conectar al servidor
+ssh root@5.189.146.163
+
+# 2. Descargar y ejecutar script de instalación
+curl -fsSL https://raw.githubusercontent.com/robertfenyiner/Coopeenortol2/main/infra/scripts/setup-vps.sh | bash
+
+# 3. Reiniciar sesión para aplicar cambios de Docker
+exit
+ssh root@5.189.146.163
+
+# 4. Ir al directorio del proyecto y desplegar
+cd /opt/coopeenortol
+./infra/scripts/deploy.sh
+
+# 5. Crear usuario administrador
+docker compose exec backend python create_admin_simple.py
+```
+
+### Opción 2: Verificación de Puertos y Troubleshooting
+
+Si experimentas problemas con puertos ocupados:
+
+```bash
+# Verificar estado de puertos
+cd /opt/coopeenortol
+./infra/scripts/check-ports.sh
+
+# Resolver conflictos automáticamente
+sudo systemctl stop nginx apache2 2>/dev/null || true
+sudo systemctl disable nginx apache2 2>/dev/null || true
+sudo fuser -k 80/tcp 443/tcp 2>/dev/null || true
+
+# Reintentar despliegue
+./infra/scripts/deploy.sh
+```
+
+## 🔧 Instalación Manual (Paso a Paso)
 
 ### 1. Conexión al Servidor
 

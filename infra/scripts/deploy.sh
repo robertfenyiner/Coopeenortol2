@@ -18,6 +18,32 @@ if [ ! -f "docker-compose.yml" ]; then
     exit 1
 fi
 
+# Verificar y resolver conflictos de puertos antes del despliegue
+echo "🔍 Verificando puertos..."
+PORTS_IN_USE=$(sudo lsof -i :80 -i :443 -t 2>/dev/null | grep -v docker || true)
+if [ ! -z "$PORTS_IN_USE" ]; then
+    echo "⚠️  Detectados servicios usando puertos 80/443. Resolviendo..."
+    
+    # Detener nginx del sistema si está corriendo
+    if systemctl is-active --quiet nginx 2>/dev/null; then
+        echo "   • Deteniendo nginx del sistema..."
+        sudo systemctl stop nginx 2>/dev/null || true
+    fi
+    
+    # Detener Apache2 si está corriendo
+    if systemctl is-active --quiet apache2 2>/dev/null; then
+        echo "   • Deteniendo Apache2..."
+        sudo systemctl stop apache2 2>/dev/null || true
+    fi
+    
+    # Liberar puertos si es necesario
+    sudo fuser -k 80/tcp 443/tcp 2>/dev/null || true
+    sleep 2
+    echo "   ✅ Puertos liberados"
+else
+    echo "   ✅ Puertos 80 y 443 disponibles"
+fi
+
 # Crear archivo .env si no existe
 if [ ! -f ".env" ]; then
     echo "📝 Creando archivo .env..."
