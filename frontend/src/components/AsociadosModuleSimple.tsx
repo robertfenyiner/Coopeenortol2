@@ -722,9 +722,10 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       fontSize: '0.875rem'
                     }}
                   >
+                    <option value="">Seleccione tipo de documento</option>
+                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="CC">Cédula de Ciudadanía</option>
                     <option value="CE">Cédula de Extranjería</option>
-                    <option value="TI">Tarjeta de Identidad</option>
                     <option value="PAS">Pasaporte</option>
                   </select>
                 </div>
