@@ -12,6 +12,7 @@ from app.schemas.usuario import (
     CambiarPassword,
     PermisoResponse,
     Token,
+    UsuarioActualizar,
     UsuarioCrear,
     UsuarioEnDB,
     UsuarioLogin,
@@ -170,6 +171,91 @@ def crear_usuario(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail=str(e)
         )
+
+
+@router.get("/usuarios", response_model=list[UsuarioEnDB])
+def listar_usuarios(
+    skip: int = 0,
+    limit: int = 100,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_superuser)
+) -> list[UsuarioEnDB]:
+    """
+    Listar todos los usuarios (solo superadministradores).
+    """
+    usuarios = service.get_all_users(db, skip=skip, limit=limit)
+    return [UsuarioEnDB.from_orm(usuario) for usuario in usuarios]
+
+
+@router.get("/usuarios/{user_id}", response_model=UsuarioEnDB)
+def obtener_usuario(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_superuser)
+) -> UsuarioEnDB:
+    """
+    Obtener información de un usuario específico (solo superadministradores).
+    """
+    usuario = service.get_user_by_id(db, user_id)
+    if not usuario:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado"
+        )
+    return UsuarioEnDB.from_orm(usuario)
+
+
+@router.put("/usuarios/{user_id}", response_model=UsuarioEnDB)
+def actualizar_usuario(
+    user_id: int,
+    usuario_data: UsuarioActualizar,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_superuser)
+) -> UsuarioEnDB:
+    """
+    Actualizar información de un usuario existente (solo superadministradores).
+    """
+    usuario = service.get_user_by_id(db, user_id)
+    if not usuario:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado"
+        )
+    
+    try:
+        usuario_actualizado = service.update_user(db, usuario, usuario_data)
+        return UsuarioEnDB.from_orm(usuario_actualizado)
+    except service.UserAlreadyExistsError as e:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail=str(e)
+        )
+
+
+@router.delete("/usuarios/{user_id}", status_code=status.HTTP_204_NO_CONTENT)
+def eliminar_usuario(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_superuser)
+):
+    """
+    Desactivar un usuario (solo superadministradores).
+    """
+    usuario = service.get_user_by_id(db, user_id)
+    if not usuario:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Usuario no encontrado"
+        )
+    
+    # No permitir eliminar el propio usuario
+    if usuario.id == current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No puedes desactivar tu propio usuario"
+        )
+    
+    service.deactivate_user(db, usuario)
 
 
 @router.post("/logout")

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AsociadosModule from './AsociadosModuleSimple';
+import UsuariosModule from './UsuariosModule';
 import ChangePasswordModal from './ChangePasswordModal';
 
 interface User {
@@ -34,6 +35,10 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   // Si hay un módulo activo, mostrar el componente correspondiente
   if (activeModule === 'asociados') {
     return <AsociadosModule onBack={handleBackToDashboard} />;
+  }
+
+  if (activeModule === 'usuarios') {
+    return <UsuariosModule onBack={handleBackToDashboard} />;
   }
 
   // Dashboard principal
