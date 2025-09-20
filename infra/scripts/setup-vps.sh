@@ -26,20 +26,25 @@ sudo usermod -aG docker $USER
 echo "🛠️  Instalando herramientas adicionales..."
 sudo apt install -y git curl wget unzip htop nginx certbot python3-certbot-nginx
 
-# Crear directorio para la aplicación
-echo "📁 Creando directorios..."
-sudo mkdir -p /opt/coopeenortol
-sudo chown $USER:$USER /opt/coopeenortol
-
 # Configurar firewall
-echo "🔥 Configurando firewall..."
+echo "� Configurando firewall..."
 sudo ufw allow ssh
 sudo ufw allow 80
 sudo ufw allow 443
+sudo ufw allow 3000
+sudo ufw allow 8000
 sudo ufw --force enable
 
-# Crear estructura de directorios
-mkdir -p /opt/coopeenortol/{data,logs,backups,ssl}
+# Clonar el repositorio del proyecto
+echo "� Clonando repositorio Coopeenortol..."
+cd /opt
+git clone https://github.com/robertfenyiner/Coopeenortol2.git coopeenortol
+sudo chown -R $USER:$USER /opt/coopeenortol
+
+# Crear estructura de directorios adicionales dentro del proyecto
+echo "📁 Creando directorios adicionales..."
+cd /opt/coopeenortol
+mkdir -p {data,logs,backups,ssl}
 
 # Configurar logrotate para logs de la aplicación
 sudo tee /etc/logrotate.d/coopeenortol > /dev/null <<EOF
@@ -56,13 +61,13 @@ EOF
 
 # Configurar cron para backups automáticos
 echo "💾 Configurando backups automáticos..."
-(crontab -l 2>/dev/null; echo "0 2 * * * /opt/coopeenortol/scripts/backup.sh") | crontab -
+(crontab -l 2>/dev/null; echo "0 2 * * * /opt/coopeenortol/infra/scripts/backup.sh") | crontab -
 
 echo "✅ Configuración base completada!"
 echo "📋 Próximos pasos para Robert:"
-echo "   1. Clonar el repositorio en /opt/coopeenortol/"
-echo "   2. Configurar variables de entorno en .env"
-echo "   3. Ejecutar el script de deployment específico"
-echo "   4. Configurar SSL con certbot"
+echo "   1. Ir al directorio del proyecto: cd /opt/coopeenortol"
+echo "   2. Ejecutar el script de deployment: ./infra/scripts/deploy.sh"
+echo "   3. Crear usuario administrador: docker compose exec backend python create_admin_simple.py"
+echo "   4. Configurar SSL con certbot (opcional)"
 
 echo "🔄 Reinicia la sesión para que los cambios de Docker tomen efecto"
