@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import AsociadosModule from './AsociadosModule';
+import ChangePasswordModal from './ChangePasswordModal';
 
 interface User {
   id?: number;
@@ -18,6 +19,7 @@ type ActiveModule = null | 'asociados' | 'usuarios' | 'reportes';
 
 const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
   const [activeModule, setActiveModule] = useState<ActiveModule>(null);
+  const [showChangePasswordModal, setShowChangePasswordModal] = useState(false);
 
   // Manejar navegación a módulos
   const handleModuleClick = (module: ActiveModule) => {
@@ -118,6 +120,26 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
               >
                 Bienvenido, {user.nombre_completo || user.email}
               </span>
+              
+              {/* Botón Cambiar Contraseña */}
+              <button
+                onClick={() => setShowChangePasswordModal(true)}
+                className="bg-blue-600 text-white px-3 py-2 rounded-md hover:bg-blue-700 transition-colors text-sm"
+                style={{
+                  backgroundColor: '#2563eb',
+                  color: 'white',
+                  padding: '0.5rem 0.75rem',
+                  borderRadius: '0.375rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontSize: '0.875rem',
+                  fontWeight: '500'
+                }}
+                title="Cambiar contraseña"
+              >
+                🔐 Contraseña
+              </button>
+              
               <button
                 onClick={onLogout}
                 className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition-colors"
@@ -534,6 +556,15 @@ const Dashboard: React.FC<DashboardProps> = ({ user, onLogout }) => {
           </div>
         </div>
       </div>
+      
+      {/* Modal de Cambio de Contraseña */}
+      <ChangePasswordModal
+        isOpen={showChangePasswordModal}
+        onClose={() => setShowChangePasswordModal(false)}
+        onSuccess={() => {
+          console.log('Contraseña cambiada exitosamente');
+        }}
+      />
     </div>
   );
 };
