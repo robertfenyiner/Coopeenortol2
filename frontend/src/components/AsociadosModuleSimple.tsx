@@ -11,6 +11,43 @@ interface Asociado {
   estado: 'activo' | 'inactivo' | 'retirado';
   fecha_ingreso: string;
   observaciones?: string;
+  datos_personales?: {
+    fecha_nacimiento?: string;
+    direccion?: string;
+    ciudad?: string;
+    departamento?: string;
+    pais?: string;
+    estado_civil?: string;
+    genero?: string;
+    nivel_academico?: string;
+    profesion?: string;
+    tipo_vivienda?: string;
+    telefono_alternativo?: string;
+  };
+  datos_laborales?: {
+    institucion_educativa?: string;
+    cargo?: string;
+    tipo_contrato?: string;
+    fecha_vinculacion?: string;
+    salario_basico?: number;
+    horario?: string;
+    dependencia?: string;
+  };
+  informacion_familiar?: {
+    estado_civil?: string;
+    numero_hijos?: number;
+    personas_a_cargo?: number;
+    familiares?: any[];
+    contactos_emergencia?: any[];
+  };
+  informacion_financiera?: {
+    ingresos_mensuales?: number;
+    egresos_mensuales?: number;
+    endeudamiento?: number;
+    obligaciones?: any[];
+    calificacion_riesgo?: string;
+    observaciones?: string;
+  };
   created_at: string;
   updated_at: string;
 }
@@ -197,27 +234,41 @@ const AsociadosModuleSimple: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       fecha_ingreso: asociado.fecha_ingreso,
       observaciones: asociado.observaciones || '',
       datos_personales: {
-        fecha_nacimiento: '1990-01-01',
-        direccion: '',
-        ciudad: 'Bogotá',
-        departamento: 'Cundinamarca',
-        pais: 'Colombia'
+        fecha_nacimiento: asociado.datos_personales?.fecha_nacimiento || '1990-01-01',
+        direccion: asociado.datos_personales?.direccion || '',
+        ciudad: asociado.datos_personales?.ciudad || 'Bogotá',
+        departamento: asociado.datos_personales?.departamento || 'Cundinamarca',
+        pais: asociado.datos_personales?.pais || 'Colombia',
+        estado_civil: asociado.datos_personales?.estado_civil || '',
+        genero: asociado.datos_personales?.genero || '',
+        nivel_academico: asociado.datos_personales?.nivel_academico || '',
+        profesion: asociado.datos_personales?.profesion || '',
+        tipo_vivienda: asociado.datos_personales?.tipo_vivienda || '',
+        telefono_alternativo: asociado.datos_personales?.telefono_alternativo || ''
       },
       datos_laborales: {
-        institucion_educativa: 'Coopeenortol',
-        cargo: '',
-        tipo_contrato: 'Indefinido',
-        fecha_vinculacion: new Date().toISOString().split('T')[0],
-        salario_basico: 0
+        institucion_educativa: asociado.datos_laborales?.institucion_educativa || 'Coopeenortol',
+        cargo: asociado.datos_laborales?.cargo || '',
+        tipo_contrato: asociado.datos_laborales?.tipo_contrato || 'Indefinido',
+        fecha_vinculacion: asociado.datos_laborales?.fecha_vinculacion || new Date().toISOString().split('T')[0],
+        salario_basico: asociado.datos_laborales?.salario_basico || 0,
+        horario: asociado.datos_laborales?.horario || '',
+        dependencia: asociado.datos_laborales?.dependencia || ''
       },
       informacion_familiar: {
-        familiares: [],
-        contactos_emergencia: []
+        estado_civil: asociado.informacion_familiar?.estado_civil || '',
+        numero_hijos: asociado.informacion_familiar?.numero_hijos || 0,
+        personas_a_cargo: asociado.informacion_familiar?.personas_a_cargo || 0,
+        familiares: asociado.informacion_familiar?.familiares || [],
+        contactos_emergencia: asociado.informacion_familiar?.contactos_emergencia || []
       },
       informacion_financiera: {
-        ingresos_mensuales: 0,
-        egresos_mensuales: 0,
-        obligaciones: []
+        ingresos_mensuales: asociado.informacion_financiera?.ingresos_mensuales || 0,
+        egresos_mensuales: asociado.informacion_financiera?.egresos_mensuales || 0,
+        endeudamiento: asociado.informacion_financiera?.endeudamiento || 0,
+        obligaciones: asociado.informacion_financiera?.obligaciones || [],
+        calificacion_riesgo: asociado.informacion_financiera?.calificacion_riesgo || '',
+        observaciones: asociado.informacion_financiera?.observaciones || ''
       }
     });
     setShowForm(true);
