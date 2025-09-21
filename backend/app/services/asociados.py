@@ -174,7 +174,6 @@ def crear_asociado(db: Session, asociado_in: AsociadoCrear) -> Asociado:
         telefono_principal=asociado_in.telefono_principal,
         estado=asociado_in.estado,
         fecha_ingreso=asociado_in.fecha_ingreso,
-        foto_url=str(asociado_in.foto_url) if asociado_in.foto_url else None,
         hoja_vida_url=str(asociado_in.hoja_vida_url) if asociado_in.hoja_vida_url else None,
         observaciones=asociado_in.observaciones,
         datos_personales=asociado_in.datos_personales.dict(),
@@ -216,7 +215,7 @@ def actualizar_asociado(db: Session, db_obj: Asociado, asociado_in: AsociadoActu
         } and valor is not None:
             if hasattr(valor, "dict"):
                 valor = valor.dict()
-        elif campo in {"hoja_vida_url", "foto_url"} and valor is not None:
+        elif campo == "hoja_vida_url" and valor is not None:
             valor = str(valor)
         
         setattr(db_obj, campo, valor)

@@ -42,7 +42,6 @@ class Asociado(Base):
     telefono_principal = Column(String(50), nullable=True)
     estado = Column(String(30), nullable=False, default="activo")
     fecha_ingreso = Column(Date, nullable=False)
-    foto_url = Column(String(500), nullable=True)
     hoja_vida_url = Column(String(500), nullable=True)
     observaciones = Column(Text, nullable=True)
     datos_personales = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)

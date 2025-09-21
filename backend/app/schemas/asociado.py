@@ -27,37 +27,26 @@ class Obligacion(BaseModel):
 
 class DatosPersonales(BaseModel):
     fecha_nacimiento: date
-    lugar_nacimiento: Optional[str] = None
     direccion: str
     ciudad: str
     departamento: str
-    pais: str = Field(default="Colombia")
-    estado_civil: Optional[str] = Field(default=None, description="soltero, casado, union_libre, divorciado, viudo")
-    genero: Optional[str] = Field(default=None, description="masculino, femenino, otro")
-    nivel_academico: Optional[str] = Field(default=None, description="primaria, secundaria, tecnico, tecnologo, universitario, posgrado")
+    pais: str
+    estado_civil: Optional[str] = None
+    genero: Optional[str] = None
+    nivel_academico: Optional[str] = None
     profesion: Optional[str] = None
-    tipo_vivienda: Optional[str] = Field(default=None, description="propia, arrendada, familiar, otra")
+    tipo_vivienda: Optional[str] = None
     telefono_alternativo: Optional[str] = None
-    tiene_discapacidad: Optional[bool] = Field(default=False)
-    tipo_discapacidad: Optional[str] = None
-    grupo_sanguineo: Optional[str] = None
-    eps: Optional[str] = None
-    arl: Optional[str] = None
 
 
 class DatosLaborales(BaseModel):
     institucion_educativa: str
     cargo: str
-    tipo_contrato: str = Field(description="indefinido, fijo, obra_labor, prestacion_servicios")
+    tipo_contrato: str
     fecha_vinculacion: date
     salario_basico: float = Field(ge=0)
-    otros_ingresos: Optional[float] = Field(default=0, ge=0, description="Bonificaciones, horas extras, etc.")
     horario: Optional[str] = None
     dependencia: Optional[str] = None
-    jefe_inmediato: Optional[str] = None
-    telefono_trabajo: Optional[str] = None
-    correo_institucional: Optional[str] = None
-    sede_trabajo: Optional[str] = None
 
 
 class InformacionFamiliar(BaseModel):
@@ -69,19 +58,11 @@ class InformacionFamiliar(BaseModel):
 
 
 class InformacionFinanciera(BaseModel):
-    ingresos_mensuales: float = Field(ge=0, description="Ingresos totales mensuales")
-    ingresos_adicionales: Optional[float] = Field(default=0, ge=0, description="Ingresos por otras fuentes")
-    egresos_mensuales: float = Field(ge=0, description="Gastos mensuales totales")
-    gastos_financieros: Optional[float] = Field(default=0, ge=0, description="Pagos de créditos y tarjetas")
-    capacidad_ahorro: Optional[float] = Field(default=0, ge=0, description="Capacidad mensual de ahorro")
-    patrimonio_neto: Optional[float] = Field(default=0, ge=0, description="Activos menos pasivos")
-    endeudamiento: Optional[float] = Field(default=None, ge=0, description="Nivel de endeudamiento total")
+    ingresos_mensuales: float = Field(ge=0)
+    egresos_mensuales: float = Field(ge=0)
+    endeudamiento: Optional[float] = Field(default=None, ge=0)
     obligaciones: List[Obligacion] = Field(default_factory=list)
-    cuenta_bancaria_principal: Optional[str] = None
-    entidad_bancaria: Optional[str] = None
-    calificacion_riesgo: Optional[str] = Field(default=None, description="A, B, C, D, E")
-    score_crediticio: Optional[int] = Field(default=None, ge=0, le=1000)
-    reportes_centrales: Optional[bool] = Field(default=False, description="¿Reportado en centrales de riesgo?")
+    calificacion_riesgo: Optional[str] = None
     observaciones: Optional[str] = None
 
 
@@ -94,7 +75,6 @@ class AsociadoBase(BaseModel):
     telefono_principal: Optional[str] = None
     estado: str = Field(default="activo")
     fecha_ingreso: date
-    foto_url: Optional[HttpUrl] = None
     hoja_vida_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
     datos_personales: DatosPersonales
@@ -116,7 +96,6 @@ class AsociadoActualizar(BaseModel):
     telefono_principal: Optional[str] = None
     estado: Optional[str] = None
     fecha_ingreso: Optional[date] = None
-    foto_url: Optional[HttpUrl] = None
     hoja_vida_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
     datos_personales: Optional[DatosPersonales] = None
