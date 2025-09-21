@@ -29,6 +29,8 @@ interface FormDataExpanded {
     grupo_sanguineo: string;
     eps: string;
     arl: string;
+    numero_hijos: number;
+    personas_a_cargo: number;
   };
   
   informacion_academica: {
