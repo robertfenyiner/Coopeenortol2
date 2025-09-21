@@ -175,11 +175,14 @@ def crear_asociado(db: Session, asociado_in: AsociadoCrear) -> Asociado:
         estado=asociado_in.estado,
         fecha_ingreso=asociado_in.fecha_ingreso,
         hoja_vida_url=str(asociado_in.hoja_vida_url) if asociado_in.hoja_vida_url else None,
+        foto_url=str(asociado_in.foto_url) if asociado_in.foto_url else None,
         observaciones=asociado_in.observaciones,
         datos_personales=asociado_in.datos_personales.dict(),
         datos_laborales=asociado_in.datos_laborales.dict(),
         informacion_familiar=asociado_in.informacion_familiar.dict(),
         informacion_financiera=asociado_in.informacion_financiera.dict(),
+        informacion_academica=asociado_in.informacion_academica.dict(),
+        informacion_vivienda=asociado_in.informacion_vivienda.dict(),
     )
     
     db.add(db_asociado)
@@ -212,10 +215,12 @@ def actualizar_asociado(db: Session, db_obj: Asociado, asociado_in: AsociadoActu
             "datos_laborales", 
             "informacion_familiar",
             "informacion_financiera",
+            "informacion_academica",
+            "informacion_vivienda",
         } and valor is not None:
             if hasattr(valor, "dict"):
                 valor = valor.dict()
-        elif campo == "hoja_vida_url" and valor is not None:
+        elif campo in {"hoja_vida_url", "foto_url"} and valor is not None:
             valor = str(valor)
         
         setattr(db_obj, campo, valor)

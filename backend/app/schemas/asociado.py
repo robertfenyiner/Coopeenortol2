@@ -27,16 +27,21 @@ class Obligacion(BaseModel):
 
 class DatosPersonales(BaseModel):
     fecha_nacimiento: date
+    lugar_nacimiento: Optional[str] = None
     direccion: str
+    barrio: Optional[str] = None
     ciudad: str
     departamento: str
-    pais: str
+    pais: str = "Colombia"
+    codigo_postal: Optional[str] = None
     estado_civil: Optional[str] = None
     genero: Optional[str] = None
-    nivel_academico: Optional[str] = None
-    profesion: Optional[str] = None
-    tipo_vivienda: Optional[str] = None
+    grupo_sanguineo: Optional[str] = None
+    eps: Optional[str] = None
+    arl: Optional[str] = None
     telefono_alternativo: Optional[str] = None
+    numero_hijos: Optional[int] = Field(default=0, ge=0)
+    personas_a_cargo: Optional[int] = Field(default=0, ge=0)
 
 
 class DatosLaborales(BaseModel):
@@ -50,18 +55,42 @@ class DatosLaborales(BaseModel):
 
 
 class InformacionFamiliar(BaseModel):
-    estado_civil: Optional[str] = None
-    numero_hijos: Optional[int] = Field(default=None, ge=0)
-    personas_a_cargo: Optional[int] = Field(default=None, ge=0)
     familiares: List[Familiar] = Field(default_factory=list)
     contactos_emergencia: List[ContactoEmergencia] = Field(default_factory=list)
+    personas_autorizadas: List[dict] = Field(default_factory=list)  # Para recogida de hijos, etc.
+
+
+class InformacionAcademica(BaseModel):
+    nivel_educativo: str
+    institucion: Optional[str] = None
+    titulo_obtenido: Optional[str] = None
+    ano_graduacion: Optional[int] = None
+    en_estudio: bool = False
+    programa_actual: Optional[str] = None
+    institucion_actual: Optional[str] = None
+    semestre_actual: Optional[int] = None
+    certificaciones: List[dict] = Field(default_factory=list)
+
+
+class InformacionVivienda(BaseModel):
+    tipo_vivienda: str  # casa, apartamento, finca, otro
+    tenencia: str  # propia, arrendada, familiar, otro
+    valor_arriendo: Optional[float] = Field(default=0, ge=0)
+    tiempo_residencia: Optional[int] = None  # en meses
+    servicios_publicos: List[str] = Field(default_factory=list)
+    estrato: Optional[int] = None
 
 
 class InformacionFinanciera(BaseModel):
     ingresos_mensuales: float = Field(ge=0)
+    ingresos_adicionales: Optional[float] = Field(default=0, ge=0)
     egresos_mensuales: float = Field(ge=0)
+    ingresos_familiares: Optional[float] = Field(default=0, ge=0)
+    gastos_familiares: Optional[float] = Field(default=0, ge=0)
     endeudamiento: Optional[float] = Field(default=None, ge=0)
     obligaciones: List[Obligacion] = Field(default_factory=list)
+    referencias_comerciales: List[dict] = Field(default_factory=list)
+    activos: List[dict] = Field(default_factory=list)  # inmuebles, vehículos, inversiones
     calificacion_riesgo: Optional[str] = None
     observaciones: Optional[str] = None
 
@@ -76,11 +105,14 @@ class AsociadoBase(BaseModel):
     estado: str = Field(default="activo")
     fecha_ingreso: date
     hoja_vida_url: Optional[HttpUrl] = None
+    foto_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
     datos_personales: DatosPersonales
     datos_laborales: DatosLaborales
     informacion_familiar: InformacionFamiliar
     informacion_financiera: InformacionFinanciera
+    informacion_academica: InformacionAcademica
+    informacion_vivienda: InformacionVivienda
 
 
 class AsociadoCrear(AsociadoBase):
@@ -97,11 +129,14 @@ class AsociadoActualizar(BaseModel):
     estado: Optional[str] = None
     fecha_ingreso: Optional[date] = None
     hoja_vida_url: Optional[HttpUrl] = None
+    foto_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
     datos_personales: Optional[DatosPersonales] = None
     datos_laborales: Optional[DatosLaborales] = None
     informacion_familiar: Optional[InformacionFamiliar] = None
     informacion_financiera: Optional[InformacionFinanciera] = None
+    informacion_academica: Optional[InformacionAcademica] = None
+    informacion_vivienda: Optional[InformacionVivienda] = None
 
 
 class AsociadoEnDB(AsociadoBase):

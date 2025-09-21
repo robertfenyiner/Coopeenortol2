@@ -1,6 +1,8 @@
+import os
+import uuid
 from typing import List, Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
+from fastapi import APIRouter, Depends, File, HTTPException, Query, Response, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.database import get_db
@@ -132,3 +134,71 @@ def eliminar_asociado(asociado_id: int, db: Session = Depends(get_db)) -> Respon
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asociado no encontrado")
     service.eliminar_asociado(db, asociado)
     return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@router.post("/{asociado_id}/foto", response_model=dict)
+async def subir_foto_asociado(
+    asociado_id: int,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db),
+) -> dict:
+    """
+    Subir foto de perfil para un asociado.
+    
+    Acepta archivos de imagen en formatos JPG, PNG, JPEG.
+    Máximo 5MB de tamaño.
+    """
+    # Verificar que el asociado existe
+    asociado = service.obtener_asociado(db, asociado_id)
+    if not asociado:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asociado no encontrado")
+    
+    # Validar tipo de archivo
+    if not file.content_type or not file.content_type.startswith('image/'):
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST, 
+            detail="Solo se permiten archivos de imagen (JPG, PNG, JPEG)"
+        )
+    
+    # Validar tamaño (5MB máximo)
+    if file.size and file.size > 5 * 1024 * 1024:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="El archivo no puede ser mayor a 5MB"
+        )
+    
+    # Crear directorio de fotos si no existe
+    upload_dir = "uploads/fotos"
+    os.makedirs(upload_dir, exist_ok=True)
+    
+    # Generar nombre único para el archivo
+    file_extension = os.path.splitext(file.filename)[1] if file.filename else '.jpg'
+    unique_filename = f"asociado_{asociado_id}_{uuid.uuid4().hex}{file_extension}"
+    file_path = os.path.join(upload_dir, unique_filename)
+    
+    try:
+        # Guardar archivo
+        with open(file_path, "wb") as buffer:
+            content = await file.read()
+            buffer.write(content)
+        
+        # Actualizar URL de foto en la base de datos
+        foto_url = f"/uploads/fotos/{unique_filename}"
+        asociado.foto_url = foto_url
+        db.commit()
+        db.refresh(asociado)
+        
+        return {
+            "message": "Foto subida exitosamente",
+            "foto_url": foto_url,
+            "filename": unique_filename
+        }
+        
+    except Exception as e:
+        # Si hay error, eliminar archivo si se creó
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        raise HTTPException(
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            detail=f"Error al subir la foto: {str(e)}"
+        )

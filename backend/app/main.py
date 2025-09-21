@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from app.api.v1.api import api_router
 from app.core.config import settings
@@ -23,6 +24,9 @@ def create_app() -> FastAPI:
         Base.metadata.create_all(bind=engine)
 
     app.include_router(api_router, prefix="/api/v1")
+    
+    # Servir archivos estáticos (fotos de asociados)
+    app.mount("/uploads", StaticFiles(directory="uploads"), name="uploads")
 
     @app.get("/salud", tags=["Sistema"])
     def healthcheck() -> dict[str, str]:

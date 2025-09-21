@@ -859,6 +859,770 @@ const AsociadoFormExpanded: React.FC<AsociadoFormExpandedProps> = ({
             </div>
           )}
 
+          {/* Paso 3: Información Laboral */}
+          {currentStep === 3 && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Institución Educativa *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.datos_laborales.institucion_educativa}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        institucion_educativa: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Cargo *
+                  </label>
+                  <input
+                    type="text"
+                    required
+                    value={formData.datos_laborales.cargo}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        cargo: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Área de Trabajo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_laborales.area_trabajo}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        area_trabajo: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tipo de Contrato
+                  </label>
+                  <select
+                    value={formData.datos_laborales.tipo_contrato}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        tipo_contrato: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  >
+                    <option value="">Seleccione tipo de contrato</option>
+                    <option value="indefinido">Indefinido</option>
+                    <option value="fijo">Término Fijo</option>
+                    <option value="prestacion_servicios">Prestación de Servicios</option>
+                    <option value="honorarios">Honorarios</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Fecha de Vinculación
+                  </label>
+                  <input
+                    type="date"
+                    value={formData.datos_laborales.fecha_vinculacion}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        fecha_vinculacion: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Salario Básico *
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="0"
+                    value={formData.datos_laborales.salario_basico}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        salario_basico: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Bonificaciones
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.datos_laborales.bonificaciones}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        bonificaciones: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Jefe Inmediato
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_laborales.jefe_inmediato}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        jefe_inmediato: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Teléfono del Jefe
+                  </label>
+                  <input
+                    type="tel"
+                    value={formData.datos_laborales.telefono_jefe}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        telefono_jefe: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Email del Jefe
+                  </label>
+                  <input
+                    type="email"
+                    value={formData.datos_laborales.email_jefe}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        email_jefe: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Sede de Trabajo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_laborales.sede_trabajo}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        sede_trabajo: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Horario de Trabajo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_laborales.horario_trabajo}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        horario_trabajo: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Paso 4: Información Familiar */}
+          {currentStep === 4 && (
+            <div className="space-y-6">
+              <div className="bg-blue-50 p-4 rounded-lg">
+                <h4 className="font-medium text-blue-900 mb-2">Familiares</h4>
+                <div className="space-y-4">
+                  {formData.informacion_familiar.familiares.map((familiar, index) => (
+                    <div key={index} className="bg-white p-4 rounded border">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          placeholder="Nombre del familiar"
+                          value={familiar.nombre}
+                          onChange={(e) => {
+                            const newFamiliares = [...formData.informacion_familiar.familiares];
+                            newFamiliares[index].nombre = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_familiar: {
+                                ...formData.informacion_familiar,
+                                familiares: newFamiliares
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Parentesco"
+                          value={familiar.parentesco}
+                          onChange={(e) => {
+                            const newFamiliares = [...formData.informacion_familiar.familiares];
+                            newFamiliares[index].parentesco = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_familiar: {
+                                ...formData.informacion_familiar,
+                                familiares: newFamiliares
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newFamiliares = formData.informacion_familiar.familiares.filter((_, i) => i !== index);
+                          setFormData({
+                            ...formData,
+                            informacion_familiar: {
+                              ...formData.informacion_familiar,
+                              familiares: newFamiliares
+                            }
+                          });
+                        }}
+                        className="mt-2 text-red-600 text-sm hover:text-red-800"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        informacion_familiar: {
+                          ...formData.informacion_familiar,
+                          familiares: [...formData.informacion_familiar.familiares, {
+                            nombre: '',
+                            parentesco: '',
+                            fecha_nacimiento: '',
+                            documento: '',
+                            telefono: '',
+                            ocupacion: '',
+                            depende_economicamente: false
+                          }]
+                        }
+                      });
+                    }}
+                    className="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700"
+                  >
+                    Agregar Familiar
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-green-50 p-4 rounded-lg">
+                <h4 className="font-medium text-green-900 mb-2">Contactos de Emergencia</h4>
+                <div className="space-y-4">
+                  {formData.informacion_familiar.contactos_emergencia.map((contacto, index) => (
+                    <div key={index} className="bg-white p-4 rounded border">
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <input
+                          type="text"
+                          placeholder="Nombre del contacto"
+                          value={contacto.nombre}
+                          onChange={(e) => {
+                            const newContactos = [...formData.informacion_familiar.contactos_emergencia];
+                            newContactos[index].nombre = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_familiar: {
+                                ...formData.informacion_familiar,
+                                contactos_emergencia: newContactos
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                        <input
+                          type="tel"
+                          placeholder="Teléfono"
+                          value={contacto.telefono}
+                          onChange={(e) => {
+                            const newContactos = [...formData.informacion_familiar.contactos_emergencia];
+                            newContactos[index].telefono = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_familiar: {
+                                ...formData.informacion_familiar,
+                                contactos_emergencia: newContactos
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newContactos = formData.informacion_familiar.contactos_emergencia.filter((_, i) => i !== index);
+                          setFormData({
+                            ...formData,
+                            informacion_familiar: {
+                              ...formData.informacion_familiar,
+                              contactos_emergencia: newContactos
+                            }
+                          });
+                        }}
+                        className="mt-2 text-red-600 text-sm hover:text-red-800"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        informacion_familiar: {
+                          ...formData.informacion_familiar,
+                          contactos_emergencia: [...formData.informacion_familiar.contactos_emergencia, {
+                            nombre: '',
+                            parentesco: '',
+                            telefono: '',
+                            direccion: '',
+                            es_principal: false
+                          }]
+                        }
+                      });
+                    }}
+                    className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700"
+                  >
+                    Agregar Contacto de Emergencia
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Paso 5: Información Financiera */}
+          {currentStep === 5 && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ingresos Mensuales *
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="0"
+                    value={formData.informacion_financiera.ingresos_mensuales}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_financiera: {
+                        ...formData.informacion_financiera,
+                        ingresos_mensuales: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ingresos Adicionales
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.informacion_financiera.ingresos_adicionales}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_financiera: {
+                        ...formData.informacion_financiera,
+                        ingresos_adicionales: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Egresos Mensuales *
+                  </label>
+                  <input
+                    type="number"
+                    required
+                    min="0"
+                    value={formData.informacion_financiera.egresos_mensuales}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_financiera: {
+                        ...formData.informacion_financiera,
+                        egresos_mensuales: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Ingresos Familiares
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.informacion_financiera.ingresos_familiares}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_financiera: {
+                        ...formData.informacion_financiera,
+                        ingresos_familiares: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Gastos Familiares
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.informacion_financiera.gastos_familiares}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_financiera: {
+                        ...formData.informacion_financiera,
+                        gastos_familiares: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+              </div>
+
+              <div className="bg-yellow-50 p-4 rounded-lg">
+                <h4 className="font-medium text-yellow-900 mb-2">Obligaciones Financieras</h4>
+                <div className="space-y-4">
+                  {formData.informacion_financiera.obligaciones.map((obligacion, index) => (
+                    <div key={index} className="bg-white p-4 rounded border">
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <input
+                          type="text"
+                          placeholder="Tipo de obligación"
+                          value={obligacion.tipo}
+                          onChange={(e) => {
+                            const newObligaciones = [...formData.informacion_financiera.obligaciones];
+                            newObligaciones[index].tipo = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_financiera: {
+                                ...formData.informacion_financiera,
+                                obligaciones: newObligaciones
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Entidad"
+                          value={obligacion.entidad}
+                          onChange={(e) => {
+                            const newObligaciones = [...formData.informacion_financiera.obligaciones];
+                            newObligaciones[index].entidad = e.target.value;
+                            setFormData({
+                              ...formData,
+                              informacion_financiera: {
+                                ...formData.informacion_financiera,
+                                obligaciones: newObligaciones
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                        <input
+                          type="number"
+                          placeholder="Valor cuota"
+                          value={obligacion.valor_cuota}
+                          onChange={(e) => {
+                            const newObligaciones = [...formData.informacion_financiera.obligaciones];
+                            newObligaciones[index].valor_cuota = parseFloat(e.target.value) || 0;
+                            setFormData({
+                              ...formData,
+                              informacion_financiera: {
+                                ...formData.informacion_financiera,
+                                obligaciones: newObligaciones
+                              }
+                            });
+                          }}
+                          className="px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                        />
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => {
+                          const newObligaciones = formData.informacion_financiera.obligaciones.filter((_, i) => i !== index);
+                          setFormData({
+                            ...formData,
+                            informacion_financiera: {
+                              ...formData.informacion_financiera,
+                              obligaciones: newObligaciones
+                            }
+                          });
+                        }}
+                        className="mt-2 text-red-600 text-sm hover:text-red-800"
+                      >
+                        Eliminar
+                      </button>
+                    </div>
+                  ))}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setFormData({
+                        ...formData,
+                        informacion_financiera: {
+                          ...formData.informacion_financiera,
+                          obligaciones: [...formData.informacion_financiera.obligaciones, {
+                            tipo: '',
+                            entidad: '',
+                            valor_cuota: 0,
+                            saldo_actual: 0,
+                            fecha_vencimiento: ''
+                          }]
+                        }
+                      });
+                    }}
+                    className="bg-yellow-600 text-white px-4 py-2 rounded-md hover:bg-yellow-700"
+                  >
+                    Agregar Obligación
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Paso 6: Información de Vivienda */}
+          {currentStep === 6 && (
+            <div className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tipo de Vivienda
+                  </label>
+                  <select
+                    value={formData.informacion_vivienda.tipo_vivienda}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_vivienda: {
+                        ...formData.informacion_vivienda,
+                        tipo_vivienda: e.target.value as '' | 'casa' | 'apartamento' | 'finca' | 'otro'
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  >
+                    <option value="">Seleccione tipo de vivienda</option>
+                    <option value="casa">Casa</option>
+                    <option value="apartamento">Apartamento</option>
+                    <option value="finca">Finca</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tenencia
+                  </label>
+                  <select
+                    value={formData.informacion_vivienda.tenencia}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_vivienda: {
+                        ...formData.informacion_vivienda,
+                        tenencia: e.target.value as '' | 'propia' | 'arrendada' | 'familiar' | 'otro'
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  >
+                    <option value="">Seleccione tenencia</option>
+                    <option value="propia">Propia</option>
+                    <option value="arrendada">Arrendada</option>
+                    <option value="familiar">Familiar</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Valor del Arriendo
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.informacion_vivienda.valor_arriendo}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_vivienda: {
+                        ...formData.informacion_vivienda,
+                        valor_arriendo: parseFloat(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Tiempo de Residencia (meses)
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.informacion_vivienda.tiempo_residencia}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_vivienda: {
+                        ...formData.informacion_vivienda,
+                        tiempo_residencia: parseInt(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                    Estrato
+                  </label>
+                  <select
+                    value={formData.informacion_vivienda.estrato}
+                    onChange={(e) => setFormData({
+                      ...formData,
+                      informacion_vivienda: {
+                        ...formData.informacion_vivienda,
+                        estrato: parseInt(e.target.value) || 0
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                  >
+                    <option value="">Seleccione estrato</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Servicios Públicos
+                </label>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+                  {['Agua', 'Luz', 'Gas', 'Internet', 'Telefonía', 'TV Cable'].map((servicio) => (
+                    <label key={servicio} className="flex items-center space-x-2">
+                      <input
+                        type="checkbox"
+                        checked={formData.informacion_vivienda.servicios_publicos.includes(servicio)}
+                        onChange={(e) => {
+                          const servicios = formData.informacion_vivienda.servicios_publicos;
+                          if (e.target.checked) {
+                            setFormData({
+                              ...formData,
+                              informacion_vivienda: {
+                                ...formData.informacion_vivienda,
+                                servicios_publicos: [...servicios, servicio]
+                              }
+                            });
+                          } else {
+                            setFormData({
+                              ...formData,
+                              informacion_vivienda: {
+                                ...formData.informacion_vivienda,
+                                servicios_publicos: servicios.filter(s => s !== servicio)
+                              }
+                            });
+                          }
+                        }}
+                        className="rounded border-gray-300 focus:ring-green-500"
+                      />
+                      <span className="text-sm text-gray-700">{servicio}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+
           {/* Paso 7: Foto y Revisión */}
           {currentStep === 7 && (
             <div className="space-y-6">

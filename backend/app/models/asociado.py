@@ -43,11 +43,14 @@ class Asociado(Base):
     estado = Column(String(30), nullable=False, default="activo")
     fecha_ingreso = Column(Date, nullable=False)
     hoja_vida_url = Column(String(500), nullable=True)
+    foto_url = Column(String(500), nullable=True)
     observaciones = Column(Text, nullable=True)
     datos_personales = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
     datos_laborales = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
     informacion_familiar = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
     informacion_financiera = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
+    informacion_academica = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
+    informacion_vivienda = Column(MutableDict.as_mutable(JSONEncodedDict), default=dict)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(
         DateTime,
