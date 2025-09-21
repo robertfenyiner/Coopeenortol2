@@ -247,7 +247,16 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       const response = await asociadoService.listarAsociados({ limit: 50 });
       setAsociados(response.datos);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al cargar asociados');
+      console.error('Error al cargar asociados:', err);
+      let errorMessage = 'Error al cargar asociados';
+      
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'object' && err !== null) {
+        errorMessage = (err as any).detail || (err as any).message || 'Error de conexión con el servidor';
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -489,7 +498,17 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       alert(editingAsociado ? 'Asociado actualizado exitosamente' : 'Asociado creado exitosamente');
       
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Error al guardar asociado');
+      console.error('Error al guardar asociado:', err);
+      let errorMessage = 'Error al guardar asociado';
+      
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === 'object' && err !== null) {
+        // Si es un objeto de error del servidor
+        errorMessage = (err as any).detail || (err as any).message || JSON.stringify(err);
+      }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

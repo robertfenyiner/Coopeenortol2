@@ -199,7 +199,12 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
                 onClick={onBack}
                 className="mr-4 p-2 text-gray-400 hover:text-gray-600 transition-colors"
               >
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg 
+                  fill="none" 
+                  stroke="currentColor" 
+                  viewBox="0 0 24 24"
+                  style={{ width: '24px', height: '24px' }}
+                >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                 </svg>
               </button>
@@ -224,7 +229,12 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
           <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center">
             <span>{error}</span>
             <button onClick={clearMessages} className="text-red-500 hover:text-red-700">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ width: '16px', height: '16px' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -235,7 +245,12 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
           <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex justify-between items-center">
             <span>{successMessage}</span>
             <button onClick={clearMessages} className="text-green-500 hover:text-green-700">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg 
+                fill="none" 
+                stroke="currentColor" 
+                viewBox="0 0 24 24"
+                style={{ width: '16px', height: '16px' }}
+              >
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
@@ -276,7 +291,13 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
                   <tr>
                     <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
                       <div className="flex flex-col items-center">
-                        <svg className="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg 
+                          className="text-gray-300 mb-2" 
+                          fill="none" 
+                          stroke="currentColor" 
+                          viewBox="0 0 24 24"
+                          style={{ width: '48px', height: '48px' }}
+                        >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
                         </svg>
                         <p className="text-lg font-medium">No hay usuarios registrados</p>
