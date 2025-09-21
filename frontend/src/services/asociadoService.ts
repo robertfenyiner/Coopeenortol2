@@ -1,4 +1,4 @@
-const API_BASE_URL = 'http://localhost:8000/api/v1';
+const API_BASE_URL = 'http://5.189.146.163:8000/api/v1';
 
 export interface AsociadoFormData {
   tipo_documento: string;
