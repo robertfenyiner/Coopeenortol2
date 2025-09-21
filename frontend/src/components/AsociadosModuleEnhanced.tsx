@@ -2,11 +2,142 @@ import React, { useState, useEffect } from 'react';
 import { asociadoService, Asociado, AsociadoFormData } from '../services/asociadoService';
 import AsociadoFormExpanded from './AsociadoFormExpanded';
 
-interface AsociadosModuleEnhancedProps {
-  onClose?: () => void;
+// Importar el tipo FormDataExpanded del componente
+interface FormDataExpanded {
+  tipo_documento: string;
+  numero_documento: string;
+  nombres: string;
+  apellidos: string;
+  correo_electronico: string;
+  telefono_principal: string;
+  estado: 'activo' | 'inactivo' | 'retirado';
+  fecha_ingreso: string;
+  observaciones: string;
+  
+  datos_personales: {
+    fecha_nacimiento: string;
+    lugar_nacimiento: string;
+    direccion: string;
+    barrio: string;
+    ciudad: string;
+    departamento: string;
+    pais: string;
+    codigo_postal: string;
+    telefono_secundario: string;
+    estado_civil: '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo';
+    genero: '' | 'masculino' | 'femenino' | 'otro';
+    grupo_sanguineo: string;
+    eps: string;
+    arl: string;
+  };
+  
+  informacion_academica: {
+    nivel_educativo: '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado';
+    institucion: string;
+    titulo_obtenido: string;
+    ano_graduacion: number;
+    en_estudio: boolean;
+    programa_actual: string;
+    institucion_actual: string;
+    semestre_actual: number;
+    certificaciones: Array<{
+      nombre: string;
+      institucion: string;
+      fecha_obtencion: string;
+      vigencia?: string;
+    }>;
+  };
+  
+  datos_laborales: {
+    institucion_educativa: string;
+    cargo: string;
+    area_trabajo: string;
+    tipo_contrato: string;
+    fecha_vinculacion: string;
+    salario_basico: number;
+    bonificaciones: number;
+    jefe_inmediato: string;
+    telefono_jefe: string;
+    email_jefe: string;
+    sede_trabajo: string;
+    horario_trabajo: string;
+    experiencia_laboral: Array<{
+      empresa: string;
+      cargo: string;
+      fecha_inicio: string;
+      fecha_fin?: string;
+      motivo_retiro?: string;
+      funciones?: string;
+    }>;
+  };
+  
+  informacion_familiar: {
+    familiares: Array<{
+      nombre: string;
+      parentesco: string;
+      fecha_nacimiento?: string;
+      documento?: string;
+      telefono?: string;
+      ocupacion?: string;
+      depende_economicamente?: boolean;
+    }>;
+    contactos_emergencia: Array<{
+      nombre: string;
+      parentesco: string;
+      telefono: string;
+      direccion?: string;
+      es_principal?: boolean;
+    }>;
+    personas_autorizadas: Array<{
+      nombre: string;
+      documento: string;
+      telefono: string;
+      parentesco?: string;
+      puede_recoger_hijo?: boolean;
+    }>;
+  };
+  
+  informacion_financiera: {
+    ingresos_mensuales: number;
+    ingresos_adicionales: number;
+    egresos_mensuales: number;
+    ingresos_familiares: number;
+    gastos_familiares: number;
+    obligaciones: Array<{
+      tipo: string;
+      entidad: string;
+      valor_cuota: number;
+      saldo_actual?: number;
+      fecha_vencimiento?: string;
+    }>;
+    referencias_comerciales: Array<{
+      entidad: string;
+      tipo_producto: string;
+      telefono?: string;
+      comportamiento?: 'excelente' | 'bueno' | 'regular' | 'malo';
+    }>;
+    activos: Array<{
+      tipo: 'inmueble' | 'vehiculo' | 'inversion' | 'otro';
+      descripcion: string;
+      valor_estimado?: number;
+    }>;
+  };
+  
+  informacion_vivienda: {
+    tipo_vivienda: '' | 'casa' | 'apartamento' | 'finca' | 'otro';
+    tenencia: '' | 'propia' | 'arrendada' | 'familiar' | 'otro';
+    valor_arriendo: number;
+    tiempo_residencia: number;
+    servicios_publicos: string[];
+    estrato: number;
+  };
 }
 
-const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onClose }) => {
+interface AsociadosModuleEnhancedProps {
+  // onClose?: () => void; // Removido ya que no se usa
+}
+
+const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
   const [asociados, setAsociados] = useState<Asociado[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -17,7 +148,7 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onClo
   const [photoPreview, setPhotoPreview] = useState<string | null>(null);
 
   // Estado del formulario
-  const [formData, setFormData] = useState<AsociadoFormData>({
+  const [formData, setFormData] = useState<FormDataExpanded>({
     tipo_documento: '',
     numero_documento: '',
     nombres: '',
@@ -129,7 +260,7 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onClo
 
   const handleEditarAsociado = (asociado: Asociado) => {
     // Convertir datos del backend al formato del formulario
-    const formDataFromAsociado: AsociadoFormData = {
+    const formDataFromAsociado: FormDataExpanded = {
       tipo_documento: asociado.tipo_documento,
       numero_documento: asociado.numero_documento,
       nombres: asociado.nombres,
@@ -321,14 +452,24 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onClo
       setLoading(true);
       setError(null);
 
+      // Convertir FormDataExpanded a AsociadoFormData
+      const dataToSend: AsociadoFormData = {
+        ...formData,
+        datos_personales: {
+          ...formData.datos_personales,
+          numero_hijos: 0, // Valor por defecto
+          personas_a_cargo: 0, // Valor por defecto
+        }
+      };
+
       let asociado: Asociado;
 
       if (editingAsociado) {
         // Actualizar asociado existente
-        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, formData);
+        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend);
       } else {
         // Crear nuevo asociado
-        asociado = await asociadoService.crearAsociado(formData);
+        asociado = await asociadoService.crearAsociado(dataToSend);
       }
 
       // Si hay foto, subirla

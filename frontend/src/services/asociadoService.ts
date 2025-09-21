@@ -21,8 +21,8 @@ export interface AsociadoFormData {
     pais: string;
     codigo_postal: string;
     telefono_secundario: string;
-    estado_civil: string;
-    genero: string;
+    estado_civil: '' | 'soltero' | 'casado' | 'union_libre' | 'separado' | 'divorciado' | 'viudo';
+    genero: '' | 'masculino' | 'femenino' | 'otro';
     grupo_sanguineo: string;
     eps: string;
     arl: string;
@@ -31,7 +31,7 @@ export interface AsociadoFormData {
   };
   
   informacion_academica: {
-    nivel_educativo: string;
+    nivel_educativo: '' | 'primaria' | 'bachillerato' | 'tecnico' | 'tecnologo' | 'universitario' | 'especializacion' | 'maestria' | 'doctorado';
     institucion: string;
     titulo_obtenido: string;
     ano_graduacion: number;
@@ -123,8 +123,8 @@ export interface AsociadoFormData {
   };
   
   informacion_vivienda: {
-    tipo_vivienda: string;
-    tenencia: string;
+    tipo_vivienda: '' | 'casa' | 'apartamento' | 'finca' | 'otro';
+    tenencia: '' | 'propia' | 'arrendada' | 'familiar' | 'otro';
     valor_arriendo: number;
     tiempo_residencia: number;
     servicios_publicos: string[];
@@ -253,7 +253,7 @@ class AsociadoService {
     const formData = new FormData();
     formData.append('file', file);
 
-    const headers: HeadersInit = {};
+    const headers: Record<string, string> = {};
     if (token) {
       headers.Authorization = `Bearer ${token}`;
     }
