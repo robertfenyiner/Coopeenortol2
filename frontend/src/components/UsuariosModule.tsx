@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { userService, User, CreateUserData, UpdateUserData } from '../services/userService';
+import ChangePasswordModal from './ChangePasswordModal';
 
 interface UsuariosModuleProps {
   onBack: () => void;
@@ -12,6 +13,9 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [editingUser, setEditingUser] = useState<User | null>(null);
   const [showEditForm, setShowEditForm] = useState(false);
+  const [showPasswordModal, setShowPasswordModal] = useState(false);
+  const [selectedUserForPassword, setSelectedUserForPassword] = useState<User | null>(null);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   // Estados para el formulario de creación
   const [createForm, setCreateForm] = useState<CreateUserData>({
@@ -54,8 +58,21 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
 
   const handleCreateUser = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Validaciones frontend
+    if (createForm.password.length < 8) {
+      setError('La contraseña debe tener al menos 8 caracteres');
+      return;
+    }
+
+    if (!createForm.email.includes('@')) {
+      setError('El email debe tener un formato válido');
+      return;
+    }
+
     try {
       setError(null);
+      setSuccessMessage(null);
       await userService.createUser(createForm);
       setShowCreateForm(false);
       setCreateForm({
@@ -67,6 +84,8 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
         telefono: '',
         descripcion: '',
       });
+      setSuccessMessage('Usuario creado exitosamente');
+      setTimeout(() => setSuccessMessage(null), 3000);
       await loadUsuarios();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al crear usuario');
@@ -77,11 +96,25 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
     e.preventDefault();
     if (!editingUser) return;
 
+    // Validaciones frontend
+    if (!editForm.email?.includes('@')) {
+      setError('El email debe tener un formato válido');
+      return;
+    }
+
+    if (editForm.password && editForm.password.length < 8) {
+      setError('La nueva contraseña debe tener al menos 8 caracteres');
+      return;
+    }
+
     try {
       setError(null);
+      setSuccessMessage(null);
       await userService.updateUser(editingUser.id, editForm);
       setShowEditForm(false);
       setEditingUser(null);
+      setSuccessMessage('Usuario actualizado exitosamente');
+      setTimeout(() => setSuccessMessage(null), 3000);
       await loadUsuarios();
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Error al actualizar usuario');
@@ -114,6 +147,21 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
       is_active: user.is_active,
     });
     setShowEditForm(true);
+  };
+
+  const openPasswordModal = (user: User) => {
+    setSelectedUserForPassword(user);
+    setShowPasswordModal(true);
+  };
+
+  const handlePasswordChanged = () => {
+    setSuccessMessage('Contraseña cambiada exitosamente');
+    setTimeout(() => setSuccessMessage(null), 3000);
+  };
+
+  const clearMessages = () => {
+    setError(null);
+    setSuccessMessage(null);
   };
 
   const getRolColor = (rol: string) => {
@@ -173,8 +221,24 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
-            {error}
+          <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg flex justify-between items-center">
+            <span>{error}</span>
+            <button onClick={clearMessages} className="text-red-500 hover:text-red-700">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+          </div>
+        )}
+
+        {successMessage && (
+          <div className="mb-6 bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg flex justify-between items-center">
+            <span>{successMessage}</span>
+            <button onClick={clearMessages} className="text-green-500 hover:text-green-700">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
           </div>
         )}
 
@@ -208,7 +272,20 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {usuarios.map((usuario) => (
+                {usuarios.length === 0 ? (
+                  <tr>
+                    <td colSpan={6} className="px-6 py-8 text-center text-gray-500">
+                      <div className="flex flex-col items-center">
+                        <svg className="w-12 h-12 text-gray-300 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.25 2.25 0 11-4.5 0 2.25 2.25 0 014.5 0z" />
+                        </svg>
+                        <p className="text-lg font-medium">No hay usuarios registrados</p>
+                        <p className="text-sm">Comienza creando el primer usuario del sistema</p>
+                      </div>
+                    </td>
+                  </tr>
+                ) : (
+                  usuarios.map((usuario) => (
                   <tr key={usuario.id}>
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div>
@@ -237,22 +314,38 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
                       {usuario.last_login ? new Date(usuario.last_login).toLocaleDateString() : 'Nunca'}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                      <button
-                        onClick={() => openEditForm(usuario)}
-                        className="text-blue-600 hover:text-blue-900 mr-3"
-                      >
-                        Editar
-                      </button>
-                      <button
-                        onClick={() => handleDeleteUser(usuario.id)}
-                        className="text-red-600 hover:text-red-900"
-                        disabled={!usuario.is_active}
-                      >
-                        {usuario.is_active ? 'Desactivar' : 'Inactivo'}
-                      </button>
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => openEditForm(usuario)}
+                          className="text-blue-600 hover:text-blue-900 px-2 py-1 rounded text-xs hover:bg-blue-50"
+                          title="Editar usuario"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          onClick={() => openPasswordModal(usuario)}
+                          className="text-purple-600 hover:text-purple-900 px-2 py-1 rounded text-xs hover:bg-purple-50"
+                          title="Cambiar contraseña"
+                        >
+                          Contraseña
+                        </button>
+                        <button
+                          onClick={() => handleDeleteUser(usuario.id)}
+                          className={`px-2 py-1 rounded text-xs ${
+                            usuario.is_active 
+                              ? 'text-red-600 hover:text-red-900 hover:bg-red-50' 
+                              : 'text-gray-400 cursor-not-allowed'
+                          }`}
+                          disabled={!usuario.is_active}
+                          title={usuario.is_active ? 'Desactivar usuario' : 'Usuario inactivo'}
+                        >
+                          {usuario.is_active ? 'Desactivar' : 'Inactivo'}
+                        </button>
+                      </div>
                     </td>
                   </tr>
-                ))}
+                  ))
+                )}
               </tbody>
             </table>
           </div>
@@ -469,6 +562,18 @@ const UsuariosModule: React.FC<UsuariosModuleProps> = ({ onBack }) => {
             </div>
           </div>
         </div>
+      )}
+
+      {/* Modal de cambio de contraseña */}
+      {selectedUserForPassword && (
+        <ChangePasswordModal
+          isOpen={showPasswordModal}
+          onClose={() => {
+            setShowPasswordModal(false);
+            setSelectedUserForPassword(null);
+          }}
+          onSuccess={handlePasswordChanged}
+        />
       )}
     </div>
   );
