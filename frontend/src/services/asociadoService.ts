@@ -1,5 +1,84 @@
 const API_BASE_URL = 'http://5.189.146.163:8000/api/v1';
 
+// Tipo para el backend (con telefono_alternativo)
+export interface AsociadoBackendData {
+  tipo_documento: string;
+  numero_documento: string;
+  nombres: string;
+  apellidos: string;
+  correo_electronico: string;
+  telefono_principal: string;
+  estado: string;
+  fecha_ingreso: string;
+  observaciones: string;
+  datos_personales: {
+    fecha_nacimiento: string;
+    lugar_nacimiento?: string;
+    direccion: string;
+    barrio?: string;
+    ciudad: string;
+    departamento: string;
+    pais: string;
+    codigo_postal?: string;
+    telefono_alternativo?: string;
+    estado_civil?: string;
+    genero?: string;
+    grupo_sanguineo?: string;
+    eps?: string;
+    arl?: string;
+    numero_hijos?: number;
+    personas_a_cargo?: number;
+  };
+  datos_laborales: {
+    institucion_educativa: string;
+    cargo: string;
+    tipo_contrato: string;
+    salario?: number;
+    fecha_inicio?: string;
+    fecha_fin?: string;
+    beneficios?: string;
+    disponibilidad_horaria?: string;
+    disponibilidad_dias?: string;
+    experiencia?: string;
+    referencias?: any[];
+  };
+  informacion_academica: {
+    nivel_educativo?: string;
+    institucion?: string;
+    titulo_obtenido?: string;
+    ano_graduacion?: number;
+    en_estudio?: boolean;
+    programa_actual?: string;
+    institucion_actual?: string;
+    semestre_actual?: number;
+    certificaciones?: any[];
+  };
+  informacion_familiar: {
+    estado_civil?: string;
+    numero_hijos?: number;
+    personas_a_cargo?: number;
+    familiares?: any[];
+  };
+  informacion_economica: {
+    ingresos_mensuales?: number;
+    egresos_mensuales?: number;
+    obligaciones_financieras?: any[];
+    referencias_comerciales?: any[];
+    actividad_economica?: string;
+    fuentes_ingreso?: string;
+  };
+  documentos_adjuntos?: {
+    cedula?: boolean;
+    foto?: boolean;
+    certificado_laboral?: boolean;
+    referencias?: boolean;
+    otros?: any[];
+  };
+  contactos_emergencia?: any[];
+  historial_actividades?: any[];
+  evaluaciones?: any[];
+}
+
 export interface AsociadoFormData {
   tipo_documento: string;
   numero_documento: string;
@@ -220,14 +299,14 @@ class AsociadoService {
     return this.request<Asociado>(`/asociados/${id}`);
   }
 
-  async crearAsociado(data: AsociadoFormData): Promise<Asociado> {
+  async crearAsociado(data: AsociadoBackendData): Promise<Asociado> {
     return this.request<Asociado>('/asociados/', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async actualizarAsociado(id: number, data: Partial<AsociadoFormData>): Promise<Asociado> {
+  async actualizarAsociado(id: number, data: Partial<AsociadoBackendData>): Promise<Asociado> {
     return this.request<Asociado>(`/asociados/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),

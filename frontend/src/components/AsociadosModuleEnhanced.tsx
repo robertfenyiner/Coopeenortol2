@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { asociadoService, Asociado, AsociadoFormData } from '../services/asociadoService';
+import { asociadoService, Asociado, AsociadoBackendData } from '../services/asociadoService';
 import AsociadoFormExpanded from './AsociadoFormExpanded';
 
 // Importar el tipo FormDataExpanded del componente
@@ -463,24 +463,94 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       setLoading(true);
       setError(null);
 
-      // Convertir FormDataExpanded a AsociadoFormData
-      const dataToSend: AsociadoFormData = {
-        ...formData,
+      // Convertir FormDataExpanded a la estructura que espera el backend
+      const dataToSend = {
+        tipo_documento: formData.tipo_documento,
+        numero_documento: formData.numero_documento,
+        nombres: formData.nombres,
+        apellidos: formData.apellidos,
+        correo_electronico: formData.correo_electronico,
+        telefono_principal: formData.telefono_principal,
+        estado: formData.estado,
+        fecha_ingreso: formData.fecha_ingreso,
+        observaciones: formData.observaciones || "",
+        
         datos_personales: {
-          ...formData.datos_personales,
-          numero_hijos: 0, // Valor por defecto
-          personas_a_cargo: 0, // Valor por defecto
-        }
+          fecha_nacimiento: formData.datos_personales.fecha_nacimiento,
+          lugar_nacimiento: formData.datos_personales.lugar_nacimiento || "",
+          direccion: formData.datos_personales.direccion,
+          barrio: formData.datos_personales.barrio || "",
+          ciudad: formData.datos_personales.ciudad,
+          departamento: formData.datos_personales.departamento,
+          pais: formData.datos_personales.pais || "Colombia",
+          codigo_postal: formData.datos_personales.codigo_postal || "",
+          estado_civil: formData.datos_personales.estado_civil || "",
+          genero: formData.datos_personales.genero || "",
+          grupo_sanguineo: formData.datos_personales.grupo_sanguineo || "",
+          eps: formData.datos_personales.eps || "",
+          arl: formData.datos_personales.arl || "",
+          telefono_alternativo: formData.datos_personales.telefono_secundario || "",
+          numero_hijos: formData.datos_personales.numero_hijos || 0,
+          personas_a_cargo: formData.datos_personales.personas_a_cargo || 0,
+        },
+        
+        datos_laborales: {
+          institucion_educativa: formData.datos_laborales.institucion_educativa || "Sin especificar",
+          cargo: formData.datos_laborales.cargo || "Sin especificar",
+          tipo_contrato: formData.datos_laborales.tipo_contrato || "Sin especificar",
+          fecha_vinculacion: formData.datos_laborales.fecha_vinculacion || formData.fecha_ingreso,
+          salario_basico: formData.datos_laborales.salario_basico || 0,
+          horario: formData.datos_laborales.horario_trabajo || "",
+          dependencia: formData.datos_laborales.area_trabajo || "",
+        },
+        
+        informacion_familiar: {
+          familiares: formData.informacion_familiar.familiares || [],
+          contactos_emergencia: formData.informacion_familiar.contactos_emergencia || [],
+          personas_autorizadas: formData.informacion_familiar.personas_autorizadas || [],
+        },
+        
+        informacion_financiera: {
+          ingresos_mensuales: Math.max(formData.informacion_financiera.ingresos_mensuales || 0, 0),
+          ingresos_adicionales: formData.informacion_financiera.ingresos_adicionales || 0,
+          egresos_mensuales: Math.max(formData.informacion_financiera.egresos_mensuales || 0, 0),
+          ingresos_familiares: formData.informacion_financiera.ingresos_familiares || 0,
+          gastos_familiares: formData.informacion_financiera.gastos_familiares || 0,
+          obligaciones: formData.informacion_financiera.obligaciones || [],
+          referencias_comerciales: formData.informacion_financiera.referencias_comerciales || [],
+          activos: formData.informacion_financiera.activos || [],
+        },
+        
+        informacion_academica: {
+          nivel_educativo: formData.informacion_academica.nivel_educativo || "Sin especificar",
+          institucion: formData.informacion_academica.institucion || "",
+          titulo_obtenido: formData.informacion_academica.titulo_obtenido || "",
+          ano_graduacion: formData.informacion_academica.ano_graduacion || new Date().getFullYear(),
+          en_estudio: formData.informacion_academica.en_estudio || false,
+          programa_actual: formData.informacion_academica.programa_actual || "",
+          institucion_actual: formData.informacion_academica.institucion_actual || "",
+          semestre_actual: formData.informacion_academica.semestre_actual || 1,
+          certificaciones: formData.informacion_academica.certificaciones || [],
+        },
+        
+        informacion_vivienda: {
+          tipo_vivienda: formData.informacion_vivienda.tipo_vivienda || "Sin especificar",
+          tenencia: formData.informacion_vivienda.tenencia || "Sin especificar",
+          valor_arriendo: formData.informacion_vivienda.valor_arriendo || 0,
+          tiempo_residencia: formData.informacion_vivienda.tiempo_residencia || 0,
+          servicios_publicos: formData.informacion_vivienda.servicios_publicos || [],
+          estrato: formData.informacion_vivienda.estrato || 0,
+        },
       };
 
       let asociado: Asociado;
 
       if (editingAsociado) {
         // Actualizar asociado existente
-        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend);
+        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend as unknown as AsociadoBackendData);
       } else {
         // Crear nuevo asociado
-        asociado = await asociadoService.crearAsociado(dataToSend);
+        asociado = await asociadoService.crearAsociado(dataToSend as unknown as AsociadoBackendData);
       }
 
       // Si hay foto, subirla
