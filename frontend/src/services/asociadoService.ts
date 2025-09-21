@@ -264,8 +264,23 @@ class AsociadoService {
     });
 
     if (!response.ok) {
-      const errorData = await response.json().catch(() => ({}));
-      throw new Error(errorData.detail || `Error ${response.status}: ${response.statusText}`);
+      let errorMessage = `Error ${response.status}: ${response.statusText}`;
+      
+      try {
+        const errorData = await response.json();
+        if (errorData.detail) {
+          errorMessage = errorData.detail;
+        } else if (errorData.message) {
+          errorMessage = errorData.message;
+        } else if (typeof errorData === 'string') {
+          errorMessage = errorData;
+        }
+      } catch (parseError) {
+        // Si no se puede parsear el JSON, usar el mensaje por defecto
+        console.warn('No se pudo parsear la respuesta de error:', parseError);
+      }
+      
+      throw new Error(errorMessage);
     }
 
     return response.json();

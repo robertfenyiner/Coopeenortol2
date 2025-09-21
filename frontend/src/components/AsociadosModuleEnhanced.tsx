@@ -572,10 +572,23 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       let errorMessage = 'Error al guardar asociado';
       
       if (err instanceof Error) {
-        errorMessage = err.message;
+        // Intentar extraer el detalle del error del mensaje
+        try {
+          // Si el mensaje contiene JSON, parsearlo
+          if (err.message.includes('{') && err.message.includes('}')) {
+            const jsonStart = err.message.indexOf('{');
+            const jsonPart = err.message.substring(jsonStart);
+            const errorData = JSON.parse(jsonPart);
+            errorMessage = errorData.detail || errorData.message || err.message;
+          } else {
+            errorMessage = err.message;
+          }
+        } catch (parseError) {
+          errorMessage = err.message;
+        }
       } else if (typeof err === 'object' && err !== null) {
         // Si es un objeto de error del servidor
-        errorMessage = (err as any).detail || (err as any).message || JSON.stringify(err);
+        errorMessage = (err as any).detail || (err as any).message || 'Error desconocido';
       }
       
       setError(errorMessage);
