@@ -459,9 +459,15 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
+    // LOGS SUPER DETALLADOS PARA DEBUG
+    console.log('🚀 INICIO HANDLESUBMIT');
+    console.log('FormData:', formData);
+    
     try {
       setLoading(true);
       setError(null);
+
+      console.log('📝 Preparando datos para envío...');
 
       // Convertir FormDataExpanded a la estructura que espera el backend
       const dataToSend = {
@@ -543,15 +549,22 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
         },
       };
 
+      console.log('📤 Datos preparados para envío:', JSON.stringify(dataToSend, null, 2));
+
       let asociado: Asociado;
 
+      console.log('🔄 Enviando datos al backend...');
       if (editingAsociado) {
+        console.log('✏️ Actualizando asociado existente ID:', editingAsociado.id);
         // Actualizar asociado existente
         asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend as unknown as AsociadoBackendData);
       } else {
+        console.log('➕ Creando nuevo asociado...');
         // Crear nuevo asociado
         asociado = await asociadoService.crearAsociado(dataToSend as unknown as AsociadoBackendData);
       }
+
+      console.log('✅ Respuesta del backend:', asociado);
 
       // Si hay foto, subirla
       if (photoFile && asociado.id) {
@@ -568,43 +581,60 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       alert(editingAsociado ? 'Asociado actualizado exitosamente' : 'Asociado creado exitosamente');
       
     } catch (err) {
-      console.error('Error completo al guardar asociado:', err);
+      console.error('🔥 ERROR CAPTURADO EN HANDLESUBMIT:', err);
+      console.error('🔍 Tipo de error:', typeof err);
+      console.error('🔍 Constructor del error:', err?.constructor?.name);
+      console.error('🔍 Error completo:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
+      
       let errorMessage = 'Error al guardar asociado';
       
+      // INVESTIGACIÓN EXHAUSTIVA DEL ERROR
       if (err instanceof Error) {
-        console.log('Error message:', err.message);
+        console.log('✅ Es una instancia de Error');
+        console.log('📝 Message:', err.message);
+        console.log('📝 Stack:', err.stack);
         errorMessage = err.message;
-      } else if (typeof err === 'object' && err !== null) {
-        console.log('Error object:', err);
-        // Intentar extraer información útil del objeto de error
+      } else if (err && typeof err === 'object') {
+        console.log('⚠️ Es un objeto pero no Error');
+        console.log('🔍 Keys del objeto:', Object.keys(err));
+        console.log('🔍 Valores:', Object.values(err));
+        
         const errorObj = err as any;
+        
+        // Buscar el mensaje en todas las propiedades posibles
         if (errorObj.detail) {
+          console.log('📄 Tiene detail:', errorObj.detail);
           errorMessage = Array.isArray(errorObj.detail) 
             ? errorObj.detail.map((e: any) => e.msg || e).join(', ')
-            : errorObj.detail;
+            : String(errorObj.detail);
         } else if (errorObj.message) {
-          errorMessage = errorObj.message;
+          console.log('📄 Tiene message:', errorObj.message);
+          errorMessage = String(errorObj.message);
         } else if (errorObj.error) {
-          errorMessage = errorObj.error;
+          console.log('📄 Tiene error:', errorObj.error);
+          errorMessage = String(errorObj.error);
         } else {
-          // Como último recurso, convertir a string de forma legible
-          try {
-            errorMessage = JSON.stringify(errorObj, null, 2);
-          } catch (stringifyError) {
-            errorMessage = 'Error desconocido del servidor';
-          }
+          console.log('📄 Convirtiendo objeto completo a string');
+          errorMessage = `Error del servidor: ${JSON.stringify(errorObj)}`;
         }
       } else {
+        console.log('❓ Tipo desconocido de error');
         errorMessage = String(err);
       }
       
-      // Log adicional para debugging
-      console.log('Error message final:', errorMessage);
+      console.log('🎯 Error message final:', errorMessage);
       
+      // Forzar que se muestre el error en múltiples lugares
       setError(errorMessage);
+      alert(`🚨 ERROR DETALLADO:\n${errorMessage}\n\nRevisa la consola para más detalles.`);
       
-      // También mostrar un alert para debug
-      alert(`Error detallado: ${errorMessage}`);
+      // También intentar mostrar en el DOM directamente
+      const errorDiv = document.createElement('div');
+      errorDiv.style.cssText = 'position:fixed;top:10px;right:10px;background:red;color:white;padding:10px;z-index:9999;max-width:400px;';
+      errorDiv.innerHTML = `<strong>ERROR:</strong><br>${errorMessage}`;
+      document.body.appendChild(errorDiv);
+      setTimeout(() => document.body.removeChild(errorDiv), 10000);
+      
     } finally {
       setLoading(false);
     }
