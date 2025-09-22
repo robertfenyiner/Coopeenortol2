@@ -136,10 +136,10 @@ interface FormDataExpanded {
 }
 
 interface AsociadosModuleEnhancedProps {
-  // onClose?: () => void; // Removido ya que no se usa
+  onBack?: () => void;
 }
 
-const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
+const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBack }) => {
   const [asociados, setAsociados] = useState<Asociado[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -683,7 +683,19 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">Gestión de Asociados</h1>
+        <div className="flex items-center">
+          {onBack && (
+            <button
+              onClick={onBack}
+              className="mr-4 p-2 hover:bg-gray-100 rounded"
+            >
+              <svg className="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+            </button>
+          )}
+          <h1 className="text-3xl font-bold text-gray-900">Gestión de Asociados</h1>
+        </div>
         <button
           onClick={handleCrearAsociado}
           className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"
