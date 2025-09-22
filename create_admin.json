@@ -1,8 +1,0 @@
-{
-  "nombres": "Admin",
-  "apellidos": "Sistema", 
-  "correo_electronico": "admin@coopeenortol.com",
-  "password": "admin123",
-  "es_activo": true,
-  "es_admin": true
-}

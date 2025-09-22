@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { asociadoService, Asociado, AsociadoBackendData } from '../services/asociadoService';
+import { asociadoService, Asociado, AsociadoFormData } from '../services/asociadoService';
 import AsociadoFormExpanded from './AsociadoFormExpanded';
 
 // Importar el tipo FormDataExpanded del componente
@@ -29,8 +29,6 @@ interface FormDataExpanded {
     grupo_sanguineo: string;
     eps: string;
     arl: string;
-    numero_hijos: number;
-    personas_a_cargo: number;
   };
   
   informacion_academica: {
@@ -136,10 +134,10 @@ interface FormDataExpanded {
 }
 
 interface AsociadosModuleEnhancedProps {
-  onBack?: () => void;
+  // onClose?: () => void; // Removido ya que no se usa
 }
 
-const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBack }) => {
+const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
   const [asociados, setAsociados] = useState<Asociado[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -247,16 +245,7 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBac
       const response = await asociadoService.listarAsociados({ limit: 50 });
       setAsociados(response.datos);
     } catch (err) {
-      console.error('Error al cargar asociados:', err);
-      let errorMessage = 'Error al cargar asociados';
-      
-      if (err instanceof Error) {
-        errorMessage = err.message;
-      } else if (typeof err === 'object' && err !== null) {
-        errorMessage = (err as any).detail || (err as any).message || 'Error de conexión con el servidor';
-      }
-      
-      setError(errorMessage);
+      setError(err instanceof Error ? err.message : 'Error al cargar asociados');
     } finally {
       setLoading(false);
     }
@@ -459,112 +448,29 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBac
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // LOGS SUPER DETALLADOS PARA DEBUG
-    console.log('🚀 INICIO HANDLESUBMIT');
-    console.log('FormData:', formData);
-    
     try {
       setLoading(true);
       setError(null);
 
-      console.log('📝 Preparando datos para envío...');
-
-      // Convertir FormDataExpanded a la estructura que espera el backend
-      const dataToSend = {
-        tipo_documento: formData.tipo_documento,
-        numero_documento: formData.numero_documento,
-        nombres: formData.nombres,
-        apellidos: formData.apellidos,
-        correo_electronico: formData.correo_electronico,
-        telefono_principal: formData.telefono_principal,
-        estado: formData.estado,
-        fecha_ingreso: formData.fecha_ingreso,
-        observaciones: formData.observaciones || "",
-        
+      // Convertir FormDataExpanded a AsociadoFormData
+      const dataToSend: AsociadoFormData = {
+        ...formData,
         datos_personales: {
-          fecha_nacimiento: formData.datos_personales.fecha_nacimiento,
-          lugar_nacimiento: formData.datos_personales.lugar_nacimiento || "",
-          direccion: formData.datos_personales.direccion,
-          barrio: formData.datos_personales.barrio || "",
-          ciudad: formData.datos_personales.ciudad,
-          departamento: formData.datos_personales.departamento,
-          pais: formData.datos_personales.pais || "Colombia",
-          codigo_postal: formData.datos_personales.codigo_postal || "",
-          estado_civil: formData.datos_personales.estado_civil || "",
-          genero: formData.datos_personales.genero || "",
-          grupo_sanguineo: formData.datos_personales.grupo_sanguineo || "",
-          eps: formData.datos_personales.eps || "",
-          arl: formData.datos_personales.arl || "",
-          telefono_alternativo: formData.datos_personales.telefono_secundario || "",
-          numero_hijos: formData.datos_personales.numero_hijos || 0,
-          personas_a_cargo: formData.datos_personales.personas_a_cargo || 0,
-        },
-        
-        datos_laborales: {
-          institucion_educativa: formData.datos_laborales.institucion_educativa || "Sin especificar",
-          cargo: formData.datos_laborales.cargo || "Sin especificar",
-          tipo_contrato: formData.datos_laborales.tipo_contrato || "Sin especificar",
-          fecha_vinculacion: formData.datos_laborales.fecha_vinculacion || formData.fecha_ingreso,
-          salario_basico: formData.datos_laborales.salario_basico || 0,
-          horario: formData.datos_laborales.horario_trabajo || "",
-          dependencia: formData.datos_laborales.area_trabajo || "",
-        },
-        
-        informacion_familiar: {
-          familiares: formData.informacion_familiar.familiares || [],
-          contactos_emergencia: formData.informacion_familiar.contactos_emergencia || [],
-          personas_autorizadas: formData.informacion_familiar.personas_autorizadas || [],
-        },
-        
-        informacion_financiera: {
-          ingresos_mensuales: Math.max(formData.informacion_financiera.ingresos_mensuales || 0, 0),
-          ingresos_adicionales: formData.informacion_financiera.ingresos_adicionales || 0,
-          egresos_mensuales: Math.max(formData.informacion_financiera.egresos_mensuales || 0, 0),
-          ingresos_familiares: formData.informacion_financiera.ingresos_familiares || 0,
-          gastos_familiares: formData.informacion_financiera.gastos_familiares || 0,
-          obligaciones: formData.informacion_financiera.obligaciones || [],
-          referencias_comerciales: formData.informacion_financiera.referencias_comerciales || [],
-          activos: formData.informacion_financiera.activos || [],
-        },
-        
-        informacion_academica: {
-          nivel_educativo: formData.informacion_academica.nivel_educativo || "Sin especificar",
-          institucion: formData.informacion_academica.institucion || "",
-          titulo_obtenido: formData.informacion_academica.titulo_obtenido || "",
-          ano_graduacion: formData.informacion_academica.ano_graduacion || new Date().getFullYear(),
-          en_estudio: formData.informacion_academica.en_estudio || false,
-          programa_actual: formData.informacion_academica.programa_actual || "",
-          institucion_actual: formData.informacion_academica.institucion_actual || "",
-          semestre_actual: formData.informacion_academica.semestre_actual || 1,
-          certificaciones: formData.informacion_academica.certificaciones || [],
-        },
-        
-        informacion_vivienda: {
-          tipo_vivienda: formData.informacion_vivienda.tipo_vivienda || "Sin especificar",
-          tenencia: formData.informacion_vivienda.tenencia || "Sin especificar",
-          valor_arriendo: formData.informacion_vivienda.valor_arriendo || 0,
-          tiempo_residencia: formData.informacion_vivienda.tiempo_residencia || 0,
-          servicios_publicos: formData.informacion_vivienda.servicios_publicos || [],
-          estrato: formData.informacion_vivienda.estrato || 0,
-        },
+          ...formData.datos_personales,
+          numero_hijos: 0, // Valor por defecto
+          personas_a_cargo: 0, // Valor por defecto
+        }
       };
-
-      console.log('📤 Datos preparados para envío:', JSON.stringify(dataToSend, null, 2));
 
       let asociado: Asociado;
 
-      console.log('🔄 Enviando datos al backend...');
       if (editingAsociado) {
-        console.log('✏️ Actualizando asociado existente ID:', editingAsociado.id);
         // Actualizar asociado existente
-        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend as unknown as AsociadoBackendData);
+        asociado = await asociadoService.actualizarAsociado(editingAsociado.id, dataToSend);
       } else {
-        console.log('➕ Creando nuevo asociado...');
         // Crear nuevo asociado
-        asociado = await asociadoService.crearAsociado(dataToSend as unknown as AsociadoBackendData);
+        asociado = await asociadoService.crearAsociado(dataToSend);
       }
-
-      console.log('✅ Respuesta del backend:', asociado);
 
       // Si hay foto, subirla
       if (photoFile && asociado.id) {
@@ -581,60 +487,7 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBac
       alert(editingAsociado ? 'Asociado actualizado exitosamente' : 'Asociado creado exitosamente');
       
     } catch (err) {
-      console.error('🔥 ERROR CAPTURADO EN HANDLESUBMIT:', err);
-      console.error('🔍 Tipo de error:', typeof err);
-      console.error('🔍 Constructor del error:', err?.constructor?.name);
-      console.error('🔍 Error completo:', JSON.stringify(err, Object.getOwnPropertyNames(err)));
-      
-      let errorMessage = 'Error al guardar asociado';
-      
-      // INVESTIGACIÓN EXHAUSTIVA DEL ERROR
-      if (err instanceof Error) {
-        console.log('✅ Es una instancia de Error');
-        console.log('📝 Message:', err.message);
-        console.log('📝 Stack:', err.stack);
-        errorMessage = err.message;
-      } else if (err && typeof err === 'object') {
-        console.log('⚠️ Es un objeto pero no Error');
-        console.log('🔍 Keys del objeto:', Object.keys(err));
-        console.log('🔍 Valores:', Object.values(err));
-        
-        const errorObj = err as any;
-        
-        // Buscar el mensaje en todas las propiedades posibles
-        if (errorObj.detail) {
-          console.log('📄 Tiene detail:', errorObj.detail);
-          errorMessage = Array.isArray(errorObj.detail) 
-            ? errorObj.detail.map((e: any) => e.msg || e).join(', ')
-            : String(errorObj.detail);
-        } else if (errorObj.message) {
-          console.log('📄 Tiene message:', errorObj.message);
-          errorMessage = String(errorObj.message);
-        } else if (errorObj.error) {
-          console.log('📄 Tiene error:', errorObj.error);
-          errorMessage = String(errorObj.error);
-        } else {
-          console.log('📄 Convirtiendo objeto completo a string');
-          errorMessage = `Error del servidor: ${JSON.stringify(errorObj)}`;
-        }
-      } else {
-        console.log('❓ Tipo desconocido de error');
-        errorMessage = String(err);
-      }
-      
-      console.log('🎯 Error message final:', errorMessage);
-      
-      // Forzar que se muestre el error en múltiples lugares
-      setError(errorMessage);
-      alert(`🚨 ERROR DETALLADO:\n${errorMessage}\n\nRevisa la consola para más detalles.`);
-      
-      // También intentar mostrar en el DOM directamente
-      const errorDiv = document.createElement('div');
-      errorDiv.style.cssText = 'position:fixed;top:10px;right:10px;background:red;color:white;padding:10px;z-index:9999;max-width:400px;';
-      errorDiv.innerHTML = `<strong>ERROR:</strong><br>${errorMessage}`;
-      document.body.appendChild(errorDiv);
-      setTimeout(() => document.body.removeChild(errorDiv), 10000);
-      
+      setError(err instanceof Error ? err.message : 'Error al guardar asociado');
     } finally {
       setLoading(false);
     }
@@ -683,19 +536,7 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = ({ onBac
   return (
     <div className="p-6">
       <div className="flex justify-between items-center mb-6">
-        <div className="flex items-center">
-          {onBack && (
-            <button
-              onClick={onBack}
-              className="mr-4 p-2 hover:bg-gray-100 rounded"
-            >
-              <svg className="h-6 w-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-            </button>
-          )}
-          <h1 className="text-3xl font-bold text-gray-900">Gestión de Asociados</h1>
-        </div>
+        <h1 className="text-3xl font-bold text-gray-900">Gestión de Asociados</h1>
         <button
           onClick={handleCrearAsociado}
           className="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700 transition-colors"

@@ -16,7 +16,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
     setError('');
 
     try {
-      const response = await fetch('http://5.189.146.163:8000/api/v1/auth/login', {
+      const response = await fetch('/api/v1/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -32,7 +32,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin }) => {
         localStorage.setItem('token', data.access_token);
         
         // Obtener info del usuario
-        const userResponse = await fetch('http://5.189.146.163:8000/api/v1/auth/me', {
+        const userResponse = await fetch('/api/v1/auth/me', {
           headers: {
             'Authorization': `Bearer ${data.access_token}`,
           },

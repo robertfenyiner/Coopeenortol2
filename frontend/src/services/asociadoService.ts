@@ -1,83 +1,4 @@
-const API_BASE_URL = 'http://5.189.146.163:8000/api/v1';
-
-// Tipo para el backend (con telefono_alternativo)
-export interface AsociadoBackendData {
-  tipo_documento: string;
-  numero_documento: string;
-  nombres: string;
-  apellidos: string;
-  correo_electronico: string;
-  telefono_principal: string;
-  estado: string;
-  fecha_ingreso: string;
-  observaciones: string;
-  datos_personales: {
-    fecha_nacimiento: string;
-    lugar_nacimiento?: string;
-    direccion: string;
-    barrio?: string;
-    ciudad: string;
-    departamento: string;
-    pais: string;
-    codigo_postal?: string;
-    telefono_alternativo?: string;
-    estado_civil?: string;
-    genero?: string;
-    grupo_sanguineo?: string;
-    eps?: string;
-    arl?: string;
-    numero_hijos?: number;
-    personas_a_cargo?: number;
-  };
-  datos_laborales: {
-    institucion_educativa: string;
-    cargo: string;
-    tipo_contrato: string;
-    salario?: number;
-    fecha_inicio?: string;
-    fecha_fin?: string;
-    beneficios?: string;
-    disponibilidad_horaria?: string;
-    disponibilidad_dias?: string;
-    experiencia?: string;
-    referencias?: any[];
-  };
-  informacion_academica: {
-    nivel_educativo?: string;
-    institucion?: string;
-    titulo_obtenido?: string;
-    ano_graduacion?: number;
-    en_estudio?: boolean;
-    programa_actual?: string;
-    institucion_actual?: string;
-    semestre_actual?: number;
-    certificaciones?: any[];
-  };
-  informacion_familiar: {
-    estado_civil?: string;
-    numero_hijos?: number;
-    personas_a_cargo?: number;
-    familiares?: any[];
-  };
-  informacion_economica: {
-    ingresos_mensuales?: number;
-    egresos_mensuales?: number;
-    obligaciones_financieras?: any[];
-    referencias_comerciales?: any[];
-    actividad_economica?: string;
-    fuentes_ingreso?: string;
-  };
-  documentos_adjuntos?: {
-    cedula?: boolean;
-    foto?: boolean;
-    certificado_laboral?: boolean;
-    referencias?: boolean;
-    otros?: any[];
-  };
-  contactos_emergencia?: any[];
-  historial_actividades?: any[];
-  evaluaciones?: any[];
-}
+const API_BASE_URL = 'http://localhost:8000/api/v1';
 
 export interface AsociadoFormData {
   tipo_documento: string;
@@ -249,9 +170,9 @@ export interface AsociadosResponse {
 class AsociadoService {
   private async request<T>(endpoint: string, options: RequestInit = {}): Promise<T> {
     const token = localStorage.getItem('token');
-    const headers: Record<string, string> = {
+    const headers: HeadersInit = {
       'Content-Type': 'application/json',
-      ...(options.headers as Record<string, string>),
+      ...options.headers,
     };
 
     if (token) {
@@ -264,61 +185,8 @@ class AsociadoService {
     });
 
     if (!response.ok) {
-      let errorMessage = `Error ${response.status}: ${response.statusText}`;
-      
-      try {
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          const errorData = await response.json();
-          console.error('Error del servidor:', errorData);
-          
-          // Manejo específico por código de error
-          if (response.status === 422) {
-            if (errorData.detail) {
-              if (Array.isArray(errorData.detail)) {
-                // Si es un array de errores de validación
-                const validationErrors = errorData.detail.map((err: any) => {
-                  if (err.loc && err.msg) {
-                    return `${err.loc.join('.')}: ${err.msg}`;
-                  }
-                  return err.msg || err;
-                }).join(', ');
-                errorMessage = `Error de validación: ${validationErrors}`;
-              } else if (typeof errorData.detail === 'string') {
-                errorMessage = errorData.detail;
-              } else {
-                errorMessage = `Error de validación: ${JSON.stringify(errorData.detail)}`;
-              }
-            } else {
-              errorMessage = 'Error de validación en los datos enviados';
-            }
-          } else if (response.status === 401) {
-            errorMessage = 'No autorizado. Debe iniciar sesión.';
-          } else if (response.status === 403) {
-            errorMessage = 'No tiene permisos para realizar esta acción.';
-          } else if (response.status === 400) {
-            errorMessage = errorData.detail || errorData.message || 'Solicitud incorrecta';
-          } else {
-            errorMessage = errorData.detail || errorData.message || errorMessage;
-          }
-        } else {
-          // Si no es JSON, usar el texto de respuesta
-          const textError = await response.text();
-          if (textError) {
-            errorMessage = textError;
-          }
-        }
-      } catch (parseError) {
-        console.error('Error al parsear respuesta de error:', parseError);
-        // Si no se puede parsear, usar mensaje por defecto mejorado
-        if (response.status === 422) {
-          errorMessage = 'Error de validación: verifique que todos los campos requeridos estén completos';
-        } else if (response.status === 401) {
-          errorMessage = 'No autorizado. Debe iniciar sesión.';
-        }
-      }
-      
-      throw new Error(errorMessage);
+      const errorData = await response.json().catch(() => ({}));
+      throw new Error(errorData.detail || `Error ${response.status}: ${response.statusText}`);
     }
 
     return response.json();
@@ -352,14 +220,14 @@ class AsociadoService {
     return this.request<Asociado>(`/asociados/${id}`);
   }
 
-  async crearAsociado(data: AsociadoBackendData): Promise<Asociado> {
+  async crearAsociado(data: AsociadoFormData): Promise<Asociado> {
     return this.request<Asociado>('/asociados/', {
       method: 'POST',
       body: JSON.stringify(data),
     });
   }
 
-  async actualizarAsociado(id: number, data: Partial<AsociadoBackendData>): Promise<Asociado> {
+  async actualizarAsociado(id: number, data: Partial<AsociadoFormData>): Promise<Asociado> {
     return this.request<Asociado>(`/asociados/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),

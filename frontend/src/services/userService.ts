@@ -36,9 +36,9 @@ interface UpdateUserData {
 }
 
 class UserService {
-  private baseUrl = 'http://5.189.146.163:8000/api/v1/auth';
+  private baseUrl = 'http://localhost:8000/api/v1/auth';
 
-  private getAuthHeaders(): Record<string, string> {
+  private getAuthHeaders(): HeadersInit {
     const token = localStorage.getItem('token');
     return {
       'Content-Type': 'application/json',
