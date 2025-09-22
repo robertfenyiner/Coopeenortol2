@@ -568,30 +568,43 @@ const AsociadosModuleEnhanced: React.FC<AsociadosModuleEnhancedProps> = () => {
       alert(editingAsociado ? 'Asociado actualizado exitosamente' : 'Asociado creado exitosamente');
       
     } catch (err) {
-      console.error('Error al guardar asociado:', err);
+      console.error('Error completo al guardar asociado:', err);
       let errorMessage = 'Error al guardar asociado';
       
       if (err instanceof Error) {
-        // Intentar extraer el detalle del error del mensaje
-        try {
-          // Si el mensaje contiene JSON, parsearlo
-          if (err.message.includes('{') && err.message.includes('}')) {
-            const jsonStart = err.message.indexOf('{');
-            const jsonPart = err.message.substring(jsonStart);
-            const errorData = JSON.parse(jsonPart);
-            errorMessage = errorData.detail || errorData.message || err.message;
-          } else {
-            errorMessage = err.message;
-          }
-        } catch (parseError) {
-          errorMessage = err.message;
-        }
+        console.log('Error message:', err.message);
+        errorMessage = err.message;
       } else if (typeof err === 'object' && err !== null) {
-        // Si es un objeto de error del servidor
-        errorMessage = (err as any).detail || (err as any).message || 'Error desconocido';
+        console.log('Error object:', err);
+        // Intentar extraer información útil del objeto de error
+        const errorObj = err as any;
+        if (errorObj.detail) {
+          errorMessage = Array.isArray(errorObj.detail) 
+            ? errorObj.detail.map((e: any) => e.msg || e).join(', ')
+            : errorObj.detail;
+        } else if (errorObj.message) {
+          errorMessage = errorObj.message;
+        } else if (errorObj.error) {
+          errorMessage = errorObj.error;
+        } else {
+          // Como último recurso, convertir a string de forma legible
+          try {
+            errorMessage = JSON.stringify(errorObj, null, 2);
+          } catch (stringifyError) {
+            errorMessage = 'Error desconocido del servidor';
+          }
+        }
+      } else {
+        errorMessage = String(err);
       }
       
+      // Log adicional para debugging
+      console.log('Error message final:', errorMessage);
+      
       setError(errorMessage);
+      
+      // También mostrar un alert para debug
+      alert(`Error detallado: ${errorMessage}`);
     } finally {
       setLoading(false);
     }

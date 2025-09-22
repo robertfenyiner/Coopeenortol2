@@ -4,7 +4,7 @@
 echo "🚀 Iniciando actualización completa del VPS..."
 
 # 1. Ir al directorio del proyecto
-cd /root/Coopeenortol2
+cd /opt/coopeenortol
 
 # 2. Hacer pull de los últimos cambios
 echo "📥 Descargando últimos cambios..."

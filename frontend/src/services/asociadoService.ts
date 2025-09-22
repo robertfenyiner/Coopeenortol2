@@ -267,17 +267,55 @@ class AsociadoService {
       let errorMessage = `Error ${response.status}: ${response.statusText}`;
       
       try {
-        const errorData = await response.json();
-        if (errorData.detail) {
-          errorMessage = errorData.detail;
-        } else if (errorData.message) {
-          errorMessage = errorData.message;
-        } else if (typeof errorData === 'string') {
-          errorMessage = errorData;
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const errorData = await response.json();
+          console.error('Error del servidor:', errorData);
+          
+          // Manejo específico por código de error
+          if (response.status === 422) {
+            if (errorData.detail) {
+              if (Array.isArray(errorData.detail)) {
+                // Si es un array de errores de validación
+                const validationErrors = errorData.detail.map((err: any) => {
+                  if (err.loc && err.msg) {
+                    return `${err.loc.join('.')}: ${err.msg}`;
+                  }
+                  return err.msg || err;
+                }).join(', ');
+                errorMessage = `Error de validación: ${validationErrors}`;
+              } else if (typeof errorData.detail === 'string') {
+                errorMessage = errorData.detail;
+              } else {
+                errorMessage = `Error de validación: ${JSON.stringify(errorData.detail)}`;
+              }
+            } else {
+              errorMessage = 'Error de validación en los datos enviados';
+            }
+          } else if (response.status === 401) {
+            errorMessage = 'No autorizado. Debe iniciar sesión.';
+          } else if (response.status === 403) {
+            errorMessage = 'No tiene permisos para realizar esta acción.';
+          } else if (response.status === 400) {
+            errorMessage = errorData.detail || errorData.message || 'Solicitud incorrecta';
+          } else {
+            errorMessage = errorData.detail || errorData.message || errorMessage;
+          }
+        } else {
+          // Si no es JSON, usar el texto de respuesta
+          const textError = await response.text();
+          if (textError) {
+            errorMessage = textError;
+          }
         }
       } catch (parseError) {
-        // Si no se puede parsear el JSON, usar el mensaje por defecto
-        console.warn('No se pudo parsear la respuesta de error:', parseError);
+        console.error('Error al parsear respuesta de error:', parseError);
+        // Si no se puede parsear, usar mensaje por defecto mejorado
+        if (response.status === 422) {
+          errorMessage = 'Error de validación: verifique que todos los campos requeridos estén completos';
+        } else if (response.status === 401) {
+          errorMessage = 'No autorizado. Debe iniciar sesión.';
+        }
       }
       
       throw new Error(errorMessage);
