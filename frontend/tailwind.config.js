@@ -2,8 +2,7 @@
 export default {
   content: [
     "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-    "./src/**/*.{vue,svelte}",
+    "./src/**/*.{js,ts,jsx,tsx}"
   ],
   safelist: [
     // Tamaños necesarios
