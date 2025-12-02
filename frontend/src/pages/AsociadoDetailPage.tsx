@@ -6,7 +6,7 @@ import Button from '../components/ui/Button';
 import { Asociado } from '../types';
 import api from '../lib/axios';
 import { useToast } from '../contexts/ToastContext';
-import { formatDate, formatCurrency } from '../lib/utils';
+import { formatDate, formatCurrency, calcularTiempoAsociado } from '../lib/utils';
 import ProfilePhoto from '../components/ProfilePhoto';
 import DocumentList from '../components/DocumentList';
 
@@ -130,6 +130,9 @@ export default function AsociadoDetailPage() {
             <div className="ml-4">
               <p className="text-sm text-gray-600">Fecha de Ingreso</p>
               <p className="text-lg font-semibold">{formatDate(asociado.fecha_ingreso)}</p>
+              <p className="text-xs text-gray-500 mt-1">
+                {calcularTiempoAsociado(asociado.fecha_ingreso)}
+              </p>
             </div>
           </div>
         </Card>
