@@ -148,6 +148,51 @@ class AsociadoEnDB(AsociadoBase):
         orm_mode = True
 
 
+class AsociadoDetalle(BaseModel):
+    """Modelo flexible para vista de detalle de asociado"""
+    id: int
+    tipo_documento: str
+    numero_documento: str
+    nombres: str
+    apellidos: str
+    correo_electronico: Optional[str] = None
+    telefono_principal: Optional[str] = None
+    estado: str
+    fecha_ingreso: date
+    hoja_vida_url: Optional[str] = None
+    foto_url: Optional[str] = None
+    observaciones: Optional[str] = None
+    datos_personales: Optional[dict] = None
+    datos_laborales: Optional[dict] = None
+    informacion_familiar: Optional[dict] = None
+    informacion_financiera: Optional[dict] = None
+    informacion_academica: Optional[dict] = None
+    informacion_vivienda: Optional[dict] = None
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
+class AsociadoSimple(BaseModel):
+    """Modelo simplificado para listados"""
+    id: int
+    tipo_documento: str
+    numero_documento: str
+    nombres: str
+    apellidos: str
+    correo_electronico: Optional[str] = None
+    telefono_principal: Optional[str] = None
+    estado: str
+    fecha_ingreso: date
+    created_at: datetime
+    updated_at: datetime
+
+    class Config:
+        orm_mode = True
+
+
 class InfoPaginacion(BaseModel):
     """Información de paginación para listados"""
     total: int = Field(description="Total de registros")
@@ -160,7 +205,7 @@ class InfoPaginacion(BaseModel):
 
 class AsociadosListResponse(BaseModel):
     """Respuesta para listado de asociados con paginación"""
-    datos: List[AsociadoEnDB] = Field(description="Lista de asociados")
+    datos: List[AsociadoSimple] = Field(description="Lista de asociados")
     paginacion: InfoPaginacion = Field(description="Información de paginación")
 
 

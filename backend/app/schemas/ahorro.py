@@ -79,6 +79,7 @@ class CuentaAhorroResponse(CuentaAhorroBase):
     abierta_por_id: int
     
     class Config:
+        orm_mode = True
         from_attributes = True
 
 
@@ -148,6 +149,7 @@ class MovimientoAhorroResponse(BaseModel):
     fecha_movimiento: datetime
     
     class Config:
+        orm_mode = True
         from_attributes = True
 
 
@@ -169,6 +171,7 @@ class ConfiguracionAhorroResponse(BaseModel):
     updated_at: datetime
     
     class Config:
+        orm_mode = True
         from_attributes = True
 
 

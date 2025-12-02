@@ -1,0 +1,1674 @@
+nohup: ignoring input
+INFO:     Will watch for changes in these directories: ['/root/projects/Coopeenortol/backend']
+INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+INFO:     Started reloader process [38625] using WatchFiles
+INFO:     Started server process [38627]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:19492 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19492 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     158.220.100.148:54604 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:54610 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19503 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19499 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19504 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19496 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19500 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19502 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19503 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19504 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19499 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19502 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19496 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19499 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19503 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19504 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19500 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19499 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19500 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19504 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19503 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19504 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19499 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19500 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19500 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19499 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     158.220.100.148:42064 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:42078 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19517 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19515 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19517 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19515 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19515 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19517 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19464 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19517 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19515 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19517 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19464 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19465 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19466 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19465 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19517 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19515 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19515 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19465 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19515 - "GET /api/v1/ahorros/ HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 75, in listar_cuentas_ahorro
+    "cuentas": [CuentaAhorroResponse.from_orm(c) for c in cuentas],
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 75, in <listcomp>
+    "cuentas": [CuentaAhorroResponse.from_orm(c) for c in cuentas],
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:19465 - "GET /api/v1/ahorros/ HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 75, in listar_cuentas_ahorro
+    "cuentas": [CuentaAhorroResponse.from_orm(c) for c in cuentas],
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 75, in <listcomp>
+    "cuentas": [CuentaAhorroResponse.from_orm(c) for c in cuentas],
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+WARNING:  WatchFiles detected changes in 'app/schemas/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [38627]
+INFO:     Started server process [39094]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     158.220.100.148:51242 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:51252 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21399 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21399 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21399 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21399 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21400 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21404 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21399 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21400 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21407 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21408 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21404 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21407 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21406 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21408 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21408 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21408 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21413 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21408 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21413 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21414 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21421 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21416 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21414 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21406 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21406 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21414 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21414 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21414 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21387 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21394 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21388 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21387 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21388 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21387 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21387 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21388 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21388 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21387 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21394 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21388 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21414 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21397 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21387 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21414 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21388 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21394 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/schemas/asociado.py', 'app/schemas/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39094]
+INFO:     Started server process [39230]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:21384 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21389 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21386 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21384 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21389 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21393 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21386 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21389 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21384 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21384 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21390 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "OPTIONS /api/v1/asociados/4/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21435 - "OPTIONS /api/v1/asociados/4/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21435 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21394 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21435 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21389 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21389 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21389 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21389 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21393 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21389 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21430 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21432 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21431 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21431 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21393 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "OPTIONS /api/v1/creditos/5/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21393 - "OPTIONS /api/v1/creditos/5/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21430 - "GET /api/v1/creditos/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21393 - "OPTIONS /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21393 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "OPTIONS /api/v1/creditos/1/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/1/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/1/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/1/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "OPTIONS /api/v1/creditos/nuevo/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/nuevo/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/nuevo/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/nuevo/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21394 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21394 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21413 - "OPTIONS /api/v1/ahorros/3/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "OPTIONS /api/v1/ahorros/3/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21413 - "GET /api/v1/ahorros/3/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/3/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21413 - "OPTIONS /api/v1/ahorros/3 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/3 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:21413 - "GET /api/v1/ahorros/3 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:21416 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21416 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21418 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21418 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21418 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21432 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21418 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21432 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21378 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21378 - "GET /api/v1/asociados/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21378 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21404 - "GET /api/v1/asociados/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21409 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21409 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21409 - "GET /api/v1/creditos/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21418 - "GET /api/v1/creditos/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21409 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21418 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21421 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21421 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21421 - "GET /api/v1/creditos/nuevo/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21423 - "GET /api/v1/creditos/nuevo/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21421 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21423 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21421 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21423 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21381 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21381 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21381 - "OPTIONS /api/v1/ahorros/4/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21383 - "OPTIONS /api/v1/ahorros/4/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21383 - "GET /api/v1/ahorros/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21381 - "GET /api/v1/ahorros/4/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21383 - "OPTIONS /api/v1/ahorros/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21383 - "GET /api/v1/ahorros/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:21381 - "GET /api/v1/ahorros/4 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:21378 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21378 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     158.220.100.148:47760 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:47768 - "GET /api/v1/asociados/1/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21387 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21387 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19500 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21387 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     158.220.100.148:34544 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:34558 - "GET /api/v1/asociados/1/ HTTP/1.1" 307 Temporary Redirect
+INFO:     158.220.100.148:36954 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:36964 - "GET /api/v1/asociados/1 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+WARNING:  WatchFiles detected changes in 'app/schemas/asociado.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39230]
+INFO:     Started server process [39715]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/asociados.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39715]
+Process SpawnProcess-5:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/config.py", line 433, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/root/projects/Coopeenortol/backend/app/main.py", line 5, in <module>
+    from app.api.v1.api import api_router
+  File "/root/projects/Coopeenortol/backend/app/api/v1/api.py", line 3, in <module>
+    from .endpoints import ahorros, asociados, auth, auditoria, contabilidad, creditos, documentos
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/asociados.py", line 12, in <module>
+    from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadoDetalle, AsociadosListResponse
+ImportError: cannot import name 'AsociadoDetalle' from 'app.schemas' (/root/projects/Coopeenortol/backend/app/schemas/__init__.py)
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/asociados.py'. Reloading...
+Process SpawnProcess-6:
+Traceback (most recent call last):
+  File "/usr/lib/python3.10/multiprocessing/process.py", line 314, in _bootstrap
+    self.run()
+  File "/usr/lib/python3.10/multiprocessing/process.py", line 108, in run
+    self._target(*self._args, **self._kwargs)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/_subprocess.py", line 78, in subprocess_started
+    target(sockets=sockets)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 65, in run
+    return asyncio.run(self.serve(sockets=sockets))
+  File "/usr/lib/python3.10/asyncio/runners.py", line 44, in run
+    return loop.run_until_complete(main)
+  File "uvloop/loop.pyx", line 1518, in uvloop.loop.Loop.run_until_complete
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 69, in serve
+    await self._serve(sockets)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/server.py", line 76, in _serve
+    config.load()
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/config.py", line 433, in load
+    self.loaded_app = import_from_string(self.app)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/importer.py", line 19, in import_from_string
+    module = importlib.import_module(module_str)
+  File "/usr/lib/python3.10/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1050, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 1027, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 1006, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 688, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 883, in exec_module
+  File "<frozen importlib._bootstrap>", line 241, in _call_with_frames_removed
+  File "/root/projects/Coopeenortol/backend/app/main.py", line 5, in <module>
+    from app.api.v1.api import api_router
+  File "/root/projects/Coopeenortol/backend/app/api/v1/api.py", line 3, in <module>
+    from .endpoints import ahorros, asociados, auth, auditoria, contabilidad, creditos, documentos
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/asociados.py", line 12, in <module>
+    from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadoDetalle, AsociadosListResponse
+ImportError: cannot import name 'AsociadoDetalle' from 'app.schemas' (/root/projects/Coopeenortol/backend/app/schemas/__init__.py)
+WARNING:  WatchFiles detected changes in 'app/schemas/__init__.py'. Reloading...
+INFO:     Started server process [39748]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:21390 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21390 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     158.220.100.148:60498 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:60514 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     158.220.100.148:55718 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:55728 - "GET /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19493 - "GET /redoc HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19493 - "GET /docs HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19493 - "GET /openapi.json HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1009, in openapi
+    return JSONResponse(self.openapi())
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 981, in openapi
+    self.openapi_schema = get_openapi(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/openapi/utils.py", line 475, in get_openapi
+    field_mapping, definitions = get_definitions(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/_compat.py", line 476, in get_definitions
+    return {}, get_model_definitions(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/_compat.py", line 375, in get_model_definitions
+    m_schema, m_definitions, m_nested_models = model_process_schema(
+  File "pydantic/schema.py", line 581, in pydantic.schema.model_process_schema
+  File "pydantic/schema.py", line 622, in pydantic.schema.model_type_schema
+  File "pydantic/schema.py", line 255, in pydantic.schema.field_schema
+  File "pydantic/schema.py", line 462, in pydantic.schema.field_type_schema
+  File "pydantic/schema.py", line 852, in pydantic.schema.field_singleton_schema
+  File "pydantic/schema.py", line 701, in pydantic.schema.field_singleton_sub_fields_schema
+  File "pydantic/schema.py", line 527, in pydantic.schema.field_type_schema
+  File "pydantic/schema.py", line 926, in pydantic.schema.field_singleton_schema
+  File "/usr/lib/python3.10/abc.py", line 123, in __subclasscheck__
+    return _abc_subclasscheck(cls, subclass)
+TypeError: issubclass() arg 1 must be a class
+INFO:     158.220.100.148:45984 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:45986 - "GET /api/v1/ahorros/1 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:21392 - "OPTIONS /api/v1/ahorros/5/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19463 - "OPTIONS /api/v1/ahorros/5/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21392 - "GET /api/v1/ahorros/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19463 - "GET /api/v1/ahorros/5/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21392 - "OPTIONS /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19463 - "OPTIONS /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21392 - "GET /api/v1/ahorros/5 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:19463 - "GET /api/v1/ahorros/5 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in obtener_cuenta_ahorro
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 103, in <listcomp>
+    movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
+  File "pydantic/main.py", line 574, in pydantic.main.BaseModel.from_orm
+pydantic.errors.ConfigError: You must have the config attribute orm_mode=True to use from_orm
+INFO:     190.108.77.114:19468 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19468 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19469 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19486 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19487 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19469 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19487 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19491 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19490 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19469 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19484 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19486 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19487 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19486 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19487 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19484 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+WARNING:  WatchFiles detected changes in 'app/schemas/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [39748]
+INFO:     Started server process [40094]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/schemas/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [40094]
+INFO:     Started server process [40106]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     158.220.100.148:56210 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:56226 - "GET /api/v1/ahorros/1 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
+    raw_response = await run_endpoint_function(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
+    return await run_in_threadpool(dependant.call, **values)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
+    return await anyio.to_thread.run_sync(func, *args)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
+    return await get_async_backend().run_sync_in_worker_thread(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
+    return await future
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
+    result = context.run(func, *args)
+  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/ahorros.py", line 101, in obtener_cuenta_ahorro
+    return CuentaAhorroConMovimientos(
+  File "pydantic/main.py", line 339, in pydantic.main.BaseModel.__init__
+  File "pydantic/main.py", line 1074, in pydantic.main.validate_model
+  File "pydantic/fields.py", line 857, in pydantic.fields.ModelField.validate
+pydantic.errors.ConfigError: field "movimientos" not yet prepared so type is still a ForwardRef, you might need to call CuentaAhorroConMovimientos.update_forward_refs().
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/ahorros.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [40106]
+INFO:     Started server process [40241]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     158.220.100.148:59498 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     158.220.100.148:59510 - "GET /api/v1/ahorros/1 HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/ahorros.py', 'app/schemas/asociado.py', 'app/schemas/__init__.py', 'app/api/v1/endpoints/asociados.py', 'app/schemas/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [40241]
+INFO:     Started server process [40320]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:19468 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19471 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19472 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19473 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19469 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19474 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19468 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19471 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19472 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19473 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19469 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19474 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19468 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19471 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19473 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19472 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19469 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19474 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19472 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19468 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19471 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19473 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19469 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19474 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19476 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "OPTIONS /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "GET /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19482 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19476 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19481 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19476 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19485 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19482 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19481 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19476 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19482 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19485 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19485 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19482 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19485 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19482 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19482 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19485 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "OPTIONS /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19507 - "OPTIONS /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19511 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19490 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19511 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19514 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19507 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19513 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19456 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19507 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19514 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19507 - "OPTIONS /api/v1/asociados/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19514 - "OPTIONS /api/v1/asociados/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19514 - "GET /api/v1/asociados/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19507 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19514 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19478 - "GET /api/v1/asociados/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19478 - "GET /api/v1/asociados/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19483 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19478 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "OPTIONS /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "OPTIONS /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "OPTIONS /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21379 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19480 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19480 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19480 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19480 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "OPTIONS /api/v1/ahorros/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "OPTIONS /api/v1/ahorros/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19490 - "GET /api/v1/ahorros/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "GET /api/v1/ahorros/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19491 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19490 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19494 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19491 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19490 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19504 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19491 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19494 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19499 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19499 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19494 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19504 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK

@@ -79,10 +79,9 @@ def listar_cuentas_ahorro(
     }
 
 
-@router.get("/{cuenta_id}", response_model=CuentaAhorroConMovimientos)
+@router.get("/{cuenta_id}", response_model=CuentaAhorroResponse)
 def obtener_cuenta_ahorro(
     cuenta_id: int,
-    incluir_movimientos: bool = Query(True),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_active_user)
 ):
@@ -96,14 +95,7 @@ def obtener_cuenta_ahorro(
             detail="Cuenta no encontrada"
         )
     
-    if incluir_movimientos:
-        movimientos = AhorroService.obtener_movimientos(db, cuenta_id, limit=50)
-        return CuentaAhorroConMovimientos(
-            **cuenta.__dict__,
-            movimientos=[MovimientoAhorroResponse.from_orm(m) for m in movimientos]
-        )
-    
-    return CuentaAhorroConMovimientos(**cuenta.__dict__, movimientos=[])
+    return cuenta
 
 
 @router.put("/{cuenta_id}", response_model=CuentaAhorroResponse)

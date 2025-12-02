@@ -10,14 +10,14 @@ from app.database import Base, engine
 def create_app() -> FastAPI:
     app = FastAPI(title=settings.app_name, version=settings.app_version)
 
-    if settings.cors_origins:
-        app.add_middleware(
-            CORSMiddleware,
-            allow_origins=settings.cors_origins,
-            allow_credentials=True,
-            allow_methods=["*"],
-            allow_headers=["*"],
-        )
+    # Configurar CORS para permitir acceso desde cualquier origen
+    app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],  # Permite todos los orígenes
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
 
     @app.on_event("startup")
     def startup() -> None:

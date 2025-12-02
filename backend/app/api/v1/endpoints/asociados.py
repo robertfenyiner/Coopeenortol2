@@ -9,7 +9,7 @@ from app.core.deps import get_current_active_user, require_permission
 from app.core.validators import validar_asociado_completo
 from app.database import get_db
 from app.models.usuario import Usuario
-from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadosListResponse
+from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadoDetalle, AsociadosListResponse
 from app.services import asociados as service
 
 router = APIRouter()
@@ -108,8 +108,8 @@ def buscar_asociados(
     return service.buscar_asociados(db, termino=q, limite=limite)
 
 
-@router.get("/{asociado_id}", response_model=AsociadoEnDB)
-def obtener_asociado(asociado_id: int, db: Session = Depends(get_db)) -> AsociadoEnDB:
+@router.get("/{asociado_id}", response_model=AsociadoDetalle)
+def obtener_asociado(asociado_id: int, db: Session = Depends(get_db)) -> AsociadoDetalle:
     """
     Obtener un asociado específico por su ID.
     

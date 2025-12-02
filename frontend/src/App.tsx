@@ -1,55 +1,20 @@
-import { useState, useEffect } from 'react';
-import LoginForm from './components/LoginForm';
-import Dashboard from './components/Dashboard';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
+import { ToastProvider } from './contexts/ToastContext';
+import ToastContainer from './components/ui/ToastContainer';
+import MainLayout from './components/layout/MainLayout';
+import LoginPage from './pages/LoginPage';
+import DashboardPage from './pages/DashboardPage';
+import AsociadosPage from './pages/AsociadosPage';
+import AsociadoDetailPage from './pages/AsociadoDetailPage';
+import CreditosPage from './pages/CreditosPage';
+import CreditoDetailPage from './pages/CreditoDetailPage';
+import AhorrosPage from './pages/AhorrosPage';
+import CuentaAhorroDetailPage from './pages/CuentaAhorroDetailPage';
 
-interface User {
-  id?: number;
-  username: string;
-  email: string;
-  nombre_completo: string;
-  rol: string;
-}
-
-function App() {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    // Verificar si hay un token guardado en localStorage
-    const savedToken = localStorage.getItem('token');
-    const savedUser = localStorage.getItem('user');
-    
-    if (savedToken && savedUser) {
-      try {
-        const userData = JSON.parse(savedUser);
-        setToken(savedToken);
-        setUser(userData);
-      } catch (error) {
-        // Si hay error al parsear, limpiar localStorage
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-      }
-    }
-    
-    setLoading(false);
-  }, []);
-
-  const handleLogin = (accessToken: string) => {
-    // El token y user ya fueron guardados en LoginForm
-    const savedUser = localStorage.getItem('user');
-    if (savedUser) {
-      setToken(accessToken);
-      setUser(JSON.parse(savedUser));
-    }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    setToken(null);
-    setUser(null);
-  };
+// Componente de ruta protegida
+function ProtectedRoute({ children }: { children: React.ReactNode }) {
+  const { isAuthenticated, loading } = useAuth();
 
   if (loading) {
     return (
@@ -62,13 +27,177 @@ function App() {
     );
   }
 
-  // Si no hay usuario logueado, mostrar login
-  if (!user || !token) {
-    return <LoginForm onLogin={handleLogin} />;
+  if (!isAuthenticated) {
+    return <Navigate to="/login" replace />;
   }
 
-  // Si hay usuario logueado, mostrar dashboard
-  return <Dashboard user={user} onLogout={handleLogout} />;
+  return <>{children}</>;
+}
+
+function AppRoutes() {
+  const { isAuthenticated } = useAuth();
+
+  return (
+    <Routes>
+      <Route
+        path="/login"
+        element={
+          isAuthenticated ? <Navigate to="/dashboard" replace /> : <LoginPage />
+        }
+      />
+      
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <Navigate to="/dashboard" replace />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <DashboardPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/asociados"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <AsociadosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/asociados/:id"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <AsociadoDetailPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/creditos"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <CreditosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/creditos/:id"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <CreditoDetailPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/ahorros"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <AhorrosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/ahorros/:id"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <CuentaAhorroDetailPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/documentos"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  Módulo de Documentos
+                </h2>
+                <p className="text-gray-600">En desarrollo...</p>
+              </div>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/contabilidad"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  Módulo de Contabilidad
+                </h2>
+                <p className="text-gray-600">En desarrollo...</p>
+              </div>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/configuracion"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <div className="text-center py-12">
+                <h2 className="text-2xl font-bold text-gray-900 mb-4">
+                  Configuración
+                </h2>
+                <p className="text-gray-600">En desarrollo...</p>
+              </div>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
+    </Routes>
+  );
+}
+
+function App() {
+  return (
+    <BrowserRouter>
+      <AuthProvider>
+        <ToastProvider>
+          <ToastContainer />
+          <AppRoutes />
+        </ToastProvider>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
 
 export default App;

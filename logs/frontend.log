@@ -1,0 +1,30 @@
+nohup: ignoring input
+Now using node v18.20.8 (npm v10.8.2)
+
+> coopeenortol-frontend@1.0.0 dev
+> vite
+
+
+  VITE v5.4.21  ready in 332 ms
+
+  ➜  Local:   http://localhost:3000/
+  ➜  Network: http://158.220.100.148:3000/
+4:29:16 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
+4:29:16 PM [vite] hmr update /src/pages/CreditosPage.tsx, /src/index.css
+4:29:56 PM [vite] hmr update /src/pages/AhorrosPage.tsx, /src/index.css
+4:32:26 PM [vite] page reload src/types/index.ts
+4:32:42 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
+4:37:40 PM [vite] page reload src/types/index.ts
+4:37:40 PM [vite] hmr update /src/pages/CreditosPage.tsx, /src/index.css
+4:37:40 PM [vite] hmr update /src/pages/AhorrosPage.tsx, /src/index.css
+4:37:40 PM [vite] hmr update /src/pages/DashboardPage.tsx, /src/index.css
+4:37:40 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
+4:40:33 PM [vite] hmr update /src/App.tsx, /src/index.css
+4:40:44 PM [vite] hmr update /src/App.tsx, /src/index.css
+4:49:48 PM [vite] hmr update /src/pages/CreditoDetailPage.tsx, /src/index.css
+4:49:48 PM [vite] hmr update /src/pages/AsociadoDetailPage.tsx, /src/index.css
+4:49:48 PM [vite] hmr update /src/pages/CuentaAhorroDetailPage.tsx, /src/index.css
+4:50:07 PM [vite] hmr update /src/App.tsx, /src/index.css
+4:50:07 PM [vite] hmr update /src/pages/AsociadoDetailPage.tsx, /src/index.css
+4:50:07 PM [vite] hmr update /src/pages/CreditoDetailPage.tsx, /src/index.css
+4:50:07 PM [vite] hmr update /src/pages/CuentaAhorroDetailPage.tsx, /src/index.css
