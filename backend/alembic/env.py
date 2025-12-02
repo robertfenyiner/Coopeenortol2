@@ -17,6 +17,7 @@ from app.models.usuario import Usuario
 from app.models.asociado import Asociado
 from app.models.contabilidad import CuentaContable, AsientoContable, MovimientoContable, Aporte
 from app.models.credito import Credito, Cuota, Pago, AbonoCuota
+from app.models.ahorro import CuentaAhorro, MovimientoAhorro, ConfiguracionAhorro  # noqa
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
