@@ -241,6 +241,7 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
                   {/* Acciones */}
                   <div className="flex items-center gap-2 ml-4">
                     <Button
+                      type="button"
                       variant="secondary"
                       onClick={() => setPreviewDoc(doc)}
                       className="!p-2"
@@ -249,6 +250,7 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
                       <Eye className="w-4 h-4" />
                     </Button>
                     <Button
+                      type="button"
                       variant="secondary"
                       onClick={() => handleDownload(doc)}
                       className="!p-2"
@@ -258,6 +260,7 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
                     </Button>
                     {editable && (
                       <Button
+                        type="button"
                         variant="secondary"
                         onClick={() => handleDelete(doc.id)}
                         className="!p-2 !text-red-600 hover:!bg-red-50"
