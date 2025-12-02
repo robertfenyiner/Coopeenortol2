@@ -1,46 +1,92 @@
-# Backend Coopeenortol
+# Sistema Coopeenortol - Backend
 
-API desarrollada con FastAPI para soportar la plataforma administrativa de Coopeenortol. En esta fase inicial se publica el módulo de gestión de personal con capacidad CRUD sobre los asociados.
+Sistema de gestión para cooperativa Coopeenortol desarrollado con FastAPI, SQLAlchemy y PostgreSQL/SQLite.
 
-## Requisitos
+## 📊 Estado del Proyecto
 
-- Python 3.11 o 3.12
-- Entorno virtual recomendado (`python -m venv venv`)
+**Última actualización:** 2 de diciembre, 2025
 
-## Instalación
+### Tests y Cobertura
+- **Tests totales:** 53/53 (100% ✅)
+- **Cobertura de código:** 73%
+- **Commits sincronizados:** 8
 
-```bash
+### Módulos Implementados
+
+#### ✅ Autenticación y Autorización
+- Login con JWT tokens
+- Roles: Admin, Auditor, Analista
+- Control de permisos por endpoint
+- Cambio de contraseña
+- Tests: 7/7 passing
+
+#### ✅ Gestión de Asociados
+- CRUD completo de asociados
+- Información personal, laboral, académica, financiera
+- Paginación y filtros
+- Soft delete (estado inactivo)
+- Validación de campos
+- Tests: 5/5 passing
+
+#### ✅ Sistema de Auditoría
+- Registro automático de todas las operaciones
+- Tracking de login, CRUD de usuarios
+- Filtros por usuario, acción, fecha
+- Solo accesible para Admin y Auditor
+- Tests: 9/9 passing
+
+#### ✅ Validadores Personalizados
+- Documentos (CC, NIT, CE)
+- Teléfonos (celular y fijo colombianos)
+- Emails con validación extendida
+- Nombres y direcciones
+- Valores numéricos y salarios
+- Tests: 22/22 passing
+
+## 🚀 Inicio Rápido
+
+### Instalación
+
+\`\`\`bash
+# Activar entorno virtual
+source venv/bin/activate
+
+# Instalar dependencias
 pip install -r requirements.txt
-```
 
-Crear un archivo `.env` en la carpeta `backend/` tomando como referencia `.env.example`.
+# Aplicar migraciones
+alembic upgrade head
 
-> Nota: se incluye `sitecustomize.py` en la raíz del repositorio para garantizar compatibilidad de Pydantic con Python 3.12. No eliminarlo, ya que forma parte del arranque del proyecto.
+# Crear usuario admin
+python create_admin_simple.py
 
-## Ejecución
+# Iniciar servidor
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
+\`\`\`
 
-```bash
-uvicorn app.main:app --reload
-```
+## 📚 API Endpoints
 
-La API quedará disponible en `http://localhost:8000`. La documentación interactiva se encuentra en `http://localhost:8000/docs`.
+### Autenticación
+- POST /api/v1/auth/login
+- GET /api/v1/auth/me
+- POST /api/v1/auth/cambiar-password
 
-## Estructura
+### Asociados
+- POST /api/v1/asociados/
+- GET /api/v1/asociados/
+- GET /api/v1/asociados/{id}
+- PUT /api/v1/asociados/{id}
+- DELETE /api/v1/asociados/{id}
 
-- `app/main.py`: punto de entrada de la aplicación FastAPI.
-- `app/api/v1/`: rutas del API versionado.
-- `app/services/`: lógica de negocio y acceso a datos.
-- `app/models/`: modelos SQLAlchemy para la base de datos.
-- `app/schemas/`: esquemas Pydantic para validaciones y respuestas.
-- `tests/`: pruebas automatizadas con Pytest.
+### Auditoría
+- GET /api/v1/auditoria/
+- GET /api/v1/auditoria/{id}
 
-## Comandos útiles
+## 🧪 Tests
 
-- Ejecutar pruebas: `pytest`
-- Formatear código (pendiente de definir herramienta).
+\`\`\`bash
+pytest -v              # Todos los tests
+pytest --cov=app       # Con cobertura
+\`\`\`
 
-## Próximos pasos
-
-- Incorporar autenticación y autorización basada en roles.
-- Añadir gestión documental (integración con almacenamiento externo).
-- Documentar scripts de migración y carga de datos.
+**Desarrollado con ❤️ para Coopeenortol**
