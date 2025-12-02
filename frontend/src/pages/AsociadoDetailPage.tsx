@@ -7,6 +7,8 @@ import { Asociado } from '../types';
 import api from '../lib/axios';
 import { useToast } from '../contexts/ToastContext';
 import { formatDate, formatCurrency } from '../lib/utils';
+import ProfilePhoto from '../components/ProfilePhoto';
+import DocumentList from '../components/DocumentList';
 
 export default function AsociadoDetailPage() {
   const { id } = useParams();
@@ -14,7 +16,8 @@ export default function AsociadoDetailPage() {
   const { showToast } = useToast();
   const [asociado, setAsociado] = useState<Asociado | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<'personal' | 'laboral' | 'financiero' | 'academico' | 'vivienda'>('personal');
+  const [activeTab, setActiveTab] = useState<'personal' | 'laboral' | 'financiero' | 'academico' | 'vivienda' | 'documentacion'>('personal');
+  const [documentos, setDocumentos] = useState<any[]>([]);
 
   useEffect(() => {
     loadAsociado();
@@ -30,12 +33,22 @@ export default function AsociadoDetailPage() {
         email: data.correo_electronico,
         telefono: data.telefono_principal
       });
+      loadDocumentos();
     } catch (error: any) {
       showToast('error', 'Error al cargar el asociado');
       console.error(error);
       navigate('/asociados');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const loadDocumentos = async () => {
+    try {
+      const response = await api.get(`/documentos/asociados/${id}/documentos`);
+      setDocumentos(response.data);
+    } catch (error) {
+      console.error('Error al cargar documentos:', error);
     }
   };
 
@@ -61,6 +74,7 @@ export default function AsociadoDetailPage() {
     { id: 'financiero', label: 'Información Financiera', icon: DollarSign },
     { id: 'academico', label: 'Información Académica', icon: GraduationCap },
     { id: 'vivienda', label: 'Información de Vivienda', icon: Home },
+    { id: 'documentacion', label: 'Documentación', icon: FileText },
   ];
 
   return (
@@ -375,6 +389,32 @@ export default function AsociadoDetailPage() {
               ) : (
                 <p className="text-gray-500 col-span-2">No hay información de vivienda registrada</p>
               )}
+            </div>
+          )}
+
+          {/* Documentación */}
+          {activeTab === 'documentacion' && (
+            <div className="space-y-6">
+              {/* Foto de Perfil */}
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Foto de Perfil</h3>
+                <ProfilePhoto
+                  asociadoId={parseInt(id!)}
+                  fotoUrl={asociado.foto_url || null}
+                  onPhotoUpdate={() => {}}
+                  editable={false}
+                />
+              </div>
+
+              {/* Documentos */}
+              <div>
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Documentos</h3>
+                <DocumentList
+                  documentos={documentos}
+                  onDocumentDeleted={loadDocumentos}
+                  editable={false}
+                />
+              </div>
             </div>
           )}
         </div>

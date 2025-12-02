@@ -1,12 +1,15 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { ArrowLeft, Save } from 'lucide-react';
+import { ArrowLeft, Save, Upload as UploadIcon } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 import Select from '../components/ui/Select';
 import { useToast } from '../contexts/ToastContext';
 import api from '../lib/axios';
+import ProfilePhoto from '../components/ProfilePhoto';
+import DocumentList from '../components/DocumentList';
+import DocumentUploadModal from '../components/DocumentUploadModal';
 
 interface DatosPersonales {
   fecha_nacimiento?: string;
@@ -106,6 +109,9 @@ export default function AsociadoEditPage() {
     informacion_academica: {},
     informacion_vivienda: {},
   });
+  const [documentos, setDocumentos] = useState<any[]>([]);
+  const [uploadModalOpen, setUploadModalOpen] = useState(false);
+  const [fotoUrl, setFotoUrl] = useState<string | null>(null);
 
   useEffect(() => {
     if (id) {
@@ -135,12 +141,32 @@ export default function AsociadoEditPage() {
         informacion_academica: data.informacion_academica || {},
         informacion_vivienda: data.informacion_vivienda || {},
       });
+      setFotoUrl(data.foto_url);
+      loadDocumentos();
     } catch (error: any) {
       showToast('error', 'Error al cargar el asociado');
       console.error(error);
     } finally {
       setLoading(false);
     }
+  };
+
+  const loadDocumentos = async () => {
+    if (!id) return;
+    try {
+      const response = await api.get(`/documentos/asociados/${id}/documentos`);
+      setDocumentos(response.data);
+    } catch (error) {
+      console.error('Error al cargar documentos:', error);
+    }
+  };
+
+  const handlePhotoUpdate = () => {
+    loadAsociado();
+  };
+
+  const handleDocumentUploadSuccess = () => {
+    loadDocumentos();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -290,6 +316,7 @@ export default function AsociadoEditPage() {
     { id: 'financiero', label: 'Información Financiera' },
     { id: 'academico', label: 'Información Académica' },
     { id: 'vivienda', label: 'Información de Vivienda' },
+    { id: 'documentacion', label: 'Documentación' },
   ];
 
   if (loading) {
@@ -817,6 +844,61 @@ export default function AsociadoEditPage() {
             </div>
           )}
 
+          {/* Documentación */}
+          {activeTab === 'documentacion' && (
+            <div className="space-y-6">
+              {/* Foto de Perfil */}
+              <div className="border-b pb-6">
+                <h3 className="text-lg font-medium text-gray-900 mb-4">Foto de Perfil</h3>
+                <div className="flex items-center gap-6">
+                  <ProfilePhoto
+                    asociadoId={parseInt(id!)}
+                    fotoUrl={fotoUrl}
+                    onPhotoUpdate={handlePhotoUpdate}
+                    editable={true}
+                  />
+                  <div className="text-sm text-gray-600">
+                    <p className="font-medium mb-1">Requisitos:</p>
+                    <ul className="list-disc list-inside space-y-1">
+                      <li>Formato: JPG, PNG</li>
+                      <li>Tamaño máximo: 5MB</li>
+                      <li>Recomendado: Foto formal tipo documento</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Documentos */}
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <h3 className="text-lg font-medium text-gray-900">Documentos</h3>
+                  <Button
+                    type="button"
+                    onClick={() => setUploadModalOpen(true)}
+                    disabled={!id}
+                  >
+                    <UploadIcon className="w-4 h-4 mr-2" />
+                    Subir Documento
+                  </Button>
+                </div>
+                
+                {!id ? (
+                  <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+                    <p className="text-gray-600">
+                      Primero guarda los datos básicos del asociado para poder subir documentos
+                    </p>
+                  </div>
+                ) : (
+                  <DocumentList
+                    documentos={documentos}
+                    onDocumentDeleted={loadDocumentos}
+                    editable={true}
+                  />
+                )}
+              </div>
+            </div>
+          )}
+
           {/* Botones de acción */}
           <div className="mt-6 flex justify-end space-x-3">
             <Button
@@ -839,6 +921,16 @@ export default function AsociadoEditPage() {
           </div>
         </Card>
       </form>
+
+      {/* Modal de subir documento */}
+      {id && (
+        <DocumentUploadModal
+          isOpen={uploadModalOpen}
+          onClose={() => setUploadModalOpen(false)}
+          asociadoId={parseInt(id)}
+          onUploadSuccess={handleDocumentUploadSuccess}
+        />
+      )}
     </div>
   );
 }
