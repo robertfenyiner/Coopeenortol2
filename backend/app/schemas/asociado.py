@@ -119,6 +119,52 @@ class AsociadoCrear(AsociadoBase):
     pass
 
 
+class DatosPersonalesActualizar(BaseModel):
+    """Datos personales con todos los campos opcionales para actualización"""
+    fecha_nacimiento: Optional[date] = None
+    lugar_nacimiento: Optional[str] = None
+    direccion: Optional[str] = None
+    barrio: Optional[str] = None
+    ciudad: Optional[str] = None
+    departamento: Optional[str] = None
+    pais: Optional[str] = None
+    codigo_postal: Optional[str] = None
+    estado_civil: Optional[str] = None
+    genero: Optional[str] = None
+    grupo_sanguineo: Optional[str] = None
+    eps: Optional[str] = None
+    arl: Optional[str] = None
+    telefono_alternativo: Optional[str] = None
+    numero_hijos: Optional[int] = None
+    personas_a_cargo: Optional[int] = None
+
+
+class DatosLaboralesActualizar(BaseModel):
+    """Datos laborales con todos los campos opcionales para actualización"""
+    institucion_educativa: Optional[str] = None
+    cargo: Optional[str] = None
+    tipo_contrato: Optional[str] = None
+    fecha_vinculacion: Optional[date] = None
+    salario_basico: Optional[float] = None
+    horario: Optional[str] = None
+    dependencia: Optional[str] = None
+
+
+class InformacionFinancieraActualizar(BaseModel):
+    """Información financiera con todos los campos opcionales para actualización"""
+    ingresos_mensuales: Optional[float] = None
+    ingresos_adicionales: Optional[float] = None
+    egresos_mensuales: Optional[float] = None
+    ingresos_familiares: Optional[float] = None
+    gastos_familiares: Optional[float] = None
+    endeudamiento: Optional[float] = None
+    obligaciones: Optional[List[Obligacion]] = None
+    referencias_comerciales: Optional[List[dict]] = None
+    activos: Optional[List[dict]] = None
+    calificacion_riesgo: Optional[str] = None
+    observaciones: Optional[str] = None
+
+
 class AsociadoActualizar(BaseModel):
     tipo_documento: Optional[str] = None
     numero_documento: Optional[str] = None
@@ -131,10 +177,10 @@ class AsociadoActualizar(BaseModel):
     hoja_vida_url: Optional[HttpUrl] = None
     foto_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
-    datos_personales: Optional[DatosPersonales] = None
-    datos_laborales: Optional[DatosLaborales] = None
+    datos_personales: Optional[DatosPersonalesActualizar] = None
+    datos_laborales: Optional[DatosLaboralesActualizar] = None
     informacion_familiar: Optional[InformacionFamiliar] = None
-    informacion_financiera: Optional[InformacionFinanciera] = None
+    informacion_financiera: Optional[InformacionFinancieraActualizar] = None
     informacion_academica: Optional[InformacionAcademica] = None
     informacion_vivienda: Optional[InformacionVivienda] = None
 
