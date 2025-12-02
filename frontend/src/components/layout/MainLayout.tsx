@@ -53,9 +53,9 @@ export default function MainLayout({ children }: MainLayoutProps) {
         <div className="flex flex-col w-64 bg-white border-r border-gray-200">
           {/* Logo */}
           <div className="flex flex-col items-center justify-center px-4 py-6 bg-white border-b border-gray-200">
-            <div className="h-24 w-24 mb-3 flex items-center justify-center">
+            <div className="h-32 w-32 mb-3 flex items-center justify-center">
               <img
-                src="/logo-principal.jpg"
+                src="/logo-principal.png"
                 alt="Coopeenortol Logo"
                 className="h-full w-full object-contain"
               />
@@ -125,7 +125,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
                 <div className="flex items-center">
                   <div className="h-10 w-10 mr-2 flex items-center justify-center">
                     <img
-                      src="/logo-principal.jpg"
+                      src="/logo-principal.png"
                       alt="Coopeenortol Logo"
                       className="h-full w-full object-contain"
                     />

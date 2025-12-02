@@ -37,3 +37,12 @@ Now using node v18.20.8 (npm v10.8.2)
 5:04:11 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
 5:04:22 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
 5:04:34 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:07:21 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:07:21 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
+(node:36828) Warning: An error event has already been emitted on the socket. Please use the destroy method on the socket while handling a 'clientError' event.
+(Use `node --trace-warnings ...` to show where the warning was created)
+5:23:20 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
+5:23:36 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:23:47 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:24:28 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:26:57 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css

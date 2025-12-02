@@ -102,7 +102,8 @@ export default function AsociadosPage() {
           <button
             onClick={(e) => {
               e.stopPropagation();
-              navigate(`/asociados/${asociado.id}/editar`);
+              // TODO: Implementar página de edición
+              showToast('info', 'Función de edición en desarrollo');
             }}
             className="text-gray-600 hover:text-gray-800"
             title="Editar"

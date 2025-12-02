@@ -37,7 +37,7 @@ export default function LoginPage() {
         <div className="text-center">
           <div className="mx-auto h-48 w-48 flex items-center justify-center">
             <img
-              src="/logo-principal.jpg"
+              src="/logo-principal.png"
               alt="Coopeenortol Logo"
               className="h-full w-full object-contain"
             />
