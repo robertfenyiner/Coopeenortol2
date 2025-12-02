@@ -47,17 +47,24 @@ export default function MainLayout({ children }: MainLayoutProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 flex">
       {/* Sidebar para desktop */}
-      <aside className="hidden md:flex md:flex-shrink-0">
+      <aside className="hidden md:flex md:flex-shrink-0 md:fixed md:inset-y-0 md:z-50">
         <div className="flex flex-col w-64 bg-white border-r border-gray-200">
           {/* Logo */}
-          <div className="flex items-center h-16 flex-shrink-0 px-4 bg-blue-600">
-            <h1 className="text-xl font-bold text-white">Coopeenortol</h1>
+          <div className="flex flex-col items-center justify-center px-4 py-6 bg-white border-b border-gray-200">
+            <div className="h-24 w-24 mb-3 flex items-center justify-center">
+              <img
+                src="/logo-principal.jpg"
+                alt="Coopeenortol Logo"
+                className="h-full w-full object-contain"
+              />
+            </div>
+            <h1 className="text-xl font-bold text-green-700 text-center">Coopeenortol</h1>
           </div>
 
           {/* Navegación */}
-          <nav className="flex-1 px-2 py-4 space-y-1 overflow-y-auto">
+          <nav className="flex-1 flex flex-col justify-center px-2 py-4 space-y-1 overflow-y-auto">
             {navItems.map((item) => {
               const isActive = location.pathname === item.path;
               return (
@@ -114,11 +121,20 @@ export default function MainLayout({ children }: MainLayoutProps) {
           />
           <aside className="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 md:hidden transform transition-transform">
             <div className="flex flex-col h-full">
-              <div className="flex items-center justify-between h-16 px-4 bg-blue-600">
-                <h1 className="text-xl font-bold text-white">Coopeenortol</h1>
+              <div className="flex items-center justify-between px-4 py-4 bg-white border-b border-gray-200">
+                <div className="flex items-center">
+                  <div className="h-10 w-10 mr-2 flex items-center justify-center">
+                    <img
+                      src="/logo-principal.jpg"
+                      alt="Coopeenortol Logo"
+                      className="h-full w-full object-contain"
+                    />
+                  </div>
+                  <h1 className="text-lg font-bold text-green-700">Coopeenortol</h1>
+                </div>
                 <button
                   onClick={() => setSidebarOpen(false)}
-                  className="text-white"
+                  className="text-gray-700"
                 >
                   <X className="w-6 h-6" />
                 </button>
@@ -177,7 +193,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
       )}
 
       {/* Contenido principal */}
-      <div className="md:pl-64 flex flex-col flex-1">
+      <div className="flex-1 flex flex-col md:ml-64">
         {/* Header móvil */}
         <header className="md:hidden bg-white border-b border-gray-200 sticky top-0 z-30">
           <div className="flex items-center justify-between h-16 px-4">

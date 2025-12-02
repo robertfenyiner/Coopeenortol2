@@ -35,22 +35,14 @@ export default function LoginPage() {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-50 to-blue-100 px-4">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <div className="mx-auto h-16 w-16 bg-blue-600 rounded-full flex items-center justify-center">
-            <svg
-              className="h-10 w-10 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
-              />
-            </svg>
+          <div className="mx-auto h-48 w-48 flex items-center justify-center">
+            <img
+              src="/logo-principal.jpg"
+              alt="Coopeenortol Logo"
+              className="h-full w-full object-contain"
+            />
           </div>
-          <h2 className="mt-6 text-3xl font-bold text-gray-900">Coopeenortol</h2>
+          <h2 className="mt-6 text-3xl font-bold text-green-700">Coopeenortol</h2>
           <p className="mt-2 text-sm text-gray-600">
             Sistema de Gestión Cooperativa
           </p>

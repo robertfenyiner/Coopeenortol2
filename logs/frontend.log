@@ -28,3 +28,12 @@ Now using node v18.20.8 (npm v10.8.2)
 4:50:07 PM [vite] hmr update /src/pages/AsociadoDetailPage.tsx, /src/index.css
 4:50:07 PM [vite] hmr update /src/pages/CreditoDetailPage.tsx, /src/index.css
 4:50:07 PM [vite] hmr update /src/pages/CuentaAhorroDetailPage.tsx, /src/index.css
+4:55:08 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+4:55:20 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+4:56:13 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+4:58:59 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
+4:59:10 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+4:59:21 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:04:11 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
+5:04:22 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
+5:04:34 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
