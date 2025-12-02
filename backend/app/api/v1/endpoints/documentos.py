@@ -255,12 +255,12 @@ def validar_documento(
     documento_id: int,
     data: DocumentoValidar,
     db: Session = Depends(get_db),
-    current_user: Usuario = Depends(require_permission("documentos:validar"))
+    current_user: Usuario = Depends(require_permission("documentos:actualizar"))
 ):
     """
     Validar/aprobar un documento.
     
-    Requiere permiso: documentos:validar
+    Requiere permiso: documentos:actualizar
     """
     documento = DocumentoService.obtener_documento(db, documento_id)
     if not documento:

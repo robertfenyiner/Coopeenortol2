@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FileText, Download, Trash2, Eye, Image, File as FileIcon } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Image, File as FileIcon, CheckCircle, XCircle } from 'lucide-react';
 import Button from './ui/Button';
 import { useToast } from '../contexts/ToastContext';
 import api from '../lib/axios';
@@ -143,6 +143,27 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
     }
   };
 
+  const handleValidate = async (id: number, esValido: boolean) => {
+    const mensaje = esValido 
+      ? '¿Marcar este documento como válido?' 
+      : '¿Marcar este documento como NO válido?';
+    
+    if (!window.confirm(mensaje)) {
+      return;
+    }
+
+    try {
+      await api.post(`/documentos/${id}/validar`, {
+        es_valido: esValido,
+        notas_validacion: esValido ? 'Documento aprobado' : 'Documento rechazado'
+      });
+      showToast('success', esValido ? 'Documento validado' : 'Documento marcado como no válido');
+      onDocumentDeleted(); // Recargar lista
+    } catch (error: any) {
+      showToast('error', error.response?.data?.detail || 'Error al validar documento');
+    }
+  };
+
   const getFileIcon = (mimeType: string) => {
     if (mimeType.startsWith('image/')) {
       return <Image className="w-8 h-8 text-blue-500" />;
@@ -212,25 +233,35 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
               {docs.map((doc) => (
                 <div
                   key={doc.id}
-                  className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors"
+                  className={`flex items-center justify-between p-4 hover:bg-gray-50 transition-colors ${
+                    !doc.es_valido ? 'border-l-4 border-orange-400 bg-orange-50/30' : 'border-l-4 border-transparent'
+                  }`}
                 >
                   {/* Info del documento */}
                   <div className="flex items-center gap-3 flex-1 min-w-0">
                     {getFileIcon(doc.mime_type)}
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-gray-900 truncate">
-                        {doc.nombre_archivo}
-                      </p>
+                      <div className="flex items-center gap-2">
+                        <p className="font-medium text-gray-900 truncate">
+                          {doc.nombre_archivo}
+                        </p>
+                        {/* Badge de estado */}
+                        {doc.es_valido ? (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            <CheckCircle className="w-3 h-3" />
+                            Válido
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium bg-orange-100 text-orange-800">
+                            <XCircle className="w-3 h-3" />
+                            Pendiente validación
+                          </span>
+                        )}
+                      </div>
                       <div className="flex items-center gap-3 text-sm text-gray-500 mt-1">
                         <span>{formatFileSize(doc.tamano_bytes)}</span>
                         <span>•</span>
                         <span>{formatDate(doc.fecha_subida)}</span>
-                        {!doc.es_valido && (
-                          <>
-                            <span>•</span>
-                            <span className="text-red-600 font-medium">No válido</span>
-                          </>
-                        )}
                       </div>
                       {doc.descripcion && (
                         <p className="text-sm text-gray-600 mt-1">{doc.descripcion}</p>
@@ -259,15 +290,41 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
                       <Download className="w-4 h-4" />
                     </Button>
                     {editable && (
-                      <Button
-                        type="button"
-                        variant="secondary"
-                        onClick={() => handleDelete(doc.id)}
-                        className="!p-2 !text-red-600 hover:!bg-red-50"
-                        title="Eliminar"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
+                      <>
+                        {/* Botón de validación */}
+                        {doc.es_valido ? (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={() => handleValidate(doc.id, false)}
+                            className="!p-2 !text-orange-600 hover:!bg-orange-50"
+                            title="Marcar como NO válido"
+                          >
+                            <XCircle className="w-4 h-4" />
+                          </Button>
+                        ) : (
+                          <Button
+                            type="button"
+                            variant="secondary"
+                            onClick={() => handleValidate(doc.id, true)}
+                            className="!p-2 !text-green-600 hover:!bg-green-50"
+                            title="Validar documento"
+                          >
+                            <CheckCircle className="w-4 h-4" />
+                          </Button>
+                        )}
+                        
+                        {/* Botón de eliminar */}
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          onClick={() => handleDelete(doc.id)}
+                          className="!p-2 !text-red-600 hover:!bg-red-50"
+                          title="Eliminar"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </>
                     )}
                   </div>
                 </div>

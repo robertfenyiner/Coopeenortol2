@@ -69,7 +69,7 @@ class DocumentoService:
             ruta_almacenamiento=ruta_relativa,
             descripcion=data.descripcion,
             subido_por_id=usuario_id,
-            es_valido=True,  # Por defecto válido, se puede cambiar manualmente si se requiere validación
+            es_valido=False,  # Requiere validación manual por seguridad
             activo=True
         )
         
