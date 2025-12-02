@@ -157,3 +157,52 @@ def auth_headers_auditor(auditor_token):
     Headers de autenticación para auditor.
     """
     return {"Authorization": f"Bearer {auditor_token}"}
+
+
+@pytest.fixture(scope="function")
+def init_cuentas_contables(db):
+    """Inicializar plan de cuentas básico para tests."""
+    from app.models.contabilidad import CuentaContable
+    from scripts.init_plan_cuentas import init_plan_cuentas
+    
+    # Solo inicializar si no existen cuentas
+    existe = db.query(CuentaContable).first()
+    if not existe:
+        init_plan_cuentas(db)
+    
+    return db
+
+
+@pytest.fixture
+def asociado_test(db):
+    """Crear un asociado de prueba."""
+    from app.models.asociado import Asociado
+    from datetime import date
+    
+    asociado = Asociado(
+        numero_documento="1234567890",
+        tipo_documento="CC",
+        nombres="Juan Carlos",
+        apellidos="Pérez Gómez",
+        correo_electronico="juan.perez@test.com",
+        telefono_principal="3001234567",
+        estado="activo",
+        fecha_ingreso=date.today(),
+        datos_personales={
+            "fecha_nacimiento": "1985-05-15",
+            "genero": "M",
+            "estado_civil": "soltero"
+        },
+        datos_laborales={
+            "actividad_economica": "empleado",
+            "empresa": "Empresa Test",
+            "cargo": "Desarrollador",
+            "ingresos_mensuales": 3000000.0
+        }
+    )
+    
+    db.add(asociado)
+    db.commit()
+    db.refresh(asociado)
+    
+    return asociado

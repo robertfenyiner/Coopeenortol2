@@ -15,6 +15,7 @@ from app.core.config import settings
 from app.database import Base
 from app.models.usuario import Usuario
 from app.models.asociado import Asociado
+from app.models.contabilidad import CuentaContable, AsientoContable, MovimientoContable, Aporte
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.
