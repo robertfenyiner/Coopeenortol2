@@ -53,7 +53,7 @@ export default function AsociadoEditPage() {
   }, [id]);
 
   const loadAsociado = async () => {
-    try:
+    try {
       const response = await api.get(`/asociados/${id}`);
       const data = response.data;
       setFormData({
