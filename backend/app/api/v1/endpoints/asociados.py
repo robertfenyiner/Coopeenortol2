@@ -6,6 +6,7 @@ from fastapi import APIRouter, Depends, File, HTTPException, Query, Response, Up
 from sqlalchemy.orm import Session
 
 from app.core.deps import get_current_active_user, require_permission
+from app.core.validators import validar_asociado_completo
 from app.database import get_db
 from app.models.usuario import Usuario
 from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadosListResponse
@@ -56,8 +57,20 @@ def crear_asociado(
     Crear un nuevo asociado en el sistema.
     
     Valida que el número de documento sea único y que todos los campos
-    requeridos estén presentes.
+    requeridos estén presentes. Aplica validaciones personalizadas para
+    documentos, teléfonos y otros campos críticos.
     """
+    # Validar campos críticos
+    es_valido, errores = validar_asociado_completo(asociado_in.dict())
+    if not es_valido:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail={
+                "message": "Errores de validación en los datos del asociado",
+                "errors": errores
+            }
+        )
+    
     try:
         return service.crear_asociado(db, asociado_in)
     except service.DocumentoDuplicadoError as error:
@@ -119,11 +132,25 @@ def actualizar_asociado(
     Actualizar información de un asociado existente.
     
     Permite actualización parcial de campos. Los campos no enviados
-    mantendrán su valor actual.
+    mantendrán su valor actual. Aplica validaciones solo a los campos
+    que se están actualizando.
     """
     asociado = service.obtener_asociado(db, asociado_id)
     if not asociado:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asociado no encontrado")
+    
+    # Validar solo los campos que se están actualizando
+    data_to_validate = asociado_in.dict(exclude_unset=True)
+    if data_to_validate:  # Solo validar si hay datos
+        es_valido, errores = validar_asociado_completo(data_to_validate)
+        if not es_valido:
+            raise HTTPException(
+                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+                detail={
+                    "message": "Errores de validación en los datos del asociado",
+                    "errors": errores
+                }
+            )
     
     try:
         return service.actualizar_asociado(db, asociado, asociado_in)
