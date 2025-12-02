@@ -75,10 +75,24 @@ def payload_base():
             "calificacion_riesgo": "Media",
             "observaciones": "Historial crediticio favorable.",
         },
+        "informacion_academica": {
+            "nivel_educativo": "Maestría",
+            "titulo_obtenido": "Magíster en Educación Matemática",
+            "institucion": "Universidad Pedagógica Nacional",
+            "ano_graduacion": 2015,
+            "en_estudio": False,
+        },
+        "informacion_vivienda": {
+            "tipo_vivienda": "casa",
+            "tenencia": "propia",
+            "estrato": 3,
+            "tiempo_residencia": 60,
+        },
     }
 
 def test_crear_asociado(client: TestClient, payload_base: dict, auth_headers_admin: dict):
     respuesta = client.post("/api/v1/asociados/", json=payload_base, headers=auth_headers_admin)
     print(f"\n\nStatus: {respuesta.status_code}")
-    print(f"Response: {respuesta.json()}\n\n")
+    if respuesta.status_code != 201:
+        print(f"Response: {respuesta.json()}\n\n")
     assert respuesta.status_code == 201

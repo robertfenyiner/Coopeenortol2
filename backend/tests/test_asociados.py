@@ -40,15 +40,17 @@ def payload_base():
             "dependencia": "Departamento de Ciencias",
         },
         "informacion_academica": {
-            "nivel_maximo": "Maestría",
-            "titulo": "Magíster en Educación Matemática",
+            "nivel_educativo": "Maestría",
+            "titulo_obtenido": "Magíster en Educación Matemática",
             "institucion": "Universidad Pedagógica Nacional",
-            "año_grado": 2015,
+            "ano_graduacion": 2015,
+            "en_estudio": False,
         },
         "informacion_vivienda": {
-            "tipo": "Propia",
+            "tipo_vivienda": "casa",
+            "tenencia": "propia",
             "estrato": 3,
-            "valor_aproximado": 150000000,
+            "tiempo_residencia": 60,
         },
         "informacion_familiar": {
             "estado_civil": "Casada",
@@ -115,8 +117,10 @@ def test_listar_asociados(client: TestClient, payload_base: dict, auth_headers_a
     respuesta = client.get("/api/v1/asociados/", headers=auth_headers_admin)
     assert respuesta.status_code == 200
     datos = respuesta.json()
-    assert len(datos) == 1
-    assert datos[0]["nombres"] == payload_base["nombres"]
+    assert "datos" in datos
+    assert "paginacion" in datos
+    assert len(datos["datos"]) >= 1
+    assert datos["datos"][0]["nombres"] == payload_base["nombres"]
 
 
 def test_actualizar_asociado(client: TestClient, payload_base: dict, auth_headers_admin: dict):
@@ -138,4 +142,7 @@ def test_eliminar_asociado(client: TestClient, payload_base: dict, auth_headers_
     respuesta = client.delete(f"/api/v1/asociados/{creado['id']}", headers=auth_headers_admin)
     assert respuesta.status_code == 204
     consulta = client.get(f"/api/v1/asociados/{creado['id']}", headers=auth_headers_admin)
-    assert consulta.status_code == 404
+    # El asociado aún existe pero con estado 'inactivo' (soft delete)
+    assert consulta.status_code == 200
+    asociado = consulta.json()
+    assert asociado["estado"] == "inactivo"

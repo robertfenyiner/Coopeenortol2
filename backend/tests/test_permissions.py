@@ -47,7 +47,33 @@ def test_analista_puede_crear_asociado(client, auth_headers_analista, analista_u
         "apellidos": "Pérez",
         "correo_electronico": "juan.perez@test.com",
         "telefono_principal": "3001234567",
-        "fecha_ingreso": "2024-01-01"
+        "fecha_ingreso": "2024-01-01",
+        "datos_personales": {
+            "fecha_nacimiento": "1990-01-01",
+            "direccion": "Calle 1",
+            "ciudad": "Honda",
+            "departamento": "Tolima",
+            "pais": "Colombia"
+        },
+        "datos_laborales": {
+            "institucion_educativa": "IE Test",
+            "cargo": "Docente",
+            "tipo_contrato": "Indefinido",
+            "fecha_vinculacion": "2020-01-01",
+            "salario_basico": 3000000
+        },
+        "informacion_familiar": {},
+        "informacion_financiera": {
+            "ingresos_mensuales": 3000000,
+            "egresos_mensuales": 1500000
+        },
+        "informacion_academica": {
+            "nivel_educativo": "Licenciatura"
+        },
+        "informacion_vivienda": {
+            "tipo_vivienda": "casa",
+            "tenencia": "propia"
+        }
     }
     
     response = client.post(
