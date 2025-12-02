@@ -186,15 +186,15 @@ async def descargar_documento(
             detail="Archivo no encontrado en el sistema"
         )
     
-    # Registrar descarga en auditoría
-    AuditoriaService.registrar_acceso(
-        db=db,
-        usuario=current_user,
-        entidad="Documento",
-        entidad_id=documento.id,
-        detalles=f"Descarga de {documento.nombre_archivo}",
-        request=None
-    )
+    # TODO: Registrar descarga en auditoría
+    # AuditoriaService.registrar_acceso(
+    #     db=db,
+    #     usuario=current_user,
+    #     entidad="Documento",
+    #     entidad_id=documento.id,
+    #     detalles=f"Descarga de {documento.nombre_archivo}",
+    #     request=None
+    # )
     
     return FileResponse(
         path=file_path,
