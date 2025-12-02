@@ -125,6 +125,14 @@ export default function AsociadoEditPage() {
     try {
       const response = await api.get(`/asociados/${id}`);
       const data = response.data;
+      
+      // Limpiar datos que pueden tener formato incorrecto
+      const informacion_vivienda = data.informacion_vivienda || {};
+      if (informacion_vivienda.tiempo_residencia && typeof informacion_vivienda.tiempo_residencia === 'string') {
+        // Extraer solo el número si viene con texto (ej: "163 meses" -> 163)
+        informacion_vivienda.tiempo_residencia = parseInt(informacion_vivienda.tiempo_residencia.toString().replace(/[^\d]/g, '')) || undefined;
+      }
+      
       setFormData({
         tipo_documento: data.tipo_documento || 'CC',
         numero_documento: data.numero_documento || '',
@@ -139,7 +147,7 @@ export default function AsociadoEditPage() {
         datos_laborales: data.datos_laborales || {},
         informacion_financiera: data.informacion_financiera || {},
         informacion_academica: data.informacion_academica || {},
-        informacion_vivienda: data.informacion_vivienda || {},
+        informacion_vivienda: informacion_vivienda,
       });
       setFotoUrl(data.foto_url);
       loadDocumentos();
