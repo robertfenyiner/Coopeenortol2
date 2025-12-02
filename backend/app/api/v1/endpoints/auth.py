@@ -18,6 +18,7 @@ from app.schemas.usuario import (
     UsuarioLogin,
 )
 from app.services import usuarios as service
+from app.services.auditoria import AuditoriaService
 
 router = APIRouter()
 
@@ -56,6 +57,9 @@ def login(
     # Actualizar último login
     service.update_last_login(db, user)
     
+    # Registrar login exitoso en auditoría
+    AuditoriaService.registrar_login(db=db, usuario=user, exitoso=True, request=None)
+    
     return Token(
         access_token=access_token,
         token_type="bearer",
@@ -92,6 +96,9 @@ def login_simple(
     )
     
     service.update_last_login(db, user)
+    
+    # Registrar login exitoso en auditoría
+    AuditoriaService.registrar_login(db=db, usuario=user, exitoso=True, request=None)
     
     return Token(
         access_token=access_token,
@@ -151,6 +158,9 @@ def cambiar_password(
     # Actualizar contraseña
     service.update_password(db, current_user, passwords.password_nueva)
     
+    # Registrar cambio de contraseña en auditoría
+    AuditoriaService.registrar_cambio_password(db=db, usuario=current_user, request=None)
+    
     return {"message": "Contraseña actualizada exitosamente"}
 
 
@@ -165,6 +175,17 @@ def crear_usuario(
     """
     try:
         nuevo_usuario = service.create_user(db, usuario_data)
+        
+        # Registrar creación en auditoría
+        AuditoriaService.registrar_creacion(
+            db=db,
+            usuario=current_user,
+            entidad="Usuario",
+            entidad_id=nuevo_usuario.id,
+            datos={"username": nuevo_usuario.username, "email": nuevo_usuario.email, "rol": nuevo_usuario.rol},
+            request=None
+        )
+        
         return UsuarioEnDB.from_orm(nuevo_usuario)
     except service.UserAlreadyExistsError as e:
         raise HTTPException(
@@ -222,8 +243,35 @@ def actualizar_usuario(
             detail="Usuario no encontrado"
         )
     
+    # Guardar datos anteriores para auditoría
+    datos_anteriores = {
+        "username": usuario.username,
+        "email": usuario.email,
+        "rol": usuario.rol,
+        "is_active": usuario.is_active
+    }
+    
     try:
         usuario_actualizado = service.update_user(db, usuario, usuario_data)
+        
+        # Registrar actualización en auditoría
+        datos_nuevos = {
+            "username": usuario_actualizado.username,
+            "email": usuario_actualizado.email,
+            "rol": usuario_actualizado.rol,
+            "is_active": usuario_actualizado.is_active
+        }
+        
+        AuditoriaService.registrar_actualizacion(
+            db=db,
+            usuario=current_user,
+            entidad="Usuario",
+            entidad_id=usuario_actualizado.id,
+            datos_anteriores=datos_anteriores,
+            datos_nuevos=datos_nuevos,
+            request=None
+        )
+        
         return UsuarioEnDB.from_orm(usuario_actualizado)
     except service.UserAlreadyExistsError as e:
         raise HTTPException(
@@ -255,7 +303,24 @@ def eliminar_usuario(
             detail="No puedes desactivar tu propio usuario"
         )
     
+    # Guardar datos antes de desactivar
+    datos_usuario = {
+        "username": usuario.username,
+        "email": usuario.email,
+        "rol": usuario.rol
+    }
+    
     service.deactivate_user(db, usuario)
+    
+    # Registrar eliminación en auditoría
+    AuditoriaService.registrar_eliminacion(
+        db=db,
+        usuario=current_user,
+        entidad="Usuario",
+        entidad_id=usuario.id,
+        datos=datos_usuario,
+        request=None
+    )
 
 
 @router.post("/logout")
