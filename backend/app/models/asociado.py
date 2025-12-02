@@ -4,6 +4,7 @@ from typing import Any
 
 from sqlalchemy import Column, Date, DateTime, Integer, String, Text
 from sqlalchemy.ext.mutable import MutableDict
+from sqlalchemy.orm import relationship
 from sqlalchemy.types import TEXT, TypeDecorator
 
 from app.database import Base
@@ -58,3 +59,6 @@ class Asociado(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
     )
+    
+    # Relaciones
+    documentos = relationship("Documento", back_populates="asociado")
