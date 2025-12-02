@@ -135,6 +135,11 @@ def actualizar_asociado(
     mantendrán su valor actual. Aplica validaciones solo a los campos
     que se están actualizando.
     """
+    import logging
+    logger = logging.getLogger(__name__)
+    logger.info(f"Recibiendo actualización para asociado {asociado_id}")
+    logger.info(f"Datos recibidos: {asociado_in.dict(exclude_unset=True)}")
+    
     asociado = service.obtener_asociado(db, asociado_id)
     if not asociado:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asociado no encontrado")

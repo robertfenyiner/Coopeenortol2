@@ -165,6 +165,29 @@ class InformacionFinancieraActualizar(BaseModel):
     observaciones: Optional[str] = None
 
 
+class InformacionAcademicaActualizar(BaseModel):
+    """Información académica con todos los campos opcionales para actualización"""
+    nivel_educativo: Optional[str] = None
+    institucion: Optional[str] = None
+    titulo_obtenido: Optional[str] = None
+    ano_graduacion: Optional[int] = None
+    en_estudio: Optional[bool] = None
+    programa_actual: Optional[str] = None
+    institucion_actual: Optional[str] = None
+    semestre_actual: Optional[int] = None
+    certificaciones: Optional[List[dict]] = None
+
+
+class InformacionViviendaActualizar(BaseModel):
+    """Información de vivienda con todos los campos opcionales para actualización"""
+    tipo_vivienda: Optional[str] = None
+    tenencia: Optional[str] = None
+    valor_arriendo: Optional[float] = None
+    tiempo_residencia: Optional[int] = None
+    servicios_publicos: Optional[List[str]] = None
+    estrato: Optional[int] = None
+
+
 class AsociadoActualizar(BaseModel):
     tipo_documento: Optional[str] = None
     numero_documento: Optional[str] = None
@@ -181,8 +204,8 @@ class AsociadoActualizar(BaseModel):
     datos_laborales: Optional[DatosLaboralesActualizar] = None
     informacion_familiar: Optional[InformacionFamiliar] = None
     informacion_financiera: Optional[InformacionFinancieraActualizar] = None
-    informacion_academica: Optional[InformacionAcademica] = None
-    informacion_vivienda: Optional[InformacionVivienda] = None
+    informacion_academica: Optional[InformacionAcademicaActualizar] = None
+    informacion_vivienda: Optional[InformacionViviendaActualizar] = None
 
 
 class AsociadoEnDB(AsociadoBase):

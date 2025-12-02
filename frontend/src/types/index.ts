@@ -27,6 +27,10 @@ export interface Asociado {
   datos_laborales?: Record<string, any>;
   datos_familiares?: Record<string, any>;
   datos_financieros?: Record<string, any>;
+  informacion_financiera?: Record<string, any>;
+  informacion_familiar?: Record<string, any>;
+  informacion_academica?: Record<string, any>;
+  informacion_vivienda?: Record<string, any>;
 }
 
 export interface Credito {

@@ -43,7 +43,27 @@ interface InformacionFinanciera {
   ingresos_familiares?: number;
   gastos_familiares?: number;
   endeudamiento?: number;
+  calificacion_riesgo?: string;
   observaciones?: string;
+}
+
+interface InformacionAcademica {
+  nivel_educativo?: string;
+  institucion?: string;
+  titulo_obtenido?: string;
+  ano_graduacion?: number;
+  en_estudio?: boolean;
+  programa_actual?: string;
+  institucion_actual?: string;
+  semestre_actual?: number;
+}
+
+interface InformacionVivienda {
+  tipo_vivienda?: string;
+  tenencia?: string;
+  valor_arriendo?: number;
+  tiempo_residencia?: number;
+  estrato?: number;
 }
 
 interface AsociadoData {
@@ -59,6 +79,8 @@ interface AsociadoData {
   datos_personales?: DatosPersonales;
   datos_laborales?: DatosLaborales;
   informacion_financiera?: InformacionFinanciera;
+  informacion_academica?: InformacionAcademica;
+  informacion_vivienda?: InformacionVivienda;
 }
 
 export default function AsociadoEditPage() {
@@ -81,6 +103,8 @@ export default function AsociadoEditPage() {
     datos_personales: {},
     datos_laborales: {},
     informacion_financiera: {},
+    informacion_academica: {},
+    informacion_vivienda: {},
   });
 
   useEffect(() => {
@@ -108,6 +132,8 @@ export default function AsociadoEditPage() {
         datos_personales: data.datos_personales || {},
         datos_laborales: data.datos_laborales || {},
         informacion_financiera: data.informacion_financiera || {},
+        informacion_academica: data.informacion_academica || {},
+        informacion_vivienda: data.informacion_vivienda || {},
       });
     } catch (error: any) {
       showToast('error', 'Error al cargar el asociado');
@@ -122,10 +148,13 @@ export default function AsociadoEditPage() {
     setSaving(true);
 
     try {
-      // Función para limpiar objetos vacíos y valores null/undefined
-      const cleanObject = (obj: any): any => {
+      // Función para limpiar objetos y filtrar solo campos válidos
+      const cleanObject = (obj: any, validFields: string[]): any => {
         const cleaned: any = {};
         Object.keys(obj).forEach(key => {
+          // Solo incluir si está en la lista de campos válidos
+          if (!validFields.includes(key)) return;
+          
           const value = obj[key];
           if (value !== null && value !== undefined && value !== '') {
             cleaned[key] = value;
@@ -151,19 +180,49 @@ export default function AsociadoEditPage() {
       }
 
       // Agregar datos adicionales si existen y tienen contenido
-      const datosPersonalesLimpios = cleanObject(formData.datos_personales || {});
+      const validPersonalFields = [
+        'fecha_nacimiento', 'lugar_nacimiento', 'direccion', 'barrio', 'ciudad',
+        'departamento', 'pais', 'estado_civil', 'genero', 'grupo_sanguineo',
+        'eps', 'arl', 'telefono_alternativo', 'numero_hijos', 'personas_a_cargo'
+      ];
+      const datosPersonalesLimpios = cleanObject(formData.datos_personales || {}, validPersonalFields);
       if (datosPersonalesLimpios) {
         dataToSend.datos_personales = datosPersonalesLimpios;
       }
       
-      const datosLaboralesLimpios = cleanObject(formData.datos_laborales || {});
+      const validLaboralFields = [
+        'institucion_educativa', 'cargo', 'tipo_contrato', 'fecha_vinculacion',
+        'salario_basico', 'horario', 'dependencia'
+      ];
+      const datosLaboralesLimpios = cleanObject(formData.datos_laborales || {}, validLaboralFields);
       if (datosLaboralesLimpios) {
         dataToSend.datos_laborales = datosLaboralesLimpios;
       }
       
-      const informacionFinancieraLimpia = cleanObject(formData.informacion_financiera || {});
+      const validFinancialFields = [
+        'ingresos_mensuales', 'ingresos_adicionales', 'egresos_mensuales',
+        'ingresos_familiares', 'gastos_familiares', 'endeudamiento', 'calificacion_riesgo', 'observaciones'
+      ];
+      const informacionFinancieraLimpia = cleanObject(formData.informacion_financiera || {}, validFinancialFields);
       if (informacionFinancieraLimpia) {
         dataToSend.informacion_financiera = informacionFinancieraLimpia;
+      }
+      
+      const validAcademicFields = [
+        'nivel_educativo', 'institucion', 'titulo_obtenido', 'ano_graduacion',
+        'en_estudio', 'programa_actual', 'institucion_actual', 'semestre_actual'
+      ];
+      const informacionAcademicaLimpia = cleanObject(formData.informacion_academica || {}, validAcademicFields);
+      if (informacionAcademicaLimpia) {
+        dataToSend.informacion_academica = informacionAcademicaLimpia;
+      }
+      
+      const validViviendaFields = [
+        'tipo_vivienda', 'tenencia', 'valor_arriendo', 'tiempo_residencia', 'estrato'
+      ];
+      const informacionViviendaLimpia = cleanObject(formData.informacion_vivienda || {}, validViviendaFields);
+      if (informacionViviendaLimpia) {
+        dataToSend.informacion_vivienda = informacionViviendaLimpia;
       }
 
       console.log('Datos a enviar:', JSON.stringify(dataToSend, null, 2));
@@ -192,17 +251,27 @@ export default function AsociadoEditPage() {
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleNestedChange = (section: 'datos_personales' | 'datos_laborales' | 'informacion_financiera', field: string, value: any) => {
+  const handleNestedChange = (
+    section: 'datos_personales' | 'datos_laborales' | 'informacion_financiera' | 'informacion_academica' | 'informacion_vivienda', 
+    field: string, 
+    value: any
+  ) => {
     // Convertir a número si el campo es numérico y no está vacío
-    const numericFields = [
-      'salario_basico', 'otros_ingresos', 'ingresos_mensuales', 
-      'egresos_mensuales', 'endeudamiento', 'capacidad_pago', 'patrimonio_neto'
+    const integerFields = ['numero_hijos', 'personas_a_cargo', 'ano_graduacion', 'semestre_actual', 'tiempo_residencia', 'estrato'];
+    const floatFields = [
+      'salario_basico', 'ingresos_mensuales', 'ingresos_adicionales', 'egresos_mensuales',
+      'ingresos_familiares', 'gastos_familiares', 'endeudamiento', 'valor_arriendo'
     ];
     
     let processedValue = value;
-    if (numericFields.includes(field) && value !== '') {
-      const numValue = parseFloat(value);
-      processedValue = isNaN(numValue) ? value : numValue;
+    if (value !== '') {
+      if (integerFields.includes(field)) {
+        const numValue = parseInt(value);
+        processedValue = isNaN(numValue) ? value : numValue;
+      } else if (floatFields.includes(field)) {
+        const numValue = parseFloat(value);
+        processedValue = isNaN(numValue) ? value : numValue;
+      }
     }
     
     setFormData((prev) => ({
@@ -219,6 +288,8 @@ export default function AsociadoEditPage() {
     { id: 'personal', label: 'Datos Personales' },
     { id: 'laboral', label: 'Datos Laborales' },
     { id: 'financiero', label: 'Información Financiera' },
+    { id: 'academico', label: 'Información Académica' },
+    { id: 'vivienda', label: 'Información de Vivienda' },
   ];
 
   if (loading) {
@@ -468,15 +539,15 @@ export default function AsociadoEditPage() {
               <Input
                 label="Número de Hijos"
                 type="number"
-                value={formData.datos_personales?.numero_hijos?.toString() || '0'}
-                onChange={(e) => handleNestedChange('datos_personales', 'numero_hijos', parseInt(e.target.value) || 0)}
+                value={formData.datos_personales?.numero_hijos?.toString() || ''}
+                onChange={(e) => handleNestedChange('datos_personales', 'numero_hijos', e.target.value)}
               />
 
               <Input
                 label="Personas a Cargo"
                 type="number"
-                value={formData.datos_personales?.personas_a_cargo?.toString() || '0'}
-                onChange={(e) => handleNestedChange('datos_personales', 'personas_a_cargo', parseInt(e.target.value) || 0)}
+                value={formData.datos_personales?.personas_a_cargo?.toString() || ''}
+                onChange={(e) => handleNestedChange('datos_personales', 'personas_a_cargo', e.target.value)}
               />
             </div>
           )}
@@ -555,7 +626,7 @@ export default function AsociadoEditPage() {
                 label="Ingresos Adicionales"
                 type="number"
                 value={formData.informacion_financiera?.ingresos_adicionales?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_adicionales', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_adicionales', e.target.value)}
               />
 
               <Input
@@ -569,14 +640,14 @@ export default function AsociadoEditPage() {
                 label="Ingresos Familiares"
                 type="number"
                 value={formData.informacion_financiera?.ingresos_familiares?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_familiares', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_familiares', e.target.value)}
               />
 
               <Input
                 label="Gastos Familiares"
                 type="number"
                 value={formData.informacion_financiera?.gastos_familiares?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'gastos_familiares', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'gastos_familiares', e.target.value)}
               />
 
               <Input
@@ -584,6 +655,19 @@ export default function AsociadoEditPage() {
                 type="number"
                 value={formData.informacion_financiera?.endeudamiento?.toString() || ''}
                 onChange={(e) => handleNestedChange('informacion_financiera', 'endeudamiento', e.target.value)}
+              />
+
+              <Select
+                label="Calificación de Riesgo"
+                value={formData.informacion_financiera?.calificacion_riesgo || ''}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'calificacion_riesgo', e.target.value)}
+                options={[
+                  { value: '', label: 'Seleccionar...' },
+                  { value: 'bajo', label: 'Bajo' },
+                  { value: 'medio', label: 'Medio' },
+                  { value: 'alto', label: 'Alto' },
+                  { value: 'muy_alto', label: 'Muy Alto' },
+                ]}
               />
 
               <div className="md:col-span-2">
@@ -597,6 +681,139 @@ export default function AsociadoEditPage() {
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
               </div>
+            </div>
+          )}
+
+          {/* Información Académica */}
+          {activeTab === 'academico' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Select
+                label="Nivel Educativo"
+                value={formData.informacion_academica?.nivel_educativo || ''}
+                onChange={(e) => handleNestedChange('informacion_academica', 'nivel_educativo', e.target.value)}
+                options={[
+                  { value: '', label: 'Seleccionar...' },
+                  { value: 'primaria', label: 'Primaria' },
+                  { value: 'bachillerato', label: 'Bachillerato' },
+                  { value: 'tecnico', label: 'Técnico' },
+                  { value: 'tecnologo', label: 'Tecnólogo' },
+                  { value: 'profesional', label: 'Profesional' },
+                  { value: 'especializacion', label: 'Especialización' },
+                  { value: 'maestria', label: 'Maestría' },
+                  { value: 'doctorado', label: 'Doctorado' },
+                ]}
+              />
+
+              <Input
+                label="Institución"
+                type="text"
+                value={formData.informacion_academica?.institucion || ''}
+                onChange={(e) => handleNestedChange('informacion_academica', 'institucion', e.target.value)}
+              />
+
+              <Input
+                label="Título Obtenido"
+                type="text"
+                value={formData.informacion_academica?.titulo_obtenido || ''}
+                onChange={(e) => handleNestedChange('informacion_academica', 'titulo_obtenido', e.target.value)}
+              />
+
+              <Input
+                label="Año de Graduación"
+                type="number"
+                value={formData.informacion_academica?.ano_graduacion?.toString() || ''}
+                onChange={(e) => handleNestedChange('informacion_academica', 'ano_graduacion', e.target.value)}
+              />
+
+              <div className="flex items-center md:col-span-2">
+                <input
+                  type="checkbox"
+                  id="en_estudio"
+                  checked={formData.informacion_academica?.en_estudio || false}
+                  onChange={(e) => handleNestedChange('informacion_academica', 'en_estudio', e.target.checked)}
+                  className="w-4 h-4 text-green-600 border-gray-300 rounded focus:ring-green-500"
+                />
+                <label htmlFor="en_estudio" className="ml-2 text-sm font-medium text-gray-700">
+                  ¿Actualmente estudiando?
+                </label>
+              </div>
+
+              {formData.informacion_academica?.en_estudio && (
+                <>
+                  <Input
+                    label="Programa Actual"
+                    type="text"
+                    value={formData.informacion_academica?.programa_actual || ''}
+                    onChange={(e) => handleNestedChange('informacion_academica', 'programa_actual', e.target.value)}
+                  />
+
+                  <Input
+                    label="Institución Actual"
+                    type="text"
+                    value={formData.informacion_academica?.institucion_actual || ''}
+                    onChange={(e) => handleNestedChange('informacion_academica', 'institucion_actual', e.target.value)}
+                  />
+
+                  <Input
+                    label="Semestre Actual"
+                    type="number"
+                    value={formData.informacion_academica?.semestre_actual?.toString() || ''}
+                    onChange={(e) => handleNestedChange('informacion_academica', 'semestre_actual', e.target.value)}
+                  />
+                </>
+              )}
+            </div>
+          )}
+
+          {/* Información de Vivienda */}
+          {activeTab === 'vivienda' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <Select
+                label="Tipo de Vivienda"
+                value={formData.informacion_vivienda?.tipo_vivienda || ''}
+                onChange={(e) => handleNestedChange('informacion_vivienda', 'tipo_vivienda', e.target.value)}
+                options={[
+                  { value: '', label: 'Seleccionar...' },
+                  { value: 'casa', label: 'Casa' },
+                  { value: 'apartamento', label: 'Apartamento' },
+                  { value: 'finca', label: 'Finca' },
+                  { value: 'otro', label: 'Otro' },
+                ]}
+              />
+
+              <Select
+                label="Tenencia"
+                value={formData.informacion_vivienda?.tenencia || ''}
+                onChange={(e) => handleNestedChange('informacion_vivienda', 'tenencia', e.target.value)}
+                options={[
+                  { value: '', label: 'Seleccionar...' },
+                  { value: 'propia', label: 'Propia' },
+                  { value: 'arrendada', label: 'Arrendada' },
+                  { value: 'familiar', label: 'Familiar' },
+                  { value: 'otro', label: 'Otro' },
+                ]}
+              />
+
+              <Input
+                label="Valor Arriendo"
+                type="number"
+                value={formData.informacion_vivienda?.valor_arriendo?.toString() || ''}
+                onChange={(e) => handleNestedChange('informacion_vivienda', 'valor_arriendo', e.target.value)}
+              />
+
+              <Input
+                label="Tiempo de Residencia (meses)"
+                type="number"
+                value={formData.informacion_vivienda?.tiempo_residencia?.toString() || ''}
+                onChange={(e) => handleNestedChange('informacion_vivienda', 'tiempo_residencia', e.target.value)}
+              />
+
+              <Input
+                label="Estrato"
+                type="number"
+                value={formData.informacion_vivienda?.estrato?.toString() || ''}
+                onChange={(e) => handleNestedChange('informacion_vivienda', 'estrato', e.target.value)}
+              />
             </div>
           )}
 

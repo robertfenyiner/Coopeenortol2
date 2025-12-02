@@ -237,20 +237,42 @@ export default function AsociadoDetailPage() {
           {/* Información Financiera */}
           {activeTab === 'financiero' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {asociado.datos_financieros ? (
+              {asociado.informacion_financiera ? (
                 <>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Ingresos Mensuales</label>
-                    <p className="text-gray-900">{asociado.datos_financieros.ingresos_mensuales ? formatCurrency(asociado.datos_financieros.ingresos_mensuales) : 'N/A'}</p>
+                    <p className="text-gray-900">{asociado.informacion_financiera.ingresos_mensuales ? formatCurrency(asociado.informacion_financiera.ingresos_mensuales) : 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Ingresos Adicionales</label>
+                    <p className="text-gray-900">{asociado.informacion_financiera.ingresos_adicionales ? formatCurrency(asociado.informacion_financiera.ingresos_adicionales) : 'N/A'}</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Egresos Mensuales</label>
-                    <p className="text-gray-900">{asociado.datos_financieros.egresos_mensuales ? formatCurrency(asociado.datos_financieros.egresos_mensuales) : 'N/A'}</p>
+                    <p className="text-gray-900">{asociado.informacion_financiera.egresos_mensuales ? formatCurrency(asociado.informacion_financiera.egresos_mensuales) : 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Ingresos Familiares</label>
+                    <p className="text-gray-900">{asociado.informacion_financiera.ingresos_familiares ? formatCurrency(asociado.informacion_financiera.ingresos_familiares) : 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Gastos Familiares</label>
+                    <p className="text-gray-900">{asociado.informacion_financiera.gastos_familiares ? formatCurrency(asociado.informacion_financiera.gastos_familiares) : 'N/A'}</p>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Endeudamiento</label>
-                    <p className="text-gray-900">{asociado.datos_financieros.endeudamiento ? formatCurrency(asociado.datos_financieros.endeudamiento) : 'N/A'}</p>
+                    <p className="text-gray-900">{asociado.informacion_financiera.endeudamiento ? formatCurrency(asociado.informacion_financiera.endeudamiento) : 'N/A'}</p>
                   </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Calificación de Riesgo</label>
+                    <p className="text-gray-900">{asociado.informacion_financiera.calificacion_riesgo ? asociado.informacion_financiera.calificacion_riesgo.replace('_', ' ').toUpperCase() : 'N/A'}</p>
+                  </div>
+                  {asociado.informacion_financiera.observaciones && (
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Observaciones</label>
+                      <p className="text-gray-900">{asociado.informacion_financiera.observaciones}</p>
+                    </div>
+                  )}
                 </>
               ) : (
                 <p className="text-gray-500 col-span-2">No hay información financiera registrada</p>
@@ -261,14 +283,98 @@ export default function AsociadoDetailPage() {
           {/* Información Académica */}
           {activeTab === 'academico' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <p className="text-gray-500 col-span-2">Información académica disponible próximamente</p>
+              {asociado.informacion_academica ? (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Nivel Educativo</label>
+                    <p className="text-gray-900 capitalize">{asociado.informacion_academica.nivel_educativo || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Institución</label>
+                    <p className="text-gray-900">{asociado.informacion_academica.institucion || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Título Obtenido</label>
+                    <p className="text-gray-900">{asociado.informacion_academica.titulo_obtenido || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Año de Graduación</label>
+                    <p className="text-gray-900">{asociado.informacion_academica.ano_graduacion || 'N/A'}</p>
+                  </div>
+                  {asociado.informacion_academica.en_estudio && (
+                    <>
+                      <div className="md:col-span-2">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Actualmente Estudiando</label>
+                        <p className="text-gray-900">Sí</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Programa Actual</label>
+                        <p className="text-gray-900">{asociado.informacion_academica.programa_actual || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Institución Actual</label>
+                        <p className="text-gray-900">{asociado.informacion_academica.institucion_actual || 'N/A'}</p>
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Semestre Actual</label>
+                        <p className="text-gray-900">{asociado.informacion_academica.semestre_actual || 'N/A'}</p>
+                      </div>
+                    </>
+                  )}
+                </>
+              ) : (
+                <p className="text-gray-500 col-span-2">No hay información académica registrada</p>
+              )}
             </div>
           )}
 
           {/* Información de Vivienda */}
           {activeTab === 'vivienda' && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <p className="text-gray-500 col-span-2">Información de vivienda disponible próximamente</p>
+              {asociado.informacion_vivienda ? (
+                <>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Tipo de Vivienda</label>
+                    <p className="text-gray-900 capitalize">{asociado.informacion_vivienda.tipo_vivienda || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Tenencia</label>
+                    <p className="text-gray-900 capitalize">{asociado.informacion_vivienda.tenencia || 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Valor Arriendo</label>
+                    <p className="text-gray-900">{asociado.informacion_vivienda.valor_arriendo ? formatCurrency(asociado.informacion_vivienda.valor_arriendo) : 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Tiempo de Residencia</label>
+                    <p className="text-gray-900">{asociado.informacion_vivienda.tiempo_residencia ? `${asociado.informacion_vivienda.tiempo_residencia} meses` : 'N/A'}</p>
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Estrato</label>
+                    <p className="text-gray-900">{asociado.informacion_vivienda.estrato || 'N/A'}</p>
+                  </div>
+                  {asociado.informacion_vivienda.departamento && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Departamento</label>
+                      <p className="text-gray-900">{asociado.informacion_vivienda.departamento}</p>
+                    </div>
+                  )}
+                  {asociado.informacion_vivienda.municipio && (
+                    <div>
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Municipio</label>
+                      <p className="text-gray-900">{asociado.informacion_vivienda.municipio}</p>
+                    </div>
+                  )}
+                  {asociado.informacion_vivienda.direccion && (
+                    <div className="md:col-span-2">
+                      <label className="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+                      <p className="text-gray-900">{asociado.informacion_vivienda.direccion}</p>
+                    </div>
+                  )}
+                </>
+              ) : (
+                <p className="text-gray-500 col-span-2">No hay información de vivienda registrada</p>
+              )}
             </div>
           )}
         </div>
