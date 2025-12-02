@@ -24,7 +24,7 @@ class RegistroAuditoriaResponse(RegistroAuditoriaBase):
     fecha_hora: datetime
 
     class Config:
-        from_attributes = True
+        orm_mode = True
 
 
 class RegistroAuditoriaFilter(BaseModel):

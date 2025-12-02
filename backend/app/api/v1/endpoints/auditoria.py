@@ -30,8 +30,8 @@ def listar_registros(
     Listar registros de auditoría con filtros opcionales.
     Solo accesible para Admins y Auditores.
     """
-    # Verificar permisos
-    if current_user.rol not in ["Admin", "Auditor"]:
+    # Verificar permisos (case-insensitive)
+    if current_user.rol.lower() not in ["admin", "auditor"]:
         raise HTTPException(status_code=403, detail="No tienes permiso para acceder a los registros de auditoría")
     
     query = db.query(RegistroAuditoria)
@@ -60,7 +60,8 @@ def listar_registros(
     # Paginación
     registros = query.offset(skip).limit(limit).all()
     
-    return registros
+    # Convertir a diccionarios para evitar problemas de serialización con relaciones
+    return [RegistroAuditoriaResponse.from_orm(r) for r in registros]
 
 
 @router.get("/{registro_id}", response_model=RegistroAuditoriaResponse)
@@ -73,7 +74,7 @@ def obtener_registro(
     Obtener un registro de auditoría específico por ID.
     Solo accesible para Admins y Auditores.
     """
-    if current_user.rol not in ["Admin", "Auditor"]:
+    if current_user.rol.lower() not in ["admin", "auditor"]:
         raise HTTPException(status_code=403, detail="No tienes permiso para acceder a los registros de auditoría")
         
     registro = db.query(RegistroAuditoria).filter(RegistroAuditoria.id == registro_id).first()
@@ -81,4 +82,4 @@ def obtener_registro(
     if not registro:
         raise HTTPException(status_code=404, detail="Registro de auditoría no encontrado")
     
-    return registro
+    return RegistroAuditoriaResponse.from_orm(registro)
