@@ -72,11 +72,12 @@ def test_obtener_usuario_sin_token(client):
 def test_cambiar_password(client, auth_headers_admin, admin_user, db):
     """Test de cambio de contraseña."""
     response = client.post(
-        "/api/v1/auth/change-password",
+        "/api/v1/auth/cambiar-password",
         headers=auth_headers_admin,
         json={
-            "old_password": "admin123",
-            "new_password": "newpassword123"
+            "password_actual": "admin123",
+            "password_nueva": "newpassword123",
+            "confirmar_password": "newpassword123"
         }
     )
     
@@ -96,11 +97,12 @@ def test_cambiar_password(client, auth_headers_admin, admin_user, db):
 def test_cambiar_password_incorrecto(client, auth_headers_admin):
     """Test de cambio de contraseña con password actual incorrecto."""
     response = client.post(
-        "/api/v1/auth/change-password",
+        "/api/v1/auth/cambiar-password",
         headers=auth_headers_admin,
         json={
-            "old_password": "wrong_password",
-            "new_password": "newpassword123"
+            "password_actual": "wrong_password",
+            "password_nueva": "newpassword123",
+            "confirmar_password": "newpassword123"
         }
     )
     
