@@ -2225,3 +2225,298 @@ INFO:     190.108.77.114:21384 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
 INFO:     190.108.77.114:21407 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
 INFO:     190.108.77.114:21407 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
 INFO:     158.220.100.148:59896 - "GET /api/v1/asociados/ HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:21385 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21382 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21381 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21385 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21381 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21382 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21385 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21388 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21386 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21381 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21385 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21388 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21390 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21390 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21390 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21392 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21392 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21390 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "PUT /api/v1/asociados/4 HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21416 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21416 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21417 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21417 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21417 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21418 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21404 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21403 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21405 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21403 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21404 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21405 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21406 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21401 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21404 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21403 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21405 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21402 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21403 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21405 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21405 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21403 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21407 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21407 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21411 - "OPTIONS /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21411 - "OPTIONS /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21412 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21411 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21380 - "GET /docs HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21380 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21380 - "GET /redoc HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21411 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21412 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21411 - "GET /api/v1/ahorros/ HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:21412 - "GET /api/v1/ahorros/ HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:21413 - "POST /api/v1/auth/login HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:21433 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "OPTIONS /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "GET /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21434 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21434 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21436 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21435 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21438 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21436 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21437 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21435 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21433 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21438 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21438 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21435 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21435 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21433 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21376 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21377 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21376 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21376 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21377 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21379 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21377 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21380 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21380 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21384 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21384 - "PUT /api/v1/asociados/4 HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21400 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21400 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23279 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23280 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23279 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23280 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19463 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19465 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19466 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19464 - "OPTIONS /api/v1/asociados/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19462 - "OPTIONS /api/v1/creditos/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19467 - "OPTIONS /api/v1/ahorros/estadisticas/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19463 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19466 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19465 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19467 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19463 - "OPTIONS /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19466 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19462 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19465 - "OPTIONS /api/v1/creditos/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19464 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19465 - "OPTIONS /api/v1/ahorros/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19463 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19464 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19467 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19463 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19464 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:19467 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:23238 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23238 - "OPTIONS /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23238 - "GET /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23238 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23238 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23240 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23239 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23240 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23239 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23243 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:23242 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:23238 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23240 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:23243 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:23242 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23253 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23253 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23253 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23253 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23258 - "OPTIONS /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23258 - "PUT /api/v1/asociados/4 HTTP/1.1" 422 Unprocessable Entity
+INFO:     158.220.100.148:59146 - "POST /api/v1/auth/login HTTP/1.1" 422 Unprocessable Entity
+INFO:     158.220.100.148:59162 - "GET /api/v1/asociados/1 HTTP/1.1" 200 OK
+INFO:     158.220.100.148:50748 - "POST /api/v1/auth/login HTTP/1.1" 422 Unprocessable Entity
+INFO:     158.220.100.148:50750 - "PUT /api/v1/asociados/1 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/asociados.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [40320]
+INFO:     Started server process [49159]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     158.220.100.148:48206 - "POST /api/v1/auth/login HTTP/1.1" 422 Unprocessable Entity
+INFO:     158.220.100.148:48208 - "PUT /api/v1/asociados/1 HTTP/1.1" 500 Internal Server Error
+ERROR:    Exception in ASGI application
+Traceback (most recent call last):
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
+    return await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
+    await super().__call__(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 83, in __call__
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
+    await route.handle(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
+    await self.app(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
+    raise exc
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
+    await app(scope, receive, sender)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
+    response = await func(request)
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 296, in app
+    content = await serialize_response(
+  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 155, in serialize_response
+    raise ResponseValidationError(
+fastapi.exceptions.ResponseValidationError: 12 validation errors:
+  {'loc': ('response', 'datos_personales', 'direccion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'ciudad'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_personales', 'departamento'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'institucion_educativa'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'fecha_vinculacion'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'datos_laborales', 'salario_basico'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'ingresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'egresos_mensuales'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_financiera', 'activos'), 'msg': 'value is not a valid list', 'type': 'type_error.list'}
+  {'loc': ('response', 'informacion_academica', 'nivel_educativo'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tenencia'), 'msg': 'field required', 'type': 'value_error.missing'}
+  {'loc': ('response', 'informacion_vivienda', 'tiempo_residencia'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}
+
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [49159]
+INFO:     Stopping reloader process [38625]

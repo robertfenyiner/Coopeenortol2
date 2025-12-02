@@ -53,7 +53,7 @@ export default function AsociadoEditPage() {
   }, [id]);
 
   const loadAsociado = async () => {
-    try {
+    try:
       const response = await api.get(`/asociados/${id}`);
       const data = response.data;
       setFormData({
@@ -82,20 +82,26 @@ export default function AsociadoEditPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log('Form submitted with data:', formData);
     setSaving(true);
 
     try {
       if (id) {
-        await api.put(`/asociados/${id}`, formData);
+        console.log('Updating asociado:', id);
+        const response = await api.put(`/asociados/${id}`, formData);
+        console.log('Update response:', response.data);
         showToast('success', 'Asociado actualizado correctamente');
       } else {
-        await api.post('/asociados/', formData);
+        console.log('Creating new asociado');
+        const response = await api.post('/asociados/', formData);
+        console.log('Create response:', response.data);
         showToast('success', 'Asociado creado correctamente');
       }
       navigate('/asociados');
     } catch (error: any) {
+      console.error('Error saving asociado:', error);
+      console.error('Error response:', error.response?.data);
       showToast('error', error.response?.data?.detail || 'Error al guardar el asociado');
-      console.error(error);
     } finally {
       setSaving(false);
     }

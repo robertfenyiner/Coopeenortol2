@@ -122,12 +122,12 @@ def obtener_asociado(asociado_id: int, db: Session = Depends(get_db)) -> Asociad
     return asociado
 
 
-@router.put("/{asociado_id}", response_model=AsociadoEnDB)
+@router.put("/{asociado_id}", response_model=AsociadoDetalle)
 def actualizar_asociado(
     asociado_id: int,
     asociado_in: AsociadoActualizar,
     db: Session = Depends(get_db),
-) -> AsociadoEnDB:
+) -> AsociadoDetalle:
     """
     Actualizar información de un asociado existente.
     
@@ -139,23 +139,16 @@ def actualizar_asociado(
     if not asociado:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Asociado no encontrado")
     
-    # Validar solo los campos que se están actualizando
-    data_to_validate = asociado_in.dict(exclude_unset=True)
-    if data_to_validate:  # Solo validar si hay datos
-        es_valido, errores = validar_asociado_completo(data_to_validate)
-        if not es_valido:
-            raise HTTPException(
-                status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-                detail={
-                    "message": "Errores de validación en los datos del asociado",
-                    "errors": errores
-                }
-            )
-    
     try:
         return service.actualizar_asociado(db, asociado, asociado_in)
     except service.EmailDuplicadoError as error:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(error)) from error
+    except Exception as e:
+        # Log the error for debugging
+        print(f"Error updating asociado: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        raise HTTPException(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, detail=f"Error al actualizar asociado: {str(e)}") from e
 
 
 @router.delete("/{asociado_id}", status_code=status.HTTP_204_NO_CONTENT)
