@@ -122,7 +122,19 @@ export default function AsociadoEditPage() {
     setSaving(true);
 
     try {
-      // Preparar datos para enviar - solo campos básicos del tab activo
+      // Función para limpiar objetos vacíos y valores null/undefined
+      const cleanObject = (obj: any): any => {
+        const cleaned: any = {};
+        Object.keys(obj).forEach(key => {
+          const value = obj[key];
+          if (value !== null && value !== undefined && value !== '') {
+            cleaned[key] = value;
+          }
+        });
+        return Object.keys(cleaned).length > 0 ? cleaned : null;
+      };
+
+      // Preparar datos para enviar - solo campos básicos
       const dataToSend: any = {
         tipo_documento: formData.tipo_documento,
         numero_documento: formData.numero_documento,
@@ -138,18 +150,23 @@ export default function AsociadoEditPage() {
         dataToSend.observaciones = formData.observaciones;
       }
 
-      // Agregar datos adicionales si existen
-      if (formData.datos_personales && Object.keys(formData.datos_personales).length > 0) {
-        dataToSend.datos_personales = formData.datos_personales;
+      // Agregar datos adicionales si existen y tienen contenido
+      const datosPersonalesLimpios = cleanObject(formData.datos_personales || {});
+      if (datosPersonalesLimpios) {
+        dataToSend.datos_personales = datosPersonalesLimpios;
       }
       
-      if (formData.datos_laborales && Object.keys(formData.datos_laborales).length > 0) {
-        dataToSend.datos_laborales = formData.datos_laborales;
+      const datosLaboralesLimpios = cleanObject(formData.datos_laborales || {});
+      if (datosLaboralesLimpios) {
+        dataToSend.datos_laborales = datosLaboralesLimpios;
       }
       
-      if (formData.informacion_financiera && Object.keys(formData.informacion_financiera).length > 0) {
-        dataToSend.informacion_financiera = formData.informacion_financiera;
+      const informacionFinancieraLimpia = cleanObject(formData.informacion_financiera || {});
+      if (informacionFinancieraLimpia) {
+        dataToSend.informacion_financiera = informacionFinancieraLimpia;
       }
+
+      console.log('Datos a enviar:', JSON.stringify(dataToSend, null, 2));
 
       if (id) {
         await api.put(`/asociados/${id}`, dataToSend);
@@ -160,8 +177,12 @@ export default function AsociadoEditPage() {
       }
       navigate('/asociados');
     } catch (error: any) {
-      showToast('error', error.response?.data?.detail || 'Error al guardar el asociado');
-      console.error('Error al guardar:', error);
+      const errorDetail = error.response?.data?.detail;
+      const errorMessage = typeof errorDetail === 'string' 
+        ? errorDetail 
+        : 'Error al guardar el asociado';
+      showToast('error', errorMessage);
+      console.error('Error al guardar:', error.response?.data);
     } finally {
       setSaving(false);
     }
@@ -172,11 +193,23 @@ export default function AsociadoEditPage() {
   };
 
   const handleNestedChange = (section: 'datos_personales' | 'datos_laborales' | 'informacion_financiera', field: string, value: any) => {
+    // Convertir a número si el campo es numérico y no está vacío
+    const numericFields = [
+      'salario_basico', 'otros_ingresos', 'ingresos_mensuales', 
+      'egresos_mensuales', 'endeudamiento', 'capacidad_pago', 'patrimonio_neto'
+    ];
+    
+    let processedValue = value;
+    if (numericFields.includes(field) && value !== '') {
+      const numValue = parseFloat(value);
+      processedValue = isNaN(numValue) ? value : numValue;
+    }
+    
     setFormData((prev) => ({
       ...prev,
       [section]: {
         ...prev[section],
-        [field]: value,
+        [field]: processedValue,
       },
     }));
   };
@@ -489,7 +522,7 @@ export default function AsociadoEditPage() {
                 label="Salario Básico"
                 type="number"
                 value={formData.datos_laborales?.salario_basico?.toString() || ''}
-                onChange={(e) => handleNestedChange('datos_laborales', 'salario_basico', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('datos_laborales', 'salario_basico', e.target.value)}
               />
 
               <Input
@@ -515,7 +548,7 @@ export default function AsociadoEditPage() {
                 label="Ingresos Mensuales"
                 type="number"
                 value={formData.informacion_financiera?.ingresos_mensuales?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_mensuales', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'ingresos_mensuales', e.target.value)}
               />
 
               <Input
@@ -529,7 +562,7 @@ export default function AsociadoEditPage() {
                 label="Egresos Mensuales"
                 type="number"
                 value={formData.informacion_financiera?.egresos_mensuales?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'egresos_mensuales', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'egresos_mensuales', e.target.value)}
               />
 
               <Input
@@ -550,7 +583,7 @@ export default function AsociadoEditPage() {
                 label="Endeudamiento"
                 type="number"
                 value={formData.informacion_financiera?.endeudamiento?.toString() || ''}
-                onChange={(e) => handleNestedChange('informacion_financiera', 'endeudamiento', parseFloat(e.target.value) || 0)}
+                onChange={(e) => handleNestedChange('informacion_financiera', 'endeudamiento', e.target.value)}
               />
 
               <div className="md:col-span-2">
