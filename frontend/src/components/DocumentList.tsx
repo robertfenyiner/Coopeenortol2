@@ -36,7 +36,7 @@ function DocumentPreviewModal({
   useEffect(() => {
     const loadDocument = async () => {
       try {
-        const response = await api.get(`/documentos/${documento.id}/download`, {
+        const response = await api.get(`/documentos/${documento.id}/descargar`, {
           responseType: 'blob',
         });
         const url = URL.createObjectURL(response.data);
@@ -113,7 +113,7 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
 
   const handleDownload = async (documento: Documento) => {
     try {
-      const response = await api.get(`/documentos/${documento.id}/download`, {
+      const response = await api.get(`/documentos/${documento.id}/descargar`, {
         responseType: 'blob',
       });
       const url = window.URL.createObjectURL(response.data);

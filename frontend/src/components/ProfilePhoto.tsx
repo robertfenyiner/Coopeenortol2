@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Camera, User } from 'lucide-react';
 import { useToast } from '../contexts/ToastContext';
-import api from '../lib/axios';
+import api, { getFileUrl } from '../lib/axios';
 
 interface ProfilePhotoProps {
   asociadoId: number;
@@ -54,13 +54,15 @@ export default function ProfilePhoto({
     }
   };
 
+  const fullFotoUrl = getFileUrl(fotoUrl);
+
   return (
     <div className="relative inline-block">
       {/* Foto de Perfil */}
       <div className="w-32 h-32 rounded-full border-4 border-gray-200 overflow-hidden bg-gray-100 flex items-center justify-center">
-        {fotoUrl ? (
+        {fullFotoUrl ? (
           <img
-            src={fotoUrl}
+            src={fullFotoUrl}
             alt="Foto de perfil"
             className="w-full h-full object-cover"
           />

@@ -1,11 +1,20 @@
 import axios from 'axios';
 
+const BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+
 const api = axios.create({
-  baseURL: (import.meta.env.VITE_API_URL || 'http://localhost:8000') + '/api/v1',
+  baseURL: BASE_URL + '/api/v1',
   headers: {
     'Content-Type': 'application/json',
   },
 });
+
+// Helper para construir URLs completas de archivos estáticos
+export const getFileUrl = (path: string | null | undefined): string | null => {
+  if (!path) return null;
+  if (path.startsWith('http')) return path;
+  return `${BASE_URL}${path.startsWith('/') ? path : '/' + path}`;
+};
 
 // Interceptor para agregar el token en cada petición
 api.interceptors.request.use(

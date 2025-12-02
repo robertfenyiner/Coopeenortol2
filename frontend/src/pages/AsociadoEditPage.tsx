@@ -154,8 +154,8 @@ export default function AsociadoEditPage() {
   const loadDocumentos = async () => {
     if (!id) return;
     try {
-      const response = await api.get(`/documentos/asociados/${id}/documentos`);
-      setDocumentos(response.data);
+      const response = await api.get(`/documentos?asociado_id=${id}`);
+      setDocumentos(response.data.documentos || []);
     } catch (error) {
       console.error('Error al cargar documentos:', error);
     }
