@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import DashboardPage from './pages/DashboardPage';
 import AsociadosPage from './pages/AsociadosPage';
 import AsociadoDetailPage from './pages/AsociadoDetailPage';
+import AsociadoEditPage from './pages/AsociadoEditPage';
 import CreditosPage from './pages/CreditosPage';
 import CreditoDetailPage from './pages/CreditoDetailPage';
 import AhorrosPage from './pages/AhorrosPage';
@@ -74,6 +75,28 @@ function AppRoutes() {
           <ProtectedRoute>
             <MainLayout>
               <AsociadosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/asociados/nuevo"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <AsociadoEditPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/asociados/:id/editar"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <AsociadoEditPage />
             </MainLayout>
           </ProtectedRoute>
         }

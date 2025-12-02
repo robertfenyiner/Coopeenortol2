@@ -2052,3 +2052,84 @@ INFO:     190.108.77.114:19510 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
 INFO:     190.108.77.114:19514 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
 INFO:     190.108.77.114:19510 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
 INFO:     190.108.77.114:19514 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19474 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19474 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19479 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19480 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19479 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19484 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19479 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19476 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19483 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19484 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19479 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:19476 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19481 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19481 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:19481 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21386 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21386 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19481 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21396 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21386 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:19481 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21397 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21396 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21398 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21399 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21396 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21398 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21397 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21397 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21398 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21398 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21397 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21397 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21398 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21398 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21397 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21402 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21404 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21398 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21403 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21401 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21404 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21398 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21398 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21404 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/asociados/4 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21430 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21432 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21434 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21432 - "GET /api/v1/creditos/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21430 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21434 - "GET /api/v1/asociados/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21436 - "GET /api/v1/ahorros/estadisticas/ HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:21432 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21437 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21435 - "GET /api/v1/creditos/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21437 - "GET /api/v1/ahorros/estadisticas HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21436 - "GET /api/v1/asociados/estadisticas HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21412 - "GET /api/v1/ahorros/5 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21412 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21410 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21422 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21423 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21422 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21423 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:21422 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21423 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21423 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21422 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:21406 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK

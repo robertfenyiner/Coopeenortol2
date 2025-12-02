@@ -46,3 +46,7 @@ Now using node v18.20.8 (npm v10.8.2)
 5:23:47 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
 5:24:28 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
 5:26:57 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
+5:33:03 PM [vite] hmr update /src/App.tsx, /src/index.css
+5:34:31 PM [vite] hmr update /src/App.tsx, /src/index.css
+5:34:42 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
+5:34:43 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
