@@ -18,11 +18,6 @@ interface AsociadoData {
   estado: string;
   fecha_ingreso: string;
   observaciones?: string;
-  datos_personales?: any;
-  datos_laborales?: any;
-  informacion_financiera?: any;
-  informacion_academica?: any;
-  informacion_vivienda?: any;
 }
 
 export default function AsociadoEditPage() {
@@ -66,11 +61,6 @@ export default function AsociadoEditPage() {
         estado: data.estado || 'activo',
         fecha_ingreso: data.fecha_ingreso || new Date().toISOString().split('T')[0],
         observaciones: data.observaciones || '',
-        datos_personales: data.datos_personales || {},
-        datos_laborales: data.datos_laborales || {},
-        informacion_financiera: data.informacion_financiera || {},
-        informacion_academica: data.informacion_academica || {},
-        informacion_vivienda: data.informacion_vivienda || {},
       });
     } catch (error: any) {
       showToast('error', 'Error al cargar el asociado');
@@ -82,26 +72,36 @@ export default function AsociadoEditPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted with data:', formData);
     setSaving(true);
 
     try {
+      // Preparar datos para enviar - solo campos básicos del tab activo
+      const dataToSend: any = {
+        tipo_documento: formData.tipo_documento,
+        numero_documento: formData.numero_documento,
+        nombres: formData.nombres,
+        apellidos: formData.apellidos,
+        correo_electronico: formData.correo_electronico,
+        telefono_principal: formData.telefono_principal,
+        estado: formData.estado,
+        fecha_ingreso: formData.fecha_ingreso,
+      };
+      
+      if (formData.observaciones) {
+        dataToSend.observaciones = formData.observaciones;
+      }
+
       if (id) {
-        console.log('Updating asociado:', id);
-        const response = await api.put(`/asociados/${id}`, formData);
-        console.log('Update response:', response.data);
+        await api.put(`/asociados/${id}`, dataToSend);
         showToast('success', 'Asociado actualizado correctamente');
       } else {
-        console.log('Creating new asociado');
-        const response = await api.post('/asociados/', formData);
-        console.log('Create response:', response.data);
+        await api.post('/asociados/', dataToSend);
         showToast('success', 'Asociado creado correctamente');
       }
       navigate('/asociados');
     } catch (error: any) {
-      console.error('Error saving asociado:', error);
-      console.error('Error response:', error.response?.data);
       showToast('error', error.response?.data?.detail || 'Error al guardar el asociado');
+      console.error('Error al guardar:', error);
     } finally {
       setSaving(false);
     }
