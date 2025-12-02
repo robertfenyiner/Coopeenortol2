@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import AsociadosModule from './AsociadosModuleSimple';
+import AsociadosModule from './AsociadosModule';
 import UsuariosModule from './UsuariosModule';
 import ChangePasswordModal from './ChangePasswordModal';
 

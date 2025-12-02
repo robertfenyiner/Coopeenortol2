@@ -5,7 +5,9 @@ from typing import List, Optional
 from fastapi import APIRouter, Depends, File, HTTPException, Query, Response, UploadFile, status
 from sqlalchemy.orm import Session
 
+from app.core.deps import get_current_active_user, require_permission
 from app.database import get_db
+from app.models.usuario import Usuario
 from app.schemas import AsociadoActualizar, AsociadoCrear, AsociadoEnDB, AsociadosListResponse
 from app.services import asociados as service
 
@@ -23,6 +25,7 @@ def listar_asociados(
     ordenar_por: Optional[str] = Query(default="fecha_ingreso", description="Campo por el cual ordenar"),
     orden: Optional[str] = Query(default="desc", regex="^(asc|desc)$", description="Orden ascendente o descendente"),
     db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("asociados:leer")),
 ) -> AsociadosListResponse:
     """
     Listar asociados con paginación y filtros avanzados.
@@ -44,7 +47,11 @@ def listar_asociados(
 
 
 @router.post("/", response_model=AsociadoEnDB, status_code=status.HTTP_201_CREATED)
-def crear_asociado(asociado_in: AsociadoCrear, db: Session = Depends(get_db)) -> AsociadoEnDB:
+def crear_asociado(
+    asociado_in: AsociadoCrear,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("asociados:crear")),
+) -> AsociadoEnDB:
     """
     Crear un nuevo asociado en el sistema.
     
@@ -60,7 +67,10 @@ def crear_asociado(asociado_in: AsociadoCrear, db: Session = Depends(get_db)) ->
 
 
 @router.get("/estadisticas", response_model=dict)
-def obtener_estadisticas(db: Session = Depends(get_db)) -> dict:
+def obtener_estadisticas(
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("asociados:leer")),
+) -> dict:
     """
     Obtener estadísticas generales de asociados.
     

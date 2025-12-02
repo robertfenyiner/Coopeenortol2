@@ -1,86 +1,124 @@
-# Plataforma Coopeenortol
+# 🏢 Coopeenortol - Sistema de Gestión Cooperativa
 
-Solución integral para la Cooperativa de Empleados del Norte del Tolima (Coopeenortol), orientada a la gestión de asociados del sector educativo. Este repositorio consolida el desarrollo de una plataforma web modular para administrar procesos de talento humano, portafolio de servicios financieros, cultura y recreación.
+Sistema integral para la **Cooperativa de Empleados del Norte del Tolima (Coopeenortol)**, diseñado para gestionar más de 1,000 asociados del sector educativo.
 
-## Propósito
+## 📋 Características Principales
 
-- Digitalizar los procesos de atención y acompañamiento a más de 1000 asociados.
-- Facilitar la gestión de créditos, ahorros, certificados y documentos institucionales.
-- Consolidar información confiable para la toma de decisiones estratégicas.
-- Fortalecer las iniciativas culturales y de bienestar social promovidas por la cooperativa.
+- ✅ **Gestión de Asociados**: Control completo de información personal, laboral, familiar y financiera
+- ✅ **Módulo Contable**: Gestión de aportes, estados de cuenta y reportes financieros (en desarrollo)
+- ✅ **Módulo de Créditos**: Sistema de solicitudes, evaluación y amortización (en desarrollo)
+- ✅ **Autenticación y Permisos**: Sistema robusto basado en roles (Admin, Analista, Auditor)
+- ✅ **API REST**: Backend con FastAPI y documentación automática
+- ✅ **Frontend Moderno**: Aplicación web con React + TypeScript + Tailwind CSS
+- ✅ **Migraciones de BD**: Gestión de esquema con Alembic
+- ✅ **Pruebas Automatizadas**: Suite de tests con pytest
 
-Robert lidera la dirección general del proyecto y coordina los entregables por etapas.
+## 🚀 Inicio Rápido
 
-## Arquitectura propuesta
+### Prerrequisitos
 
-La plataforma seguirá una arquitectura modular conformada por:
+- Python 3.10+
+- Node.js 18+
+- Git
 
-- **Backend**: API desarrollada con FastAPI, conectada a una base de datos relacional. Gestiona la lógica de negocio y expone servicios REST.
-- **Frontend**: Aplicación web SPA (en construcción) que consumirá los servicios del backend.
-- **Base de datos**: PostgreSQL en producción, con SQLite para entornos locales de desarrollo y pruebas.
-- **Automatización**: Pruebas automatizadas, tareas de despliegue continuo y herramientas de control de calidad.
+### Instalación Local
 
-## Estructura del repositorio
-
-```
-├── backend/           # Código fuente del API y pruebas automatizadas
-├── frontend/          # Aplicación web React con TypeScript
-├── infra/             # Scripts de infraestructura y despliegue
-│   ├── scripts/       # Scripts automatizados (setup-vps.sh, deploy.sh, check-ports.sh)
-│   ├── docker/        # Configuraciones Docker adicionales
-│   └── nginx/         # Configuraciones de proxy reverso
-├── docs/              # Documentación funcional y técnica
-├── backend/data/      # Archivos de datos locales (excluye bases reales)
-└── README.md          # Resumen general del proyecto
-```
-
-## 🚀 Instalación en VPS Ubuntu 22.04
-
-**Instalación completa en 3 comandos:**
+#### 1. Clonar y configurar backend
 
 ```bash
-# 1. Configurar entorno (Docker, dependencias, repositorio)
-curl -fsSL https://raw.githubusercontent.com/robertfenyiner/Coopeenortol2/main/infra/scripts/setup-vps.sh | bash
+git clone https://github.com/robertfenyiner/Coopeenortol.git
+cd Coopeenortol/backend
 
-# 2. Desplegar aplicación
-cd /opt/coopeenortol
-./infra/scripts/deploy.sh
+# Crear entorno virtual
+python3 -m venv venv
+source venv/bin/activate
 
-# 3. Crear usuario administrador
-docker compose exec backend python create_admin_simple.py
+# Instalar dependencias
+pip install -r requirements.txt
+
+# Configurar .env
+cp .env.example .env
+
+# Ejecutar migraciones
+alembic upgrade head
+
+# Crear usuario admin
+python create_admin_simple.py
+
+# Iniciar servidor
+uvicorn app.main:app --reload
 ```
 
-**¡Listo!** Tu aplicación estará disponible en:
-- **Frontend**: http://tu-ip:3000
-- **API**: http://tu-ip:8000  
-- **Documentación**: http://tu-ip:8000/docs
+**Backend:** `http://localhost:8000`  
+**Docs:** `http://localhost:8000/docs`
 
-**Características del despliegue:**
-- ✅ Resolución automática de conflictos de puertos
-- ✅ Configuración completa de Docker y dependencias
-- ✅ Scripts de verificación y diagnóstico
-- ✅ Backups automáticos configurados
-- ✅ Logs rotativos y monitoreo básico
+#### 2. Configurar frontend
 
-Ver [**INSTALACIÓN RÁPIDA**](docs/INSTALACION_RAPIDA.md) para la guía completa de 3 comandos.
+```bash
+cd frontend
+npm install
+npm run dev
+```
 
-Ver [documentación detallada de instalación](docs/instalacion_vps.md) para troubleshooting.
+**Frontend:** `http://localhost:3000`
 
-## Primeros pasos
+## 🔐 Usuario por Defecto
 
-1. Crear un entorno virtual de Python 3.11.
-2. Instalar dependencias ejecutando `pip install -r backend/requirements.txt`.
-3. Configurar variables en `backend/.env` (puede basarse en `backend/.env.example`).
-4. Ejecutar la API con `uvicorn app.main:app --reload` desde la carpeta `backend`.
+- **Usuario:** `admin`
+- **Contraseña:** `admin123`
 
-El archivo [docs/roadmap.md](docs/roadmap.md) describe el plan de trabajo por fases, mientras que [docs/modulo_gestion_personal.md](docs/modulo_gestion_personal.md) profundiza en el módulo inicial de talento humano.
+## 📚 Documentación API
 
-## Próximos hitos
+Ver documentación interactiva en `/docs` cuando el servidor esté corriendo.
 
-- Completar la fase 1 con el módulo de gestión de personal y la captura integral de información del asociado.
-- Definir el diseño del frontend y la experiencia de usuario.
-- Preparar infraestructura y scripts de despliegue para la VPS Ubuntu 22.04.
+### Roles y Permisos
 
-## Licencia
+| Rol | Permisos |
+|-----|----------|
+| **Admin** | CRUD completo en todos los módulos |
+| **Analista** | Crear, leer y actualizar asociados |
+| **Auditor** | Solo lectura y reportes |
 
-Uso interno para Coopeenortol. Todos los derechos reservados.
+## 🧪 Pruebas
+
+```bash
+cd backend
+pytest
+pytest --cov=app
+```
+
+## 🗄️ Migraciones
+
+```bash
+# Crear migración
+alembic revision --autogenerate -m "Descripción"
+
+# Aplicar migraciones
+alembic upgrade head
+```
+
+## 📦 Estructura
+
+```
+Coopeenortol/
+├── backend/          # FastAPI + SQLAlchemy
+│   ├── alembic/      # Migraciones
+│   ├── app/          # Código fuente
+│   └── tests/        # Pruebas
+├── frontend/         # React + TypeScript
+│   └── src/          # Componentes
+└── docs/             # Documentación
+```
+
+## 📈 Roadmap
+
+- [x] Fase 1: Gestión de Personal (90%)
+- [ ] Fase 2: Módulo Contable (0%)
+- [ ] Fase 3: Módulo de Créditos (0%)
+- [ ] Fase 4: Portal del Asociado (0%)
+
+## 📄 Licencia
+
+Uso interno Coopeenortol. Todos los derechos reservados.
+
+**Versión**: 0.2.0 | **Última actualización**: Diciembre 2025

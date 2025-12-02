@@ -2,16 +2,54 @@ import React, { useState, useEffect } from 'react';
 
 interface Asociado {
   id: number;
-  numero_asociado: string;
-  nombre: string;
-  apellido: string;
-  cedula: string;
-  telefono?: string;
-  email?: string;
-  direccion?: string;
+  tipo_documento: string;
+  numero_documento: string;
+  nombres: string;
+  apellidos: string;
+  correo_electronico: string;
+  telefono_principal?: string;
+  estado: 'activo' | 'inactivo' | 'retirado';
   fecha_ingreso: string;
-  estado: 'activo' | 'inactivo' | 'suspendido';
-  informacion_adicional?: any;
+  observaciones?: string;
+  datos_personales?: {
+    fecha_nacimiento?: string;
+    direccion?: string;
+    ciudad?: string;
+    departamento?: string;
+    pais?: string;
+    estado_civil?: string;
+    genero?: string;
+    nivel_academico?: string;
+    profesion?: string;
+    tipo_vivienda?: string;
+    telefono_alternativo?: string;
+  };
+  datos_laborales?: {
+    institucion_educativa?: string;
+    cargo?: string;
+    tipo_contrato?: string;
+    fecha_vinculacion?: string;
+    salario_basico?: number;
+    horario?: string;
+    dependencia?: string;
+  };
+  informacion_familiar?: {
+    estado_civil?: string;
+    numero_hijos?: number;
+    personas_a_cargo?: number;
+    familiares?: any[];
+    contactos_emergencia?: any[];
+  };
+  informacion_financiera?: {
+    ingresos_mensuales?: number;
+    egresos_mensuales?: number;
+    endeudamiento?: number;
+    obligaciones?: any[];
+    calificacion_riesgo?: string;
+    observaciones?: string;
+  };
+  created_at: string;
+  updated_at: string;
 }
 
 interface AsociadosModuleProps {
@@ -25,18 +63,56 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   const [editingAsociado, setEditingAsociado] = useState<Asociado | null>(null);
   const [searchTerm, setSearchTerm] = useState('');
 
-  // Formulario state
+  // Formulario state - versión simplificada
   const [formData, setFormData] = useState({
-    numero_asociado: '',
-    nombre: '',
-    apellido: '',
-    cedula: '',
-    telefono: '',
-    email: '',
-    direccion: '',
-    estado: 'activo' as 'activo' | 'inactivo' | 'suspendido'
+    tipo_documento: 'CC',
+    numero_documento: '',
+    nombres: '',
+    apellidos: '',
+    correo_electronico: '',
+    telefono_principal: '',
+    estado: 'activo' as 'activo' | 'inactivo' | 'retirado',
+    fecha_ingreso: new Date().toISOString().split('T')[0],
+    observaciones: '',
+    // Datos mínimos requeridos por el backend
+    datos_personales: {
+      fecha_nacimiento: '1990-01-01',
+      direccion: '',
+      ciudad: 'Bogotá',
+      departamento: 'Cundinamarca',
+      pais: 'Colombia',
+      estado_civil: '',
+      genero: '',
+      nivel_academico: '',
+      profesion: '',
+      tipo_vivienda: '',
+      telefono_alternativo: ''
+    },
+    datos_laborales: {
+      institucion_educativa: 'Coopeenortol',
+      cargo: '',
+      tipo_contrato: 'Indefinido',
+      fecha_vinculacion: new Date().toISOString().split('T')[0],
+      salario_basico: 0,
+      horario: '',
+      dependencia: ''
+    },
+    informacion_familiar: {
+      estado_civil: '',
+      numero_hijos: 0,
+      personas_a_cargo: 0,
+      familiares: [] as any[],
+      contactos_emergencia: [] as any[]
+    },
+    informacion_financiera: {
+      ingresos_mensuales: 0,
+      egresos_mensuales: 0,
+      endeudamiento: 0,
+      obligaciones: [] as any[],
+      calificacion_riesgo: '',
+      observaciones: ''
+    }
   });
-
   // Cargar asociados
   const fetchAsociados = async () => {
     try {
@@ -48,7 +124,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       });
       if (response.ok) {
         const data = await response.json();
-        setAsociados(data);
+        // Si viene paginado, extraer los datos
+        const asociadosData = data.datos || data;
+        setAsociados(asociadosData);
       }
     } catch (error) {
       console.error('Error al cargar asociados:', error);
@@ -62,11 +140,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
   }, []);
 
   // Filtrar asociados
-  const filteredAsociados = asociados.filter(asociado =>
-    asociado.nombre.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.apellido.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    asociado.cedula.includes(searchTerm) ||
-    asociado.numero_asociado.includes(searchTerm)
+  const filteredAsociados = asociados.filter((asociado: Asociado) =>
+    asociado.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.apellidos.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    asociado.numero_documento.includes(searchTerm) ||
+    asociado.correo_electronico.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Manejar envío del formulario
@@ -80,47 +158,146 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
       
       const method = editingAsociado ? 'PUT' : 'POST';
       
+      // Preparar los datos con estructura completa requerida por el backend
+      const submitData = {
+        ...formData,
+        datos_laborales: {
+          ...formData.datos_laborales,
+          salario_basico: Number(formData.datos_laborales.salario_basico) || 0
+        },
+        informacion_financiera: {
+          ...formData.informacion_financiera,
+          ingresos_mensuales: Number(formData.informacion_financiera.ingresos_mensuales) || 0,
+          egresos_mensuales: Number(formData.informacion_financiera.egresos_mensuales) || 0
+        }
+      };
+      
       const response = await fetch(url, {
         method,
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submitData),
       });
 
       if (response.ok) {
         await fetchAsociados();
         setShowForm(false);
         setEditingAsociado(null);
-        setFormData({
-          numero_asociado: '',
-          nombre: '',
-          apellido: '',
-          cedula: '',
-          telefono: '',
-          email: '',
-          direccion: '',
-          estado: 'activo'
-        });
+        resetForm();
+        alert(editingAsociado ? 'Asociado actualizado correctamente' : 'Asociado creado correctamente');
+      } else {
+        const errorData = await response.json();
+        alert('Error: ' + (errorData.detail || 'No se pudo guardar el asociado'));
       }
     } catch (error) {
       console.error('Error al guardar asociado:', error);
+      alert('Error al guardar el asociado');
     }
+  };
+
+  const resetForm = () => {
+    setFormData({
+      tipo_documento: 'CC',
+      numero_documento: '',
+      nombres: '',
+      apellidos: '',
+      correo_electronico: '',
+      telefono_principal: '',
+      estado: 'activo',
+      fecha_ingreso: new Date().toISOString().split('T')[0],
+      observaciones: '',
+      datos_personales: {
+        fecha_nacimiento: '1990-01-01',
+        direccion: '',
+        ciudad: 'Bogotá',
+        departamento: 'Cundinamarca',
+        pais: 'Colombia',
+        estado_civil: '',
+        genero: '',
+        nivel_academico: '',
+        profesion: '',
+        tipo_vivienda: '',
+        telefono_alternativo: ''
+      },
+      datos_laborales: {
+        institucion_educativa: 'Coopeenortol',
+        cargo: '',
+        tipo_contrato: 'Indefinido',
+        fecha_vinculacion: new Date().toISOString().split('T')[0],
+        salario_basico: 0,
+        horario: '',
+        dependencia: ''
+      },
+      informacion_familiar: {
+        estado_civil: '',
+        numero_hijos: 0,
+        personas_a_cargo: 0,
+        familiares: [] as any[],
+        contactos_emergencia: [] as any[]
+      },
+      informacion_financiera: {
+        ingresos_mensuales: 0,
+        egresos_mensuales: 0,
+        endeudamiento: 0,
+        obligaciones: [] as any[],
+        calificacion_riesgo: '',
+        observaciones: ''
+      }
+    });
   };
 
   // Editar asociado
   const handleEdit = (asociado: Asociado) => {
     setEditingAsociado(asociado);
     setFormData({
-      numero_asociado: asociado.numero_asociado,
-      nombre: asociado.nombre,
-      apellido: asociado.apellido,
-      cedula: asociado.cedula,
-      telefono: asociado.telefono || '',
-      email: asociado.email || '',
-      direccion: asociado.direccion || '',
-      estado: asociado.estado
+      tipo_documento: asociado.tipo_documento,
+      numero_documento: asociado.numero_documento,
+      nombres: asociado.nombres,
+      apellidos: asociado.apellidos,
+      correo_electronico: asociado.correo_electronico,
+      telefono_principal: asociado.telefono_principal || '',
+      estado: asociado.estado,
+      fecha_ingreso: asociado.fecha_ingreso,
+      observaciones: asociado.observaciones || '',
+      datos_personales: {
+        fecha_nacimiento: asociado.datos_personales?.fecha_nacimiento || '1990-01-01',
+        direccion: asociado.datos_personales?.direccion || '',
+        ciudad: asociado.datos_personales?.ciudad || 'Bogotá',
+        departamento: asociado.datos_personales?.departamento || 'Cundinamarca',
+        pais: asociado.datos_personales?.pais || 'Colombia',
+        estado_civil: asociado.datos_personales?.estado_civil || '',
+        genero: asociado.datos_personales?.genero || '',
+        nivel_academico: asociado.datos_personales?.nivel_academico || '',
+        profesion: asociado.datos_personales?.profesion || '',
+        tipo_vivienda: asociado.datos_personales?.tipo_vivienda || '',
+        telefono_alternativo: asociado.datos_personales?.telefono_alternativo || ''
+      },
+      datos_laborales: {
+        institucion_educativa: asociado.datos_laborales?.institucion_educativa || 'Coopeenortol',
+        cargo: asociado.datos_laborales?.cargo || '',
+        tipo_contrato: asociado.datos_laborales?.tipo_contrato || 'Indefinido',
+        fecha_vinculacion: asociado.datos_laborales?.fecha_vinculacion || new Date().toISOString().split('T')[0],
+        salario_basico: asociado.datos_laborales?.salario_basico || 0,
+        horario: asociado.datos_laborales?.horario || '',
+        dependencia: asociado.datos_laborales?.dependencia || ''
+      },
+      informacion_familiar: {
+        estado_civil: asociado.informacion_familiar?.estado_civil || '',
+        numero_hijos: asociado.informacion_familiar?.numero_hijos || 0,
+        personas_a_cargo: asociado.informacion_familiar?.personas_a_cargo || 0,
+        familiares: asociado.informacion_familiar?.familiares || [],
+        contactos_emergencia: asociado.informacion_familiar?.contactos_emergencia || []
+      },
+      informacion_financiera: {
+        ingresos_mensuales: asociado.informacion_financiera?.ingresos_mensuales || 0,
+        egresos_mensuales: asociado.informacion_financiera?.egresos_mensuales || 0,
+        endeudamiento: asociado.informacion_financiera?.endeudamiento || 0,
+        obligaciones: asociado.informacion_financiera?.obligaciones || [],
+        calificacion_riesgo: asociado.informacion_financiera?.calificacion_riesgo || '',
+        observaciones: asociado.informacion_financiera?.observaciones || ''
+      }
     });
     setShowForm(true);
   };
@@ -138,9 +315,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
         });
         if (response.ok) {
           await fetchAsociados();
+          alert('Asociado eliminado correctamente');
+        } else {
+          alert('Error al eliminar el asociado');
         }
       } catch (error) {
         console.error('Error al eliminar asociado:', error);
+        alert('Error al eliminar el asociado');
       }
     }
   };
@@ -258,9 +439,9 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
             >
               <input
                 type="text"
-                placeholder="Buscar por nombre, apellido, cédula o número de asociado..."
+                placeholder="Buscar por nombres, apellidos, documento o email..."
                 value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
+                onChange={(e: React.ChangeEvent<HTMLInputElement>) => setSearchTerm(e.target.value)}
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                 style={{
                   width: '100%',
@@ -313,7 +494,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       color: '#6b7280'
                     }}
                   >
-                    No se encontraron asociados
+                    {searchTerm ? 'No se encontraron asociados que coincidan con la búsqueda' : 'No hay asociados registrados'}
                   </div>
                 </div>
               ) : (
@@ -348,7 +529,20 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
-                          No. Asociado
+                          ID Asociado
+                        </th>
+                        <th 
+                          className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
+                          style={{
+                            padding: '0.75rem 1.5rem',
+                            textAlign: 'left',
+                            fontSize: '0.75rem',
+                            fontWeight: '500',
+                            color: '#6b7280',
+                            textTransform: 'uppercase'
+                          }}
+                        >
+                          Documento
                         </th>
                         <th 
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -374,7 +568,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                             textTransform: 'uppercase'
                           }}
                         >
-                          Cédula
+                          Email
                         </th>
                         <th 
                           className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
@@ -421,7 +615,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-                            {asociado.numero_asociado}
+                            #{asociado.id}
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
@@ -431,7 +625,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-                            {asociado.nombre} {asociado.apellido}
+                            {asociado.tipo_documento} {asociado.numero_documento}
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
@@ -441,7 +635,17 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                               color: '#111827'
                             }}
                           >
-                            {asociado.cedula}
+                            {asociado.nombres} {asociado.apellidos}
+                          </td>
+                          <td 
+                            className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
+                            style={{
+                              padding: '1rem 1.5rem',
+                              fontSize: '0.875rem',
+                              color: '#111827'
+                            }}
+                          >
+                            {asociado.correo_electronico}
                           </td>
                           <td 
                             className="px-6 py-4 whitespace-nowrap"
@@ -513,7 +717,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
             </div>
           </>
         ) : (
-          /* Formulario */
+          /* Formulario Simplificado */
           <div 
             className="bg-white shadow sm:rounded-md"
             style={{
@@ -562,13 +766,47 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Número de Asociado *
+                    Tipo de Documento *
+                  </label>
+                  <select
+                    required
+                    value={formData.tipo_documento}
+                    onChange={(e) => setFormData({...formData, tipo_documento: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem 0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem'
+                    }}
+                  >
+                    <option value="">Seleccione tipo de documento</option>
+                    <option value="TI">Tarjeta de Identidad</option>
+                    <option value="CC">Cédula de Ciudadanía</option>
+                    <option value="CE">Cédula de Extranjería</option>
+                    <option value="PAS">Pasaporte</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label 
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                    style={{
+                      display: 'block',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '0.25rem'
+                    }}
+                  >
+                    Número de Documento *
                   </label>
                   <input
                     type="text"
                     required
-                    value={formData.numero_asociado}
-                    onChange={(e) => setFormData({...formData, numero_asociado: e.target.value})}
+                    value={formData.numero_documento}
+                    onChange={(e) => setFormData({...formData, numero_documento: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -591,13 +829,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Nombre *
+                    Nombres *
                   </label>
                   <input
                     type="text"
                     required
-                    value={formData.nombre}
-                    onChange={(e) => setFormData({...formData, nombre: e.target.value})}
+                    value={formData.nombres}
+                    onChange={(e) => setFormData({...formData, nombres: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -620,13 +858,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Apellido *
+                    Apellidos *
                   </label>
                   <input
                     type="text"
                     required
-                    value={formData.apellido}
-                    onChange={(e) => setFormData({...formData, apellido: e.target.value})}
+                    value={formData.apellidos}
+                    onChange={(e) => setFormData({...formData, apellidos: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -649,13 +887,13 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Cédula *
+                    Email *
                   </label>
                   <input
-                    type="text"
+                    type="email"
                     required
-                    value={formData.cedula}
-                    onChange={(e) => setFormData({...formData, cedula: e.target.value})}
+                    value={formData.correo_electronico}
+                    onChange={(e) => setFormData({...formData, correo_electronico: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -682,8 +920,8 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                   </label>
                   <input
                     type="text"
-                    value={formData.telefono}
-                    onChange={(e) => setFormData({...formData, telefono: e.target.value})}
+                    value={formData.telefono_principal}
+                    onChange={(e) => setFormData({...formData, telefono_principal: e.target.value})}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -706,12 +944,152 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Email
+                    Fecha de Ingreso *
                   </label>
                   <input
-                    type="email"
-                    value={formData.email}
-                    onChange={(e) => setFormData({...formData, email: e.target.value})}
+                    type="date"
+                    required
+                    value={formData.fecha_ingreso}
+                    onChange={(e) => setFormData({...formData, fecha_ingreso: e.target.value})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem 0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label 
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                    style={{
+                      display: 'block',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '0.25rem'
+                    }}
+                  >
+                    Estado
+                  </label>
+                  <select
+                    value={formData.estado}
+                    onChange={(e) => setFormData({...formData, estado: e.target.value as 'activo' | 'inactivo' | 'retirado'})}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem 0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem'
+                    }}
+                  >
+                    <option value="activo">Activo</option>
+                    <option value="inactivo">Inactivo</option>
+                    <option value="retirado">Retirado</option>
+                  </select>
+                </div>
+
+                <div 
+                  className="md:col-span-2"
+                  style={{
+                    gridColumn: 'span 2'
+                  }}
+                >
+                  <label 
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                    style={{
+                      display: 'block',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '0.25rem'
+                    }}
+                  >
+                    Dirección
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_personales.direccion}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      datos_personales: {
+                        ...formData.datos_personales,
+                        direccion: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem 0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label 
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                    style={{
+                      display: 'block',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '0.25rem'
+                    }}
+                  >
+                    Cargo
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.datos_laborales.cargo}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        cargo: e.target.value
+                      }
+                    })}
+                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
+                    style={{
+                      width: '100%',
+                      padding: '0.5rem 0.75rem',
+                      border: '1px solid #d1d5db',
+                      borderRadius: '0.375rem',
+                      fontSize: '0.875rem'
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label 
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                    style={{
+                      display: 'block',
+                      fontSize: '0.875rem',
+                      fontWeight: '500',
+                      color: '#374151',
+                      marginBottom: '0.25rem'
+                    }}
+                  >
+                    Salario Básico
+                  </label>
+                  <input
+                    type="number"
+                    min="0"
+                    value={formData.datos_laborales.salario_basico}
+                    onChange={(e) => setFormData({
+                      ...formData, 
+                      datos_laborales: {
+                        ...formData.datos_laborales,
+                        salario_basico: Number(e.target.value)
+                      }
+                    })}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
                       width: '100%',
@@ -739,11 +1117,11 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       marginBottom: '0.25rem'
                     }}
                   >
-                    Dirección
+                    Observaciones
                   </label>
                   <textarea
-                    value={formData.direccion}
-                    onChange={(e) => setFormData({...formData, direccion: e.target.value})}
+                    value={formData.observaciones}
+                    onChange={(e) => setFormData({...formData, observaciones: e.target.value})}
                     rows={3}
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
                     style={{
@@ -755,37 +1133,6 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                       resize: 'vertical'
                     }}
                   />
-                </div>
-
-                <div>
-                  <label 
-                    className="block text-sm font-medium text-gray-700 mb-1"
-                    style={{
-                      display: 'block',
-                      fontSize: '0.875rem',
-                      fontWeight: '500',
-                      color: '#374151',
-                      marginBottom: '0.25rem'
-                    }}
-                  >
-                    Estado
-                  </label>
-                  <select
-                    value={formData.estado}
-                    onChange={(e) => setFormData({...formData, estado: e.target.value as 'activo' | 'inactivo' | 'suspendido'})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-green-500 focus:border-green-500"
-                    style={{
-                      width: '100%',
-                      padding: '0.5rem 0.75rem',
-                      border: '1px solid #d1d5db',
-                      borderRadius: '0.375rem',
-                      fontSize: '0.875rem'
-                    }}
-                  >
-                    <option value="activo">Activo</option>
-                    <option value="inactivo">Inactivo</option>
-                    <option value="suspendido">Suspendido</option>
-                  </select>
                 </div>
               </div>
 
@@ -802,16 +1149,7 @@ const AsociadosModule: React.FC<AsociadosModuleProps> = ({ onBack }) => {
                   onClick={() => {
                     setShowForm(false);
                     setEditingAsociado(null);
-                    setFormData({
-                      numero_asociado: '',
-                      nombre: '',
-                      apellido: '',
-                      cedula: '',
-                      telefono: '',
-                      email: '',
-                      direccion: '',
-                      estado: 'activo'
-                    });
+                    resetForm();
                   }}
                   className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50"
                   style={{
