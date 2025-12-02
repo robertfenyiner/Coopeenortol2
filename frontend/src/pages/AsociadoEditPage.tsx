@@ -166,13 +166,14 @@ export default function AsociadoEditPage() {
                 value={formData.tipo_documento}
                 onChange={(e) => handleChange('tipo_documento', e.target.value)}
                 required
-              >
-                <option value="CC">Cédula de Ciudadanía</option>
-                <option value="TI">Tarjeta de Identidad</option>
-                <option value="CE">Cédula de Extranjería</option>
-                <option value="PA">Pasaporte</option>
-                <option value="NIT">NIT</option>
-              </Select>
+                options={[
+                  { value: 'CC', label: 'Cédula de Ciudadanía' },
+                  { value: 'TI', label: 'Tarjeta de Identidad' },
+                  { value: 'CE', label: 'Cédula de Extranjería' },
+                  { value: 'PA', label: 'Pasaporte' },
+                  { value: 'NIT', label: 'NIT' },
+                ]}
+              />
 
               <Input
                 label="Número de Documento *"
@@ -218,12 +219,13 @@ export default function AsociadoEditPage() {
                 value={formData.estado}
                 onChange={(e) => handleChange('estado', e.target.value)}
                 required
-              >
-                <option value="activo">Activo</option>
-                <option value="inactivo">Inactivo</option>
-                <option value="suspendido">Suspendido</option>
-                <option value="retirado">Retirado</option>
-              </Select>
+                options={[
+                  { value: 'activo', label: 'Activo' },
+                  { value: 'inactivo', label: 'Inactivo' },
+                  { value: 'suspendido', label: 'Suspendido' },
+                  { value: 'retirado', label: 'Retirado' },
+                ]}
+              />
 
               <Input
                 label="Fecha de Ingreso *"
