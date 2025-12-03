@@ -108,9 +108,9 @@ def generar_reporte_mora(
     return service.generar_reporte_mora(db, dias_mora_minimo)
 
 
-@router.get("/estado-cuenta/{asociado_id}", response_model=EstadoCuentaAsociadoResponse)
+@router.get("/estado-cuenta/{numero_documento}", response_model=EstadoCuentaAsociadoResponse)
 def generar_estado_cuenta(
-    asociado_id: int,
+    numero_documento: str,
     fecha_inicio: Optional[date] = Query(None, description="Fecha inicial (default: hace 6 meses)"),
     fecha_fin: Optional[date] = Query(None, description="Fecha final (default: hoy)"),
     db: Session = Depends(get_db),
@@ -119,6 +119,8 @@ def generar_estado_cuenta(
     """
     Generar Estado de Cuenta de un Asociado.
     
+    Buscar por número de documento (cédula).
+    
     Muestra:
     - Información del asociado
     - Aportes realizados
@@ -126,12 +128,18 @@ def generar_estado_cuenta(
     - Cuentas de ahorro y movimientos
     - Resumen financiero
     """
-    return service.generar_estado_cuenta(
-        db,
-        asociado_id=asociado_id,
-        fecha_inicio=fecha_inicio,
-        fecha_fin=fecha_fin or date.today()
-    )
+    try:
+        return service.generar_estado_cuenta_por_documento(
+            db,
+            numero_documento=numero_documento,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin or date.today()
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
 
 
 @router.get("/estadisticas", response_model=EstadisticasGeneralesResponse)
@@ -228,26 +236,63 @@ def exportar_mora_excel(
     )
 
 
-@router.get("/estado-cuenta/{asociado_id}/export/pdf")
+@router.get("/estado-cuenta/{numero_documento}/export/pdf")
 def exportar_estado_cuenta_pdf(
-    asociado_id: int,
+    numero_documento: str,
     fecha_inicio: Optional[date] = Query(None, description="Fecha inicial"),
     fecha_fin: Optional[date] = Query(None, description="Fecha final"),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(require_permission("reportes:exportar")),
 ):
-    """Exportar Estado de Cuenta a PDF."""
-    pdf_content = service.exportar_estado_cuenta_pdf(
-        db,
-        asociado_id=asociado_id,
-        fecha_inicio=fecha_inicio,
-        fecha_fin=fecha_fin or date.today()
-    )
-    
-    return StreamingResponse(
-        pdf_content,
-        media_type="application/pdf",
-        headers={
-            "Content-Disposition": f"attachment; filename=estado_cuenta_{asociado_id}_{date.today()}.pdf"
-        }
-    )
+    """Exportar Estado de Cuenta a PDF (buscar por número de documento)."""
+    try:
+        pdf_content = service.exportar_estado_cuenta_pdf_por_documento(
+            db,
+            numero_documento=numero_documento,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin or date.today()
+        )
+        
+        return StreamingResponse(
+            pdf_content,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=estado_cuenta_{numero_documento}_{date.today()}.pdf"
+            }
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+
+
+@router.get("/estado-cuenta/{numero_documento}/export/excel")
+def exportar_estado_cuenta_excel(
+    numero_documento: str,
+    fecha_inicio: Optional[date] = Query(None, description="Fecha inicial"),
+    fecha_fin: Optional[date] = Query(None, description="Fecha final"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:exportar")),
+):
+    """Exportar Estado de Cuenta a Excel (buscar por número de documento)."""
+    try:
+        excel_content = service.exportar_estado_cuenta_excel_por_documento(
+            db,
+            numero_documento=numero_documento,
+            fecha_inicio=fecha_inicio,
+            fecha_fin=fecha_fin or date.today()
+        )
+        
+        return StreamingResponse(
+            excel_content,
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={
+                "Content-Disposition": f"attachment; filename=estado_cuenta_{numero_documento}_{date.today()}.xlsx"
+            }
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )

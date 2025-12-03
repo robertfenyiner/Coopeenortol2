@@ -12,7 +12,7 @@ from reportlab.lib.pagesizes import letter, A4
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
-from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak
+from reportlab.platypus import SimpleDocTemplate, Table, TableStyle, Paragraph, Spacer, PageBreak, Image as RLImage
 from reportlab.lib.enums import TA_CENTER, TA_RIGHT, TA_LEFT
 
 from openpyxl import Workbook
@@ -20,7 +20,7 @@ from openpyxl.styles import Font, Alignment, PatternFill, Border, Side
 from openpyxl.utils import get_column_letter
 
 from app.models.asociado import Asociado
-from app.models.contabilidad import CuentaContable, MovimientoContable, Aporte
+from app.models.contabilidad import CuentaContable, MovimientoContable, Aporte, AsientoContable
 from app.models.credito import Credito
 from app.models.ahorro import CuentaAhorro, MovimientoAhorro
 from app.schemas.reportes import (
@@ -65,10 +65,11 @@ def generar_balance_general(db: Session, fecha_corte: date) -> BalanceGeneralRes
     for cuenta in cuentas:
         # Calcular saldo de la cuenta hasta la fecha de corte
         movimientos = db.query(MovimientoContable).join(
-            MovimientoContable.asiento
+            AsientoContable, MovimientoContable.asiento_id == AsientoContable.id
         ).filter(
             MovimientoContable.cuenta_id == cuenta.id,
-            MovimientoContable.asiento.has(fecha__lte=fecha_corte)
+            AsientoContable.fecha <= fecha_corte,
+            AsientoContable.anulado == False
         ).all()
         
         total_debito = sum(m.debito for m in movimientos)
@@ -159,15 +160,12 @@ def generar_estado_resultados(
     # Calcular ingresos
     for cuenta in cuentas_ingresos:
         movimientos = db.query(MovimientoContable).join(
-            MovimientoContable.asiento
+            AsientoContable, MovimientoContable.asiento_id == AsientoContable.id
         ).filter(
             MovimientoContable.cuenta_id == cuenta.id,
-            MovimientoContable.asiento.has(
-                and_(
-                    MovimientoContable.asiento.has(fecha__gte=fecha_inicio),
-                    MovimientoContable.asiento.has(fecha__lte=fecha_fin)
-                )
-            )
+            AsientoContable.fecha >= fecha_inicio,
+            AsientoContable.fecha <= fecha_fin,
+            AsientoContable.anulado == False
         ).all()
         
         total_credito = sum(m.credito for m in movimientos)
@@ -185,15 +183,12 @@ def generar_estado_resultados(
     # Calcular gastos
     for cuenta in cuentas_gastos:
         movimientos = db.query(MovimientoContable).join(
-            MovimientoContable.asiento
+            AsientoContable, MovimientoContable.asiento_id == AsientoContable.id
         ).filter(
             MovimientoContable.cuenta_id == cuenta.id,
-            MovimientoContable.asiento.has(
-                and_(
-                    MovimientoContable.asiento.has(fecha__gte=fecha_inicio),
-                    MovimientoContable.asiento.has(fecha__lte=fecha_fin)
-                )
-            )
+            AsientoContable.fecha >= fecha_inicio,
+            AsientoContable.fecha <= fecha_fin,
+            AsientoContable.anulado == False
         ).all()
         
         total_debito = sum(m.debito for m in movimientos)
@@ -435,13 +430,14 @@ def generar_estado_cuenta(
     cuentas_ahorro = []
     total_ahorros = Decimal("0.00")
     for cuenta in cuentas_db:
+        saldo_cuenta = cuenta.saldo_disponible + cuenta.saldo_bloqueado
         cuentas_ahorro.append(CuentaAhorroAsociado(
             numero_cuenta=cuenta.numero_cuenta,
             tipo_ahorro=cuenta.tipo_ahorro,
-            saldo_actual=cuenta.saldo_actual,
+            saldo_actual=saldo_cuenta,
             estado=cuenta.estado
         ))
-        total_ahorros += cuenta.saldo_actual
+        total_ahorros += saldo_cuenta
     
     patrimonio_neto = total_aportes + total_ahorros - total_deuda
     
@@ -461,6 +457,27 @@ def generar_estado_cuenta(
         total_ahorros=total_ahorros,
         patrimonio_neto=patrimonio_neto
     )
+
+
+def generar_estado_cuenta_por_documento(
+    db: Session,
+    numero_documento: str,
+    fecha_inicio: Optional[date],
+    fecha_fin: date
+) -> EstadoCuentaAsociadoResponse:
+    """
+    Generar estado de cuenta buscando por número de documento.
+    """
+    # Buscar asociado por número de documento
+    asociado = db.query(Asociado).filter(
+        Asociado.numero_documento == numero_documento
+    ).first()
+    
+    if not asociado:
+        raise ValueError(f"Asociado con documento {numero_documento} no encontrado")
+    
+    # Delegar a la función existente
+    return generar_estado_cuenta(db, asociado.id, fecha_inicio, fecha_fin)
 
 
 def obtener_estadisticas_generales(db: Session) -> EstadisticasGeneralesResponse:
@@ -516,7 +533,7 @@ def obtener_estadisticas_generales(db: Session) -> EstadisticasGeneralesResponse
         CuentaAhorro.estado == "activa"
     ).all()
     
-    total_ahorros = sum(c.saldo_actual for c in cuentas_activas)
+    total_ahorros = sum((c.saldo_disponible + c.saldo_bloqueado) for c in cuentas_activas)
     ahorro_promedio = total_ahorros / len(cuentas_activas) if cuentas_activas else Decimal("0.00")
     
     estadisticas_ahorros = EstadisticasAhorros(
@@ -592,12 +609,13 @@ def exportar_balance_pdf(db: Session, fecha_corte: date) -> BytesIO:
     elements.append(Paragraph("ACTIVOS", heading_style))
     activos_data = [['Código', 'Cuenta', 'Saldo']]
     
-    for cuenta in balance.activos:
-        activos_data.append([
-            cuenta.codigo,
-            cuenta.nombre,
-            f"${cuenta.saldo:,.2f}"
-        ])
+    for grupo in balance.activos:
+        for cuenta in grupo.cuentas:
+            activos_data.append([
+                cuenta.codigo,
+                cuenta.nombre,
+                f"${cuenta.saldo:,.2f}"
+            ])
     
     activos_data.append(['', 'TOTAL ACTIVOS', f"${balance.total_activos:,.2f}"])
     
@@ -621,12 +639,13 @@ def exportar_balance_pdf(db: Session, fecha_corte: date) -> BytesIO:
     elements.append(Paragraph("PASIVOS", heading_style))
     pasivos_data = [['Código', 'Cuenta', 'Saldo']]
     
-    for cuenta in balance.pasivos:
-        pasivos_data.append([
-            cuenta.codigo,
-            cuenta.nombre,
-            f"${cuenta.saldo:,.2f}"
-        ])
+    for grupo in balance.pasivos:
+        for cuenta in grupo.cuentas:
+            pasivos_data.append([
+                cuenta.codigo,
+                cuenta.nombre,
+                f"${cuenta.saldo:,.2f}"
+            ])
     
     pasivos_data.append(['', 'TOTAL PASIVOS', f"${balance.total_pasivos:,.2f}"])
     
@@ -650,12 +669,13 @@ def exportar_balance_pdf(db: Session, fecha_corte: date) -> BytesIO:
     elements.append(Paragraph("PATRIMONIO", heading_style))
     patrimonio_data = [['Código', 'Cuenta', 'Saldo']]
     
-    for cuenta in balance.patrimonio:
-        patrimonio_data.append([
-            cuenta.codigo,
-            cuenta.nombre,
-            f"${cuenta.saldo:,.2f}"
-        ])
+    for grupo in balance.patrimonio:
+        for cuenta in grupo.cuentas:
+            patrimonio_data.append([
+                cuenta.codigo,
+                cuenta.nombre,
+                f"${cuenta.saldo:,.2f}"
+            ])
     
     patrimonio_data.append(['', 'TOTAL PATRIMONIO', f"${balance.total_patrimonio:,.2f}"])
     
@@ -727,22 +747,23 @@ def exportar_cartera_excel(db: Session, fecha_corte: date) -> BytesIO:
     # Estadísticas
     ws['A3'] = "ESTADÍSTICAS"
     ws['A3'].font = Font(bold=True, size=12)
-    ws['A4'] = "Total Cartera:"
-    ws['B4'] = reporte.estadisticas.total_cartera
-    ws['B4'].number_format = '$#,##0.00'
-    ws['A5'] = "Créditos al Día:"
-    ws['B5'] = reporte.estadisticas.creditos_al_dia
-    ws['C5'] = "Monto:"
-    ws['D5'] = reporte.estadisticas.monto_al_dia
-    ws['D5'].number_format = '$#,##0.00'
-    ws['A6'] = "Créditos en Mora:"
-    ws['B6'] = reporte.estadisticas.creditos_mora
-    ws['C6'] = "Monto:"
-    ws['D6'] = reporte.estadisticas.monto_mora
-    ws['D6'].number_format = '$#,##0.00'
+    ws['A4'] = "Total Créditos:"
+    ws['B4'] = reporte.estadisticas.total_creditos
+    ws['A5'] = "Cartera Total:"
+    ws['B5'] = reporte.estadisticas.cartera_total
+    ws['B5'].number_format = '$#,##0.00'
+    ws['A6'] = "Cartera al Día:"
+    ws['B6'] = reporte.estadisticas.cartera_al_dia
+    ws['B6'].number_format = '$#,##0.00'
+    ws['A7'] = "Cartera en Mora:"
+    ws['B7'] = reporte.estadisticas.cartera_mora
+    ws['B7'].number_format = '$#,##0.00'
+    ws['A8'] = "Tasa de Mora:"
+    ws['B8'] = float(reporte.estadisticas.tasa_mora)
+    ws['B8'].number_format = '0.00%'
     
     # Encabezados de tabla
-    row = 9
+    row = 11
     headers = ['ID', 'Asociado', 'Tipo', 'Monto Original', 'Saldo Actual', 'Cuota', 'Estado', 'Días Mora']
     for col, header in enumerate(headers, start=1):
         cell = ws.cell(row=row, column=col, value=header)
@@ -754,24 +775,24 @@ def exportar_cartera_excel(db: Session, fecha_corte: date) -> BytesIO:
     # Datos
     row += 1
     for credito in reporte.creditos:
-        ws.cell(row=row, column=1, value=credito.credito_id).border = border
+        ws.cell(row=row, column=1, value=credito.numero_credito).border = border
         ws.cell(row=row, column=2, value=credito.asociado_nombre).border = border
         ws.cell(row=row, column=3, value=credito.tipo_credito).border = border
         
-        cell = ws.cell(row=row, column=4, value=float(credito.monto_credito))
+        cell = ws.cell(row=row, column=4, value=float(credito.monto_desembolsado))
         cell.number_format = '$#,##0.00'
         cell.border = border
         
-        cell = ws.cell(row=row, column=5, value=float(credito.saldo_actual))
+        cell = ws.cell(row=row, column=5, value=float(credito.saldo_capital))
         cell.number_format = '$#,##0.00'
         cell.border = border
         
-        cell = ws.cell(row=row, column=6, value=float(credito.cuota_mensual))
+        cell = ws.cell(row=row, column=6, value=0)  # No hay cuota en el schema
         cell.number_format = '$#,##0.00'
         cell.border = border
         
         ws.cell(row=row, column=7, value=credito.estado).border = border
-        ws.cell(row=row, column=8, value=credito.dias_mora if credito.dias_mora else 0).border = border
+        ws.cell(row=row, column=8, value=credito.dias_mora).border = border
         row += 1
     
     # Ajustar anchos
@@ -822,9 +843,8 @@ def exportar_estado_resultados_pdf(db: Session, fecha_inicio: date, fecha_fin: d
     kpi_data = [
         ['Total Ingresos', f"${estado.total_ingresos:,.2f}"],
         ['Total Gastos', f"${estado.total_gastos:,.2f}"],
-        ['Utilidad Operacional', f"${estado.utilidad_operacional:,.2f}"],
         ['Utilidad Neta', f"${estado.utilidad_neta:,.2f}"],
-        ['Margen Neto', f"{estado.margen_neto:.2f}%"]
+        ['Margen Utilidad', f"{estado.margen_utilidad:.2f}%"]
     ]
     kpi_table = Table(kpi_data, colWidths=[3*inch, 2*inch])
     kpi_table.setStyle(TableStyle([
@@ -840,28 +860,22 @@ def exportar_estado_resultados_pdf(db: Session, fecha_inicio: date, fecha_fin: d
     # INGRESOS
     elements.append(Paragraph("INGRESOS", heading_style))
     
-    def add_conceptos_table(conceptos, title, color):
-        if conceptos:
-            data = [['Código', 'Concepto', 'Monto', '% Ingresos']]
-            for c in conceptos:
-                data.append([c.codigo, c.nombre, f"${c.monto:,.2f}", f"{c.porcentaje_ingresos:.2f}%"])
-            
-            table = Table(data, colWidths=[1*inch, 3*inch, 1.5*inch, 1*inch])
-            table.setStyle(TableStyle([
-                ('BACKGROUND', (0, 0), (-1, 0), color),
-                ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
-                ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
-                ('ALIGN', (2, 0), (-1, -1), 'RIGHT'),
-                ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
-                ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
-            ]))
-            elements.append(Paragraph(title, styles['Normal']))
-            elements.append(table)
-            elements.append(Spacer(1, 0.1*inch))
-    
-    add_conceptos_table(estado.ingresos_operacionales, "Ingresos Operacionales", colors.HexColor('#10b981'))
-    add_conceptos_table(estado.ingresos_financieros, "Ingresos Financieros", colors.HexColor('#10b981'))
-    add_conceptos_table(estado.otros_ingresos, "Otros Ingresos", colors.HexColor('#10b981'))
+    if estado.ingresos:
+        ingresos_data = [['Código', 'Cuenta', 'Valor']]
+        for ing in estado.ingresos:
+            ingresos_data.append([ing.codigo, ing.nombre, f"${ing.valor:,.2f}"])
+        
+        ingresos_table = Table(ingresos_data, colWidths=[1*inch, 4*inch, 1.5*inch])
+        ingresos_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#10b981')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('ALIGN', (2, 0), (2, -1), 'RIGHT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ]))
+        elements.append(ingresos_table)
+        elements.append(Spacer(1, 0.2*inch))
     
     total_ingresos_data = [['TOTAL INGRESOS', f"${estado.total_ingresos:,.2f}"]]
     total_ingresos_table = Table(total_ingresos_data, colWidths=[4.5*inch, 1.5*inch])
@@ -877,9 +891,23 @@ def exportar_estado_resultados_pdf(db: Session, fecha_inicio: date, fecha_fin: d
     
     # GASTOS
     elements.append(Paragraph("GASTOS", heading_style))
-    add_conceptos_table(estado.gastos_administrativos, "Gastos Administrativos", colors.HexColor('#ef4444'))
-    add_conceptos_table(estado.gastos_financieros, "Gastos Financieros", colors.HexColor('#ef4444'))
-    add_conceptos_table(estado.otros_gastos, "Otros Gastos", colors.HexColor('#ef4444'))
+    
+    if estado.gastos:
+        gastos_data = [['Código', 'Cuenta', 'Valor']]
+        for gasto in estado.gastos:
+            gastos_data.append([gasto.codigo, gasto.nombre, f"${gasto.valor:,.2f}"])
+        
+        gastos_table = Table(gastos_data, colWidths=[1*inch, 4*inch, 1.5*inch])
+        gastos_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#ef4444')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'LEFT'),
+            ('ALIGN', (2, 0), (2, -1), 'RIGHT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ]))
+        elements.append(gastos_table)
+        elements.append(Spacer(1, 0.2*inch))
     
     total_gastos_data = [['TOTAL GASTOS', f"${estado.total_gastos:,.2f}"]]
     total_gastos_table = Table(total_gastos_data, colWidths=[4.5*inch, 1.5*inch])
@@ -895,10 +923,10 @@ def exportar_estado_resultados_pdf(db: Session, fecha_inicio: date, fecha_fin: d
     
     # RESULTADOS
     resultados_data = [
-        ['Utilidad Operacional', f"${estado.utilidad_operacional:,.2f}"],
-        ['Utilidad Antes de Impuestos', f"${estado.utilidad_antes_impuestos:,.2f}"],
-        ['(-) Provisiones', f"${estado.provisiones:,.2f}"],
-        ['UTILIDAD NETA', f"${estado.utilidad_neta:,.2f}"]
+        ['Total Ingresos', f"${estado.total_ingresos:,.2f}"],
+        ['Total Gastos', f"${estado.total_gastos:,.2f}"],
+        ['UTILIDAD NETA', f"${estado.utilidad_neta:,.2f}"],
+        ['Margen Utilidad', f"{estado.margen_utilidad:.2f}%"]
     ]
     resultados_table = Table(resultados_data, colWidths=[4.5*inch, 1.5*inch])
     resultados_table.setStyle(TableStyle([
@@ -941,24 +969,23 @@ def exportar_mora_excel(db: Session, dias_mora_minimo: int = 1) -> BytesIO:
     
     # Título
     ws.merge_cells('A1:I1')
-    ws['A1'] = f"REPORTE DE MOROSIDAD - {reporte.fecha_reporte.strftime('%d/%m/%Y')}"
+    ws['A1'] = f"REPORTE DE MOROSIDAD - {reporte.fecha_generacion.strftime('%d/%m/%Y')}"
     ws['A1'].font = Font(bold=True, size=14)
     ws['A1'].alignment = Alignment(horizontal='center')
     
     # Estadísticas
     ws['A3'] = "Total Créditos en Mora:"
-    ws['B3'] = reporte.estadisticas.total_creditos_mora
+    ws['B3'] = reporte.total_creditos_mora
     ws['A4'] = "Monto Total Mora:"
-    ws['B4'] = float(reporte.estadisticas.monto_total_mora)
+    ws['B4'] = float(reporte.monto_total_mora)
     ws['B4'].number_format = '$#,##0.00'
-    ws['A5'] = "Provisión Total:"
-    ws['B5'] = float(reporte.estadisticas.provision_total)
-    ws['B5'].number_format = '$#,##0.00'
+    ws['A5'] = "Días Mínimos:"
+    ws['B5'] = reporte.dias_mora_minimo
     
     # Encabezados
     row = 8
-    headers = ['ID Crédito', 'Asociado', 'Teléfono', 'Email', 'Saldo Vencido', 
-               'Días Mora', 'Rango', 'Cuotas Vencidas', 'Provisión']
+    headers = ['Número Crédito', 'Asociado', 'Documento', 'Teléfono', 'Tipo Crédito', 
+               'Saldo Capital', 'Saldo Mora', 'Días Mora', 'Rango']
     for col, header in enumerate(headers, start=1):
         cell = ws.cell(row=row, column=col, value=header)
         cell.fill = header_fill
@@ -969,22 +996,22 @@ def exportar_mora_excel(db: Session, dias_mora_minimo: int = 1) -> BytesIO:
     # Datos
     row += 1
     for credito in reporte.creditos:
-        ws.cell(row=row, column=1, value=credito.credito_id).border = border
+        ws.cell(row=row, column=1, value=credito.numero_credito).border = border
         ws.cell(row=row, column=2, value=credito.asociado_nombre).border = border
-        ws.cell(row=row, column=3, value=credito.asociado_telefono or '').border = border
-        ws.cell(row=row, column=4, value=credito.asociado_email or '').border = border
+        ws.cell(row=row, column=3, value=credito.asociado_documento).border = border
+        ws.cell(row=row, column=4, value=credito.asociado_telefono or '').border = border
+        ws.cell(row=row, column=5, value=credito.tipo_credito).border = border
         
-        cell = ws.cell(row=row, column=5, value=float(credito.saldo_vencido))
+        cell = ws.cell(row=row, column=6, value=float(credito.saldo_capital))
         cell.number_format = '$#,##0.00'
         cell.border = border
         
-        ws.cell(row=row, column=6, value=credito.dias_mora).border = border
-        ws.cell(row=row, column=7, value=credito.rango_mora).border = border
-        ws.cell(row=row, column=8, value=credito.cuotas_vencidas).border = border
-        
-        cell = ws.cell(row=row, column=9, value=float(credito.provision_requerida))
+        cell = ws.cell(row=row, column=7, value=float(credito.saldo_mora))
         cell.number_format = '$#,##0.00'
         cell.border = border
+        
+        ws.cell(row=row, column=8, value=credito.dias_mora).border = border
+        ws.cell(row=row, column=9, value=credito.rango_mora).border = border
         
         row += 1
     
@@ -998,11 +1025,283 @@ def exportar_mora_excel(db: Session, dias_mora_minimo: int = 1) -> BytesIO:
     return buffer
 
 
+def exportar_estado_cuenta_excel(db: Session, asociado_id: int, fecha_inicio: Optional[date], 
+                                  fecha_fin: date) -> BytesIO:
+    """
+    Exportar Estado de Cuenta del Asociado a Excel con formato profesional y logo.
+    """
+    from openpyxl.drawing.image import Image as XLImage
+    import os
+    
+    # Generar datos del estado de cuenta
+    estado = generar_estado_cuenta(db, asociado_id, fecha_inicio, fecha_fin)
+    
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Estado de Cuenta"
+    
+    # Colores corporativos
+    color_header = PatternFill(start_color="1e40af", end_color="1e40af", fill_type="solid")
+    color_subheader = PatternFill(start_color="3b82f6", end_color="3b82f6", fill_type="solid")
+    color_section = PatternFill(start_color="dbeafe", end_color="dbeafe", fill_type="solid")
+    color_total = PatternFill(start_color="93c5fd", end_color="93c5fd", fill_type="solid")
+    
+    font_white = Font(color="FFFFFF", bold=True, size=12)
+    font_bold = Font(bold=True, size=11)
+    font_title = Font(bold=True, size=16, color="1e40af")
+    
+    border = Border(
+        left=Side(style='thin'),
+        right=Side(style='thin'),
+        top=Side(style='thin'),
+        bottom=Side(style='thin')
+    )
+    
+    row = 1
+    
+    # Agregar logo si existe
+    logo_path = "/root/projects/Coopeenortol/assets/logos/logo-principal.png"
+    if os.path.exists(logo_path):
+        img = XLImage(logo_path)
+        # Ajustar tamaño del logo a 80x80 px
+        img.width = 80
+        img.height = 80
+        ws.add_image(img, 'A1')
+        # Ajustar altura de filas para el logo
+        for i in range(1, 6):
+            ws.row_dimensions[i].height = 15
+        row = 7
+    
+    # Título
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="ESTADO DE CUENTA")
+    cell.font = font_title
+    cell.alignment = Alignment(horizontal='center', vertical='center')
+    row += 1
+    
+    # Subtítulo con nombre del asociado
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value=f"{estado.nombres} {estado.apellidos}")
+    cell.font = Font(size=12, bold=True)
+    cell.alignment = Alignment(horizontal='center')
+    row += 1
+    
+    # Fecha de generación
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value=f"Generado el {estado.fecha_generacion.strftime('%d de %B de %Y')}")
+    cell.font = Font(size=10, italic=True, color="666666")
+    cell.alignment = Alignment(horizontal='center')
+    row += 2
+    
+    # INFORMACIÓN DEL ASOCIADO
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="INFORMACIÓN DEL ASOCIADO")
+    cell.font = font_white
+    cell.fill = color_header
+    cell.alignment = Alignment(horizontal='center')
+    cell.border = border
+    row += 1
+    
+    info_data = [
+        ('ID Asociado:', str(estado.asociado_id)),
+        ('Documento:', estado.numero_documento),
+        ('Periodo:', f"{estado.fecha_inicio.strftime('%d/%m/%Y') if estado.fecha_inicio else 'Inicio'} - {estado.fecha_fin.strftime('%d/%m/%Y')}")
+    ]
+    
+    for label, value in info_data:
+        ws.cell(row=row, column=1, value=label).font = font_bold
+        ws.cell(row=row, column=1).border = border
+        ws.cell(row=row, column=2, value=value).border = border
+        ws.merge_cells(f'B{row}:F{row}')
+        row += 1
+    
+    row += 1
+    
+    # RESUMEN FINANCIERO
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="RESUMEN FINANCIERO")
+    cell.font = font_white
+    cell.fill = color_header
+    cell.alignment = Alignment(horizontal='center')
+    cell.border = border
+    row += 1
+    
+    # KPIs
+    kpi_data = [
+        ('Total Aportes', float(estado.total_aportes)),
+        ('Total Deuda', float(estado.total_deuda)),
+        ('Total Ahorros', float(estado.total_ahorros)),
+        ('Patrimonio Neto', float(estado.patrimonio_neto))
+    ]
+    
+    for label, value in kpi_data:
+        ws.cell(row=row, column=1, value=label).font = font_bold
+        ws.cell(row=row, column=1).fill = color_section
+        ws.cell(row=row, column=1).border = border
+        
+        cell = ws.cell(row=row, column=2, value=value)
+        cell.number_format = '$#,##0.00'
+        cell.font = Font(size=11)
+        cell.alignment = Alignment(horizontal='right')
+        cell.border = border
+        ws.merge_cells(f'B{row}:F{row}')
+        row += 1
+    
+    row += 1
+    
+    # RESUMEN DE APORTES
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="RESUMEN DE APORTES")
+    cell.font = font_white
+    cell.fill = color_subheader
+    cell.alignment = Alignment(horizontal='center')
+    cell.border = border
+    row += 1
+    
+    aportes_data = [
+        ('Total Aportes', float(estado.aportes.total_aportes)),
+        ('Número de Aportes', estado.aportes.numero_aportes),
+        ('Último Aporte', float(estado.aportes.ultimo_aporte_valor) if estado.aportes.ultimo_aporte_valor else 0),
+        ('Fecha Último Aporte', estado.aportes.ultimo_aporte_fecha.strftime('%d/%m/%Y') if estado.aportes.ultimo_aporte_fecha else 'N/A')
+    ]
+    
+    for label, value in aportes_data:
+        ws.cell(row=row, column=1, value=label).font = font_bold
+        ws.cell(row=row, column=1).border = border
+        
+        cell = ws.cell(row=row, column=2, value=value)
+        if label != 'Fecha Último Aporte' and label != 'Número de Aportes':
+            cell.number_format = '$#,##0.00'
+        cell.border = border
+        cell.alignment = Alignment(horizontal='right')
+        ws.merge_cells(f'B{row}:F{row}')
+        row += 1
+    
+    row += 1
+    
+    # CRÉDITOS
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="CRÉDITOS")
+    cell.font = font_white
+    cell.fill = color_subheader
+    cell.alignment = Alignment(horizontal='center')
+    cell.border = border
+    row += 1
+    
+    if estado.creditos:
+        # Encabezados de tabla
+        headers = ['Número', 'Tipo', 'Desembolsado', 'Saldo Capital', 'Cuota', 'Días Mora', 'Estado']
+        for col, header in enumerate(headers, 1):
+            cell = ws.cell(row=row, column=col, value=header)
+            cell.font = font_white
+            cell.fill = color_header
+            cell.alignment = Alignment(horizontal='center')
+            cell.border = border
+        row += 1
+        
+        # Datos de créditos
+        for credito in estado.creditos:
+            ws.cell(row=row, column=1, value=credito.numero_credito).border = border
+            ws.cell(row=row, column=2, value=credito.tipo_credito).border = border
+            
+            cell = ws.cell(row=row, column=3, value=float(credito.monto_desembolsado))
+            cell.number_format = '$#,##0.00'
+            cell.border = border
+            
+            cell = ws.cell(row=row, column=4, value=float(credito.saldo_capital))
+            cell.number_format = '$#,##0.00'
+            cell.border = border
+            
+            cell = ws.cell(row=row, column=5, value=float(credito.valor_cuota))
+            cell.number_format = '$#,##0.00'
+            cell.border = border
+            
+            ws.cell(row=row, column=6, value=credito.dias_mora).border = border
+            ws.cell(row=row, column=7, value=credito.estado).border = border
+            row += 1
+    else:
+        ws.merge_cells(f'A{row}:F{row}')
+        cell = ws.cell(row=row, column=1, value="No hay créditos activos")
+        cell.alignment = Alignment(horizontal='center')
+        cell.border = border
+        row += 1
+    
+    row += 1
+    
+    # CUENTAS DE AHORRO
+    ws.merge_cells(f'A{row}:F{row}')
+    cell = ws.cell(row=row, column=1, value="CUENTAS DE AHORRO")
+    cell.font = font_white
+    cell.fill = color_subheader
+    cell.alignment = Alignment(horizontal='center')
+    cell.border = border
+    row += 1
+    
+    if estado.cuentas_ahorro:
+        # Encabezados
+        headers = ['Número Cuenta', 'Tipo', 'Saldo', 'Estado']
+        for col, header in enumerate(headers, 1):
+            cell = ws.cell(row=row, column=col, value=header)
+            cell.font = font_white
+            cell.fill = color_header
+            cell.alignment = Alignment(horizontal='center')
+            cell.border = border
+        row += 1
+        
+        # Datos de cuentas
+        for cuenta in estado.cuentas_ahorro:
+            ws.cell(row=row, column=1, value=cuenta.numero_cuenta).border = border
+            ws.cell(row=row, column=2, value=cuenta.tipo_ahorro).border = border
+            
+            cell = ws.cell(row=row, column=3, value=float(cuenta.saldo_actual))
+            cell.number_format = '$#,##0.00'
+            cell.border = border
+            
+            ws.cell(row=row, column=4, value=cuenta.estado).border = border
+            row += 1
+    else:
+        ws.merge_cells(f'A{row}:F{row}')
+        cell = ws.cell(row=row, column=1, value="No hay cuentas de ahorro")
+        cell.alignment = Alignment(horizontal='center')
+        cell.border = border
+        row += 1
+    
+    # Ajustar anchos de columna
+    ws.column_dimensions['A'].width = 20
+    ws.column_dimensions['B'].width = 18
+    ws.column_dimensions['C'].width = 18
+    ws.column_dimensions['D'].width = 18
+    ws.column_dimensions['E'].width = 15
+    ws.column_dimensions['F'].width = 15
+    
+    buffer = BytesIO()
+    wb.save(buffer)
+    buffer.seek(0)
+    return buffer
+
+
+def exportar_estado_cuenta_excel_por_documento(
+    db: Session,
+    numero_documento: str,
+    fecha_inicio: Optional[date],
+    fecha_fin: date
+) -> BytesIO:
+    """
+    Exportar Estado de Cuenta a Excel usando número de documento.
+    """
+    asociado = db.query(Asociado).filter(Asociado.numero_documento == numero_documento).first()
+    if not asociado:
+        raise ValueError(f"Asociado con documento {numero_documento} no encontrado")
+    return exportar_estado_cuenta_excel(db, asociado.id, fecha_inicio, fecha_fin)
+
+
 def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Optional[date], 
                                 fecha_fin: date) -> BytesIO:
     """
-    Exportar Estado de Cuenta del Asociado a PDF.
+    Exportar Estado de Cuenta del Asociado a PDF con logo.
     """
+    import os
+    
     buffer = BytesIO()
     doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch, bottomMargin=0.5*inch)
     elements = []
@@ -1019,16 +1318,23 @@ def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Opti
     heading_style = ParagraphStyle('Heading', parent=styles['Heading2'], fontSize=14, 
                                     textColor=colors.HexColor('#1e40af'), spaceAfter=12, spaceBefore=12)
     
+    # Agregar logo si existe
+    logo_path = "/root/projects/Coopeenortol/assets/logos/logo-principal.png"
+    if os.path.exists(logo_path):
+        logo = RLImage(logo_path, width=1*inch, height=1*inch)
+        elements.append(logo)
+        elements.append(Spacer(1, 0.2*inch))
+    
     # Título
     elements.append(Paragraph("ESTADO DE CUENTA", title_style))
-    elements.append(Paragraph(f"Asociado: {estado.asociado_nombre}", subtitle_style))
-    elements.append(Paragraph(f"Al {estado.fecha_reporte.strftime('%d de %B de %Y')}", subtitle_style))
+    elements.append(Paragraph(f"Asociado: {estado.nombres} {estado.apellidos}", subtitle_style))
+    elements.append(Paragraph(f"Al {estado.fecha_generacion.strftime('%d de %B de %Y')}", subtitle_style))
     
     # Información del Asociado
     info_data = [
         ['ID Asociado:', str(estado.asociado_id)],
-        ['Fecha Vinculación:', estado.fecha_vinculacion.strftime('%d/%m/%Y')],
-        ['Estado:', estado.estado_asociado]
+        ['Documento:', estado.numero_documento],
+        ['Periodo:', f"{estado.fecha_inicio.strftime('%d/%m/%Y') if estado.fecha_inicio else 'Inicio'} - {estado.fecha_fin.strftime('%d/%m/%Y')}"]
     ]
     info_table = Table(info_data, colWidths=[2*inch, 3*inch])
     info_table.setStyle(TableStyle([
@@ -1062,9 +1368,10 @@ def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Opti
     # APORTES
     elements.append(Paragraph("RESUMEN DE APORTES", heading_style))
     aportes_data = [
-        ['Aportes Obligatorios', f"${estado.resumen_aportes.aportes_obligatorios:,.2f}"],
-        ['Aportes Voluntarios', f"${estado.resumen_aportes.aportes_voluntarios:,.2f}"],
-        ['TOTAL APORTES', f"${estado.resumen_aportes.total_aportes:,.2f}"]
+        ['Total Aportes', f"${estado.aportes.total_aportes:,.2f}"],
+        ['Número de Aportes', str(estado.aportes.numero_aportes)],
+        ['Último Aporte', f"${estado.aportes.ultimo_aporte_valor:,.2f}" if estado.aportes.ultimo_aporte_valor else "N/A"],
+        ['Fecha Último Aporte', estado.aportes.ultimo_aporte_fecha.strftime('%d/%m/%Y') if estado.aportes.ultimo_aporte_fecha else "N/A"]
     ]
     aportes_table = Table(aportes_data, colWidths=[4*inch, 2*inch])
     aportes_table.setStyle(TableStyle([
@@ -1081,18 +1388,19 @@ def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Opti
     # CRÉDITOS
     if estado.creditos:
         elements.append(Paragraph("CRÉDITOS", heading_style))
-        creditos_data = [['ID', 'Tipo', 'Monto Original', 'Saldo', 'Cuota', 'Estado']]
+        creditos_data = [['Número', 'Tipo', 'Desembolso', 'Saldo', 'Cuota', 'Estado', 'Mora']]
         for credito in estado.creditos:
             creditos_data.append([
-                str(credito.credito_id),
+                credito.numero_credito,
                 credito.tipo_credito,
-                f"${credito.monto_original:,.2f}",
-                f"${credito.saldo_actual:,.2f}",
-                f"${credito.cuota_mensual:,.2f}",
-                credito.estado
+                f"${credito.monto_desembolsado:,.2f}",
+                f"${credito.saldo_capital:,.2f}",
+                f"${credito.valor_cuota:,.2f}",
+                credito.estado,
+                str(credito.dias_mora)
             ])
         
-        creditos_table = Table(creditos_data, colWidths=[0.5*inch, 1.5*inch, 1.3*inch, 1.3*inch, 1.2*inch, 0.9*inch])
+        creditos_table = Table(creditos_data, colWidths=[1*inch, 1.2*inch, 1.2*inch, 1.2*inch, 1*inch, 0.9*inch, 0.6*inch])
         creditos_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#ef4444')),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -1108,17 +1416,16 @@ def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Opti
     # CUENTAS DE AHORRO
     if estado.cuentas_ahorro:
         elements.append(Paragraph("CUENTAS DE AHORRO", heading_style))
-        ahorros_data = [['ID', 'Tipo', 'Saldo', 'Tasa', 'Estado']]
+        ahorros_data = [['Número Cuenta', 'Tipo', 'Saldo', 'Estado']]
         for cuenta in estado.cuentas_ahorro:
             ahorros_data.append([
-                str(cuenta.cuenta_id),
+                cuenta.numero_cuenta,
                 cuenta.tipo_ahorro,
                 f"${cuenta.saldo_actual:,.2f}",
-                f"{cuenta.tasa_interes}%",
                 cuenta.estado
             ])
         
-        ahorros_table = Table(ahorros_data, colWidths=[0.7*inch, 2*inch, 1.5*inch, 1*inch, 1*inch])
+        ahorros_table = Table(ahorros_data, colWidths=[1.5*inch, 2.5*inch, 1.5*inch, 1*inch])
         ahorros_table.setStyle(TableStyle([
             ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#10b981')),
             ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
@@ -1133,3 +1440,24 @@ def exportar_estado_cuenta_pdf(db: Session, asociado_id: int, fecha_inicio: Opti
     doc.build(elements)
     buffer.seek(0)
     return buffer
+
+
+def exportar_estado_cuenta_pdf_por_documento(
+    db: Session,
+    numero_documento: str,
+    fecha_inicio: Optional[date],
+    fecha_fin: date
+) -> BytesIO:
+    """
+    Exportar Estado de Cuenta a PDF buscando por número de documento.
+    """
+    # Buscar asociado por número de documento
+    asociado = db.query(Asociado).filter(
+        Asociado.numero_documento == numero_documento
+    ).first()
+    
+    if not asociado:
+        raise ValueError(f"Asociado con documento {numero_documento} no encontrado")
+    
+    # Delegar a la función existente
+    return exportar_estado_cuenta_pdf(db, asociado.id, fecha_inicio, fecha_fin)

@@ -8,41 +8,42 @@ import Input from '../components/ui/Input';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
 
-interface ResumenAportes {
-  aportes_obligatorios: number;
-  aportes_voluntarios: number;
+interface AportesAsociado {
   total_aportes: number;
+  numero_aportes: number;
+  ultimo_aporte_fecha: string | null;
+  ultimo_aporte_valor: number | null;
 }
 
 interface CreditoEstadoCuenta {
-  credito_id: number;
+  numero_credito: string;
   tipo_credito: string;
-  monto_original: number;
-  saldo_actual: number;
-  cuota_mensual: number;
-  proxima_cuota: string | null;
+  monto_desembolsado: number;
+  saldo_capital: number;
+  valor_cuota: number;
   estado: string;
+  dias_mora: number;
 }
 
 interface CuentaAhorroEstadoCuenta {
-  cuenta_id: number;
+  numero_cuenta: string;
   tipo_ahorro: string;
   saldo_actual: number;
-  tasa_interes: number;
-  fecha_apertura: string;
   estado: string;
 }
 
 interface EstadoCuenta {
   asociado_id: number;
-  asociado_nombre: string;
-  fecha_vinculacion: string;
-  estado_asociado: string;
-  fecha_reporte: string;
-  resumen_aportes: ResumenAportes;
+  nombres: string;
+  apellidos: string;
+  numero_documento: string;
+  fecha_generacion: string;
+  fecha_inicio: string | null;
+  fecha_fin: string;
+  aportes: AportesAsociado;
   creditos: CreditoEstadoCuenta[];
   cuentas_ahorro: CuentaAhorroEstadoCuenta[];
-  total_creditos_activos: number;
+  total_aportes: number;
   total_deuda: number;
   total_ahorros: number;
   patrimonio_neto: number;
@@ -52,8 +53,9 @@ export default function EstadoCuentaPage() {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [exporting, setExporting] = useState(false);
+  const [exportingExcel, setExportingExcel] = useState(false);
   const [estado, setEstado] = useState<EstadoCuenta | null>(null);
-  const [asociadoId, setAsociadoId] = useState('');
+  const [numeroDocumento, setNumeroDocumento] = useState('');
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat('es-CO', {
@@ -68,7 +70,9 @@ export default function EstadoCuentaPage() {
     const colors: Record<string, string> = {
       ACTIVO: 'bg-green-100 text-green-800',
       AL_DIA: 'bg-green-100 text-green-800',
+      al_dia: 'bg-green-100 text-green-800',
       MORA: 'bg-red-100 text-red-800',
+      mora: 'bg-red-100 text-red-800',
       CANCELADO: 'bg-gray-100 text-gray-800',
       INACTIVO: 'bg-gray-100 text-gray-800',
     };
@@ -76,8 +80,8 @@ export default function EstadoCuentaPage() {
   };
 
   const handleGenerate = async () => {
-    if (!asociadoId) {
-      alert('Por favor ingresa el ID del asociado');
+    if (!numeroDocumento) {
+      alert('Por favor ingresa el número de documento');
       return;
     }
 
@@ -85,7 +89,7 @@ export default function EstadoCuentaPage() {
       setLoading(true);
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${API_URL}/api/v1/reportes/estado-cuenta/${asociadoId}`,
+        `${API_URL}/api/v1/reportes/estado-cuenta/${numeroDocumento}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -96,7 +100,7 @@ export default function EstadoCuentaPage() {
     } catch (error: any) {
       console.error('Error al generar estado de cuenta:', error);
       if (error.response?.status === 404) {
-        alert('Asociado no encontrado');
+        alert(`Asociado con documento ${numeroDocumento} no encontrado`);
       } else {
         alert('Error al generar el estado de cuenta');
       }
@@ -110,7 +114,7 @@ export default function EstadoCuentaPage() {
       setExporting(true);
       const token = localStorage.getItem('token');
       const response = await axios.get(
-        `${API_URL}/api/v1/reportes/estado-cuenta/${asociadoId}/export/pdf`,
+        `${API_URL}/api/v1/reportes/estado-cuenta/${numeroDocumento}/export/pdf`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -123,7 +127,7 @@ export default function EstadoCuentaPage() {
       const link = document.createElement('a');
       link.href = url;
       const today = new Date().toISOString().split('T')[0];
-      link.setAttribute('download', `estado_cuenta_${asociadoId}_${today}.pdf`);
+      link.setAttribute('download', `estado_cuenta_${numeroDocumento}_${today}.pdf`);
       document.body.appendChild(link);
       link.click();
       link.remove();
@@ -132,6 +136,36 @@ export default function EstadoCuentaPage() {
       alert('Error al exportar el PDF');
     } finally {
       setExporting(false);
+    }
+  };
+
+  const handleExportExcel = async () => {
+    try {
+      setExportingExcel(true);
+      const token = localStorage.getItem('token');
+      const response = await axios.get(
+        `${API_URL}/api/v1/reportes/estado-cuenta/${numeroDocumento}/export/excel`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          responseType: 'blob',
+        }
+      );
+
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement('a');
+      link.href = url;
+      const today = new Date().toISOString().split('T')[0];
+      link.setAttribute('download', `estado_cuenta_${numeroDocumento}_${today}.xlsx`);
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    } catch (error) {
+      console.error('Error al exportar Excel:', error);
+      alert('Error al exportar el Excel');
+    } finally {
+      setExportingExcel(false);
     }
   };
 
@@ -154,14 +188,14 @@ export default function EstadoCuentaPage() {
 
       {/* Búsqueda */}
       <Card>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-1">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+          <div className="md:col-span-2">
             <Input
-              label="ID Asociado"
-              type="number"
-              value={asociadoId}
-              onChange={(e) => setAsociadoId(e.target.value)}
-              placeholder="Ingresa el ID del asociado"
+              label="Número de Documento (Cédula)"
+              type="text"
+              value={numeroDocumento}
+              onChange={(e) => setNumeroDocumento(e.target.value)}
+              placeholder="Ej: 94123456"
             />
           </div>
           <div className="flex items-end">
@@ -175,17 +209,28 @@ export default function EstadoCuentaPage() {
             </Button>
           </div>
           {estado && (
-            <div className="flex items-end">
-              <Button
-                variant="secondary"
-                onClick={handleExportPDF}
-                disabled={exporting}
-                className="w-full"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                {exporting ? 'Exportando...' : 'Exportar PDF'}
-              </Button>
-            </div>
+            <>
+              <div className="flex items-end gap-2">
+                <Button
+                  variant="secondary"
+                  onClick={handleExportPDF}
+                  disabled={exporting}
+                  className="flex-1"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  {exporting ? 'PDF...' : 'PDF'}
+                </Button>
+                <Button
+                  variant="secondary"
+                  onClick={handleExportExcel}
+                  disabled={exportingExcel}
+                  className="flex-1"
+                >
+                  <Download className="h-4 w-4 mr-2" />
+                  {exportingExcel ? 'Excel...' : 'Excel'}
+                </Button>
+              </div>
+            </>
           )}
         </div>
       </Card>
@@ -200,32 +245,32 @@ export default function EstadoCuentaPage() {
                   <User className="h-8 w-8 text-blue-600" />
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">{estado.asociado_nombre}</h2>
-                  <p className="text-gray-600">ID: {estado.asociado_id}</p>
+                  <h2 className="text-2xl font-bold text-gray-900">{estado.nombres} {estado.apellidos}</h2>
+                  <p className="text-gray-600">Documento: {estado.numero_documento}</p>
                 </div>
               </div>
-              <span className={`px-3 py-1 text-sm font-semibold rounded ${getEstadoBadge(estado.estado_asociado)}`}>
-                {estado.estado_asociado}
+              <span className="px-3 py-1 text-sm font-semibold rounded bg-green-100 text-green-800">
+                ACTIVO
               </span>
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div>
-                <p className="text-sm text-gray-600">Fecha Vinculación</p>
+                <p className="text-sm text-gray-600">Fecha Inicio</p>
                 <p className="text-lg font-semibold text-gray-900">
-                  {new Date(estado.fecha_vinculacion).toLocaleDateString('es-CO')}
+                  {estado.fecha_inicio ? new Date(estado.fecha_inicio).toLocaleDateString('es-CO') : 'N/A'}
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Fecha Reporte</p>
+                <p className="text-sm text-gray-600">Fecha Fin</p>
                 <p className="text-lg font-semibold text-gray-900">
-                  {new Date(estado.fecha_reporte).toLocaleDateString('es-CO')}
+                  {new Date(estado.fecha_fin).toLocaleDateString('es-CO')}
                 </p>
               </div>
               <div>
                 <p className="text-sm text-gray-600">Créditos Activos</p>
                 <p className="text-lg font-semibold text-gray-900">
-                  {estado.total_creditos_activos}
+                  {estado.creditos.length}
                 </p>
               </div>
             </div>
@@ -237,11 +282,13 @@ export default function EstadoCuentaPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Total Aportes</p>
-                  <p className="text-2xl font-bold text-blue-600">
-                    {formatCurrency(estado.resumen_aportes.total_aportes)}
+                  <p className="text-2xl font-bold text-gray-900">
+                    {formatCurrency(estado.total_aportes)}
                   </p>
                 </div>
-                <FileText className="h-8 w-8 text-blue-600" />
+                <div className="bg-blue-100 p-3 rounded-lg">
+                  <FileText className="h-6 w-6 text-blue-600" />
+                </div>
               </div>
             </Card>
 
@@ -249,11 +296,13 @@ export default function EstadoCuentaPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Total Deuda</p>
-                  <p className="text-2xl font-bold text-red-600">
+                  <p className="text-2xl font-bold text-gray-900">
                     {formatCurrency(estado.total_deuda)}
                   </p>
                 </div>
-                <CreditCard className="h-8 w-8 text-red-600" />
+                <div className="bg-red-100 p-3 rounded-lg">
+                  <CreditCard className="h-6 w-6 text-red-600" />
+                </div>
               </div>
             </Card>
 
@@ -261,20 +310,27 @@ export default function EstadoCuentaPage() {
               <div className="flex items-center justify-between">
                 <div>
                   <p className="text-sm text-gray-600">Total Ahorros</p>
-                  <p className="text-2xl font-bold text-green-600">
+                  <p className="text-2xl font-bold text-gray-900">
                     {formatCurrency(estado.total_ahorros)}
                   </p>
                 </div>
-                <PiggyBank className="h-8 w-8 text-green-600" />
+                <div className="bg-green-100 p-3 rounded-lg">
+                  <PiggyBank className="h-6 w-6 text-green-600" />
+                </div>
               </div>
             </Card>
 
             <Card>
-              <div>
-                <p className="text-sm text-gray-600">Patrimonio Neto</p>
-                <p className={`text-2xl font-bold ${estado.patrimonio_neto >= 0 ? 'text-green-600' : 'text-red-600'}`}>
-                  {formatCurrency(estado.patrimonio_neto)}
-                </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-sm text-gray-600">Patrimonio Neto</p>
+                  <p className="text-2xl font-bold text-gray-900">
+                    {formatCurrency(estado.patrimonio_neto)}
+                  </p>
+                </div>
+                <div className={`p-3 rounded-lg ${estado.patrimonio_neto >= 0 ? 'bg-green-100' : 'bg-red-100'}`}>
+                  <FileText className={`h-6 w-6 ${estado.patrimonio_neto >= 0 ? 'text-green-600' : 'text-red-600'}`} />
+                </div>
               </div>
             </Card>
           </div>
@@ -284,24 +340,29 @@ export default function EstadoCuentaPage() {
             <h3 className="text-lg font-bold text-gray-900 mb-4">Resumen de Aportes</h3>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-700 font-medium mb-1">Aportes Obligatorios</p>
+                <p className="text-sm text-blue-700 font-medium mb-1">Número de Aportes</p>
                 <p className="text-2xl font-bold text-blue-900">
-                  {formatCurrency(estado.resumen_aportes.aportes_obligatorios)}
+                  {estado.aportes.numero_aportes}
                 </p>
               </div>
               <div className="bg-blue-50 p-4 rounded-lg">
-                <p className="text-sm text-blue-700 font-medium mb-1">Aportes Voluntarios</p>
+                <p className="text-sm text-blue-700 font-medium mb-1">Último Aporte</p>
                 <p className="text-2xl font-bold text-blue-900">
-                  {formatCurrency(estado.resumen_aportes.aportes_voluntarios)}
+                  {estado.aportes.ultimo_aporte_valor ? formatCurrency(estado.aportes.ultimo_aporte_valor) : 'N/A'}
                 </p>
               </div>
               <div className="bg-blue-100 p-4 rounded-lg border-2 border-blue-300">
                 <p className="text-sm text-blue-700 font-medium mb-1">Total Aportes</p>
                 <p className="text-2xl font-bold text-blue-900">
-                  {formatCurrency(estado.resumen_aportes.total_aportes)}
+                  {formatCurrency(estado.total_aportes)}
                 </p>
               </div>
             </div>
+            {estado.aportes.ultimo_aporte_fecha && (
+              <div className="mt-4 text-sm text-gray-600">
+                Fecha último aporte: {new Date(estado.aportes.ultimo_aporte_fecha).toLocaleDateString('es-CO')}
+              </div>
+            )}
           </Card>
 
           {/* Créditos */}
@@ -312,38 +373,40 @@ export default function EstadoCuentaPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">ID</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Número</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-700">Tipo</th>
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Monto Original</th>
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Saldo Actual</th>
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Cuota Mensual</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Próxima Cuota</th>
+                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Desembolsado</th>
+                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Saldo Capital</th>
+                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Cuota</th>
+                      <th className="text-center py-3 px-4 font-semibold text-gray-700">Días Mora</th>
                       <th className="text-center py-3 px-4 font-semibold text-gray-700">Estado</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {estado.creditos.map((credito) => (
-                      <tr key={credito.credito_id} className="border-b border-gray-100 hover:bg-gray-50">
+                    {estado.creditos.map((credito, index) => (
+                      <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
                         <td className="py-3 px-4">
-                          <span className="font-medium text-blue-600">#{credito.credito_id}</span>
+                          <span className="font-medium text-blue-600">{credito.numero_credito}</span>
                         </td>
-                        <td className="py-3 px-4 text-gray-900">{credito.tipo_credito}</td>
-                        <td className="py-3 px-4 text-right text-gray-900">
-                          {formatCurrency(credito.monto_original)}
+                        <td className="py-3 px-4">{credito.tipo_credito}</td>
+                        <td className="py-3 px-4 text-right">
+                          {formatCurrency(credito.monto_desembolsado)}
                         </td>
-                        <td className="py-3 px-4 text-right font-medium text-red-600">
-                          {formatCurrency(credito.saldo_actual)}
+                        <td className="py-3 px-4 text-right">
+                          {formatCurrency(credito.saldo_capital)}
                         </td>
-                        <td className="py-3 px-4 text-right text-gray-900">
-                          {formatCurrency(credito.cuota_mensual)}
-                        </td>
-                        <td className="py-3 px-4 text-gray-900">
-                          {credito.proxima_cuota
-                            ? new Date(credito.proxima_cuota).toLocaleDateString('es-CO')
-                            : 'N/A'}
+                        <td className="py-3 px-4 text-right">
+                          {formatCurrency(credito.valor_cuota)}
                         </td>
                         <td className="py-3 px-4 text-center">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${getEstadoBadge(credito.estado)}`}>
+                          {credito.dias_mora > 0 ? (
+                            <span className="text-red-600 font-semibold">{credito.dias_mora}</span>
+                          ) : (
+                            <span className="text-green-600">0</span>
+                          )}
+                        </td>
+                        <td className="py-3 px-4 text-center">
+                          <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(credito.estado)}`}>
                             {credito.estado}
                           </span>
                         </td>
@@ -353,7 +416,9 @@ export default function EstadoCuentaPage() {
                 </table>
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No hay créditos registrados</p>
+              <div className="text-center py-8 text-gray-500">
+                No hay créditos activos
+              </div>
             )}
           </Card>
 
@@ -365,32 +430,22 @@ export default function EstadoCuentaPage() {
                 <table className="w-full">
                   <thead>
                     <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">ID</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Número Cuenta</th>
                       <th className="text-left py-3 px-4 font-semibold text-gray-700">Tipo</th>
                       <th className="text-right py-3 px-4 font-semibold text-gray-700">Saldo</th>
-                      <th className="text-right py-3 px-4 font-semibold text-gray-700">Tasa Interés</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-700">Fecha Apertura</th>
                       <th className="text-center py-3 px-4 font-semibold text-gray-700">Estado</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {estado.cuentas_ahorro.map((cuenta) => (
-                      <tr key={cuenta.cuenta_id} className="border-b border-gray-100 hover:bg-gray-50">
+                    {estado.cuentas_ahorro.map((cuenta, index) => (
+                      <tr key={index} className="border-b border-gray-100 hover:bg-gray-50">
                         <td className="py-3 px-4">
-                          <span className="font-medium text-green-600">#{cuenta.cuenta_id}</span>
+                          <span className="font-medium text-green-600">{cuenta.numero_cuenta}</span>
                         </td>
-                        <td className="py-3 px-4 text-gray-900">{cuenta.tipo_ahorro}</td>
-                        <td className="py-3 px-4 text-right font-medium text-green-600">
-                          {formatCurrency(cuenta.saldo_actual)}
-                        </td>
-                        <td className="py-3 px-4 text-right text-gray-900">
-                          {cuenta.tasa_interes}%
-                        </td>
-                        <td className="py-3 px-4 text-gray-900">
-                          {new Date(cuenta.fecha_apertura).toLocaleDateString('es-CO')}
-                        </td>
+                        <td className="py-3 px-4">{cuenta.tipo_ahorro}</td>
+                        <td className="py-3 px-4 text-right">{formatCurrency(cuenta.saldo_actual)}</td>
                         <td className="py-3 px-4 text-center">
-                          <span className={`px-2 py-1 text-xs font-semibold rounded ${getEstadoBadge(cuenta.estado)}`}>
+                          <span className={`px-3 py-1 text-xs font-semibold rounded-full ${getEstadoBadge(cuenta.estado)}`}>
                             {cuenta.estado}
                           </span>
                         </td>
@@ -400,21 +455,12 @@ export default function EstadoCuentaPage() {
                 </table>
               </div>
             ) : (
-              <p className="text-gray-500 text-center py-4">No hay cuentas de ahorro registradas</p>
+              <div className="text-center py-8 text-gray-500">
+                No hay cuentas de ahorro
+              </div>
             )}
           </Card>
         </>
-      )}
-
-      {!estado && !loading && (
-        <Card>
-          <div className="text-center py-12">
-            <User className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-            <p className="text-gray-500">
-              Ingresa el ID del asociado y haz clic en "Generar Estado de Cuenta"
-            </p>
-          </div>
-        </Card>
       )}
     </div>
   );

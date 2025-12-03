@@ -65,7 +65,9 @@ class Usuario(Base):
                 "usuarios:leer",
                 "usuarios:actualizar", 
                 "usuarios:eliminar",
+                "reportes:leer",
                 "reportes:generar",
+                "reportes:exportar",
                 "configuracion:leer",
                 "configuracion:actualizar"
             ]
@@ -77,12 +79,15 @@ class Usuario(Base):
                 "documentos:crear",
                 "documentos:leer",
                 "documentos:actualizar",
-                "reportes:generar"
+                "reportes:leer",
+                "reportes:generar",
+                "reportes:exportar"
             ]
         elif self.rol == RolUsuario.AUDITOR:
             return [
                 "asociados:leer",
                 "documentos:leer",
+                "reportes:leer",
                 "reportes:generar"
             ]
         return []
