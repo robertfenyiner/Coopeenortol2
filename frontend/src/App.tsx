@@ -12,6 +12,13 @@ import CreditosPage from './pages/CreditosPage';
 import CreditoDetailPage from './pages/CreditoDetailPage';
 import AhorrosPage from './pages/AhorrosPage';
 import CuentaAhorroDetailPage from './pages/CuentaAhorroDetailPage';
+import ReportesPage from './pages/ReportesPage';
+import BalanceGeneralPage from './pages/BalanceGeneralPage';
+import ReporteCarteraPage from './pages/ReporteCarteraPage';
+import EstadoResultadosPage from './pages/EstadoResultadosPage';
+import ReporteMoraPage from './pages/ReporteMoraPage';
+import EstadoCuentaPage from './pages/EstadoCuentaPage';
+import EstadisticasGeneralesPage from './pages/EstadisticasGeneralesPage';
 
 // Componente de ruta protegida
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
@@ -184,6 +191,83 @@ function AppRoutes() {
                 </h2>
                 <p className="text-gray-600">En desarrollo...</p>
               </div>
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <ReportesPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/balance-general"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <BalanceGeneralPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/cartera"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <ReporteCarteraPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/estado-resultados"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <EstadoResultadosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/mora"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <ReporteMoraPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/estado-cuenta"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <EstadoCuentaPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reportes/estadisticas"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <EstadisticasGeneralesPage />
             </MainLayout>
           </ProtectedRoute>
         }
