@@ -189,3 +189,65 @@ def exportar_cartera_excel(
             "Content-Disposition": f"attachment; filename=cartera_{fecha_corte or date.today()}.xlsx"
         }
     )
+
+
+@router.get("/estado-resultados/export/pdf")
+def exportar_estado_resultados_pdf(
+    fecha_inicio: date = Query(..., description="Fecha inicial del período"),
+    fecha_fin: date = Query(..., description="Fecha final del período"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:exportar")),
+):
+    """Exportar Estado de Resultados a PDF."""
+    pdf_content = service.exportar_estado_resultados_pdf(db, fecha_inicio, fecha_fin)
+    
+    return StreamingResponse(
+        pdf_content,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f"attachment; filename=estado_resultados_{fecha_inicio}_{fecha_fin}.pdf"
+        }
+    )
+
+
+@router.get("/mora/export/excel")
+def exportar_mora_excel(
+    dias_mora_minimo: int = Query(default=1, ge=1, description="Días mínimos de mora"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:exportar")),
+):
+    """Exportar Reporte de Mora a Excel."""
+    excel_content = service.exportar_mora_excel(db, dias_mora_minimo)
+    
+    return StreamingResponse(
+        excel_content,
+        media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+        headers={
+            "Content-Disposition": f"attachment; filename=reporte_mora_{date.today()}.xlsx"
+        }
+    )
+
+
+@router.get("/estado-cuenta/{asociado_id}/export/pdf")
+def exportar_estado_cuenta_pdf(
+    asociado_id: int,
+    fecha_inicio: Optional[date] = Query(None, description="Fecha inicial"),
+    fecha_fin: Optional[date] = Query(None, description="Fecha final"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:exportar")),
+):
+    """Exportar Estado de Cuenta a PDF."""
+    pdf_content = service.exportar_estado_cuenta_pdf(
+        db,
+        asociado_id=asociado_id,
+        fecha_inicio=fecha_inicio,
+        fecha_fin=fecha_fin or date.today()
+    )
+    
+    return StreamingResponse(
+        pdf_content,
+        media_type="application/pdf",
+        headers={
+            "Content-Disposition": f"attachment; filename=estado_cuenta_{asociado_id}_{date.today()}.pdf"
+        }
+    )
