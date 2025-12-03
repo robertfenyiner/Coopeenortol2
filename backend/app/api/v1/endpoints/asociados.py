@@ -24,7 +24,7 @@ def listar_asociados(
     nombre: Optional[str] = Query(default=None, description="Buscar por nombre o apellidos"),
     correo: Optional[str] = Query(default=None, description="Buscar por correo electrónico"),
     ordenar_por: Optional[str] = Query(default="fecha_ingreso", description="Campo por el cual ordenar"),
-    orden: Optional[str] = Query(default="desc", regex="^(asc|desc)$", description="Orden ascendente o descendente"),
+    orden: Optional[str] = Query(default="desc", pattern="^(asc|desc)$", description="Orden ascendente o descendente"),
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(require_permission("asociados:leer")),
 ) -> AsociadosListResponse:

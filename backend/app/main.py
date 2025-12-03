@@ -1,3 +1,4 @@
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
@@ -13,8 +14,23 @@ from app.database import Base, engine
 logger = logging.getLogger(__name__)
 
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Gestión del ciclo de vida de la aplicación."""
+    # Startup
+    Base.metadata.create_all(bind=engine)
+    logger.info("Base de datos inicializada")
+    yield
+    # Shutdown (si se necesita limpieza)
+    logger.info("Cerrando aplicación")
+
+
 def create_app() -> FastAPI:
-    app = FastAPI(title=settings.app_name, version=settings.app_version)
+    app = FastAPI(
+        title=settings.app_name,
+        version=settings.app_version,
+        lifespan=lifespan
+    )
 
     # Configurar CORS para permitir acceso desde cualquier origen
     app.add_middleware(
@@ -37,10 +53,6 @@ def create_app() -> FastAPI:
                 "body": exc.body
             }
         )
-
-    @app.on_event("startup")
-    def startup() -> None:
-        Base.metadata.create_all(bind=engine)
 
     app.include_router(api_router, prefix="/api/v1")
     
