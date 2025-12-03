@@ -8,6 +8,7 @@ import {
   PiggyBank,
   FileText,
   BarChart3,
+  FileBarChart,
   Settings,
   LogOut,
   Menu,
@@ -38,6 +39,7 @@ export default function MainLayout({ children }: MainLayoutProps) {
     { label: 'Ahorros', path: '/ahorros', icon: <PiggyBank className="w-5 h-5" /> },
     { label: 'Documentos', path: '/documentos', icon: <FileText className="w-5 h-5" /> },
     { label: 'Contabilidad', path: '/contabilidad', icon: <BarChart3 className="w-5 h-5" /> },
+    { label: 'Reportes', path: '/reportes', icon: <FileBarChart className="w-5 h-5" /> },
     { label: 'Configuración', path: '/configuracion', icon: <Settings className="w-5 h-5" /> },
   ];
 
