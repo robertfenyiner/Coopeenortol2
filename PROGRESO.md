@@ -51,7 +51,7 @@
 - ✅ Migración aplicada (4 tablas nuevas)
 - ⚠️  Tests pendientes de ajuste
 
-### 7. Módulo de Ahorros **[NUEVO - COMPLETO]** ⭐
+### 7. Módulo de Ahorros ⭐
 - ✅ Modelos: CuentaAhorro, MovimientoAhorro, ConfiguracionAhorro
 - ✅ Tipos de ahorro: a_la_vista, programado, CDAT, contractual, aportes
 - ✅ Estados: activa, inactiva, bloqueada, cancelada
@@ -68,15 +68,32 @@
 - ✅ Migración aplicada (1 tabla nueva: fecha_ultimo_interes)
 - ✅ Script de prueba completo ejecutado exitosamente
 
+### 8. Módulo de Reportes **[COMPLETADO]** ⭐
+- ✅ Balance General con clasificación contable
+- ✅ Estado de Resultados con márgenes de utilidad
+- ✅ Reporte de Cartera (total, al día, mora, castigada)
+- ✅ Reporte de Mora con rangos (1-30, 31-60, 61-90, 90+)
+- ✅ Estado de Cuenta de Asociados (aportes, créditos, ahorros)
+- ✅ Estadísticas Generales (dashboard KPIs)
+- ✅ Exportación a PDF (Balance, Estado Resultados, Estado Cuenta)
+- ✅ Exportación a Excel (Cartera, Mora, Estado Cuenta)
+- ✅ Certificado de Paz y Salvo (con validación de deudas)
+- ✅ Certificado de Aportes (histórico o por año)
+- ✅ 11 endpoints principales + 8 endpoints de exportación (19 total)
+- ✅ Integración con ReportLab (PDF) y OpenPyXL (Excel)
+- ✅ Búsqueda por número de documento
+- ✅ Script de prueba completo ejecutado exitosamente
+
 ## 📊 Estadísticas del Backend
 
 - **Tests**: 87/92 pasando (94.5%)
-- **Cobertura**: 76% global
-- **Commits**: 4 (auth + contabilidad + créditos + ahorros)
+- **Cobertura**: 76% global  
+- **Commits**: 5 (auth + contabilidad + créditos + ahorros + reportes)
 - **Migraciones**: 7 aplicadas
-- **Archivos**: ~60 archivos Python
-- **Líneas de código**: ~8000+
-- **Endpoints REST**: ~60 endpoints activos
+- **Archivos**: ~65 archivos Python
+- **Líneas de código**: ~10,000+
+- **Endpoints REST**: ~80 endpoints activos
+- **Exportaciones**: PDF y Excel disponibles
 
 ## 🗄️ Base de Datos
 
@@ -108,20 +125,14 @@
 
 ## 📋 MÓDULOS PENDIENTES (Backend)
 
-### 1. Reportes ⭐ SIGUIENTE
-- Reportes financieros
-- Estados de cuenta
-- Balance general
-- Estado de resultados
-- Informes de cartera
-
-### 2. Notificaciones
+### 1. Notificaciones ⭐ SIGUIENTE
+### 1. Notificaciones
 - Sistema de notificaciones
 - Alertas de mora
 - Recordatorios de pago
 - Notificaciones por email/SMS
 
-### 3. Dashboard Avanzado
+### 2. Dashboard Avanzado
 - Ampliar métricas en tiempo real
 - Más gráficos y estadísticas
 - KPIs adicionales de la cooperativa
@@ -147,25 +158,31 @@
 
 ## 🔄 PRÓXIMOS PASOS
 
-### Inmediato:
-1. ✅ Módulo de Créditos completado
-2. ✅ Módulo de Ahorros completado
-3. ⏭️ Decidir próximo módulo
+### Completado hasta ahora:
+1. ✅ Módulo de Autenticación y Usuarios
+2. ✅ Módulo de Asociados con validaciones
+3. ✅ Módulo de Auditoría
+4. ✅ Módulo de Documentos
+5. ✅ Módulo de Contabilidad (PUC + Partida Doble)
+6. ✅ Módulo de Créditos (Amortización + Pagos + Mora)
+7. ✅ Módulo de Ahorros (Cuentas + Intereses + CDTs)
+8. ✅ Módulo de Reportes (Balance + Cartera + Certificados)
 
-### Opciones:
-**Opción A**: Módulo de Reportes (2-3 horas)
-- Reportes financieros (balance, estado de resultados)
-- Reportes de cartera
-- Estados de cuenta de asociados
-- Exportación a PDF/Excel
-- Completa el ecosistema core de backend
-
-**Opción B**: Iniciar Frontend (Setup + Login)
-- Setup de React + TypeScript + Vite
+### Opciones para continuar:
+**Opción A**: Iniciar Frontend **[RECOMENDADO]** 🎨
+- Setup de React + TypeScript + Vite + Tailwind
 - Sistema de autenticación visual
-- Dashboard principal
-- Ver funcionalidades en acción
-- Validar UX/UI temprano
+- Dashboard principal con gráficos
+- CRUD de asociados con tablas y formularios
+- Ver 80% del backend funcionando visualmente
+- *Ventaja*: Sistema usable y demo-able, UX/UI temprano
+
+**Opción B**: Completar Backend (Notificaciones)
+- Sistema de notificaciones internas
+- Alertas de mora por email
+- Recordatorios de pago
+- Templates de notificaciones
+- *Ventaja*: Backend 100% antes de UI
 
 ### Para Producción:
 - [ ] Tests completos (100% cobertura objetivo)
@@ -197,4 +214,4 @@
 ---
 
 **Última actualización**: 2024-12-05
-**Progreso**: 7/10 módulos backend core completados (70%)
+**Progreso**: 8/10 módulos backend core completados (80%)

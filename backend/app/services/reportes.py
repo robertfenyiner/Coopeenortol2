@@ -1461,3 +1461,332 @@ def exportar_estado_cuenta_pdf_por_documento(
     
     # Delegar a la función existente
     return exportar_estado_cuenta_pdf(db, asociado.id, fecha_inicio, fecha_fin)
+
+
+def generar_certificado_paz_salvo(
+    db: Session,
+    numero_documento: str
+) -> BytesIO:
+    """
+    Generar certificado de Paz y Salvo para un asociado.
+    
+    Certifica que el asociado no tiene obligaciones pendientes.
+    """
+    # Buscar asociado
+    asociado = db.query(Asociado).filter(
+        Asociado.numero_documento == numero_documento
+    ).first()
+    
+    if not asociado:
+        raise ValueError(f"Asociado con documento {numero_documento} no encontrado")
+    
+    # Verificar obligaciones
+    creditos_activos = db.query(Credito).filter(
+        Credito.asociado_id == asociado.id,
+        Credito.estado.in_(["desembolsado", "al_dia", "mora"])
+    ).all()
+    
+    tiene_deudas = any(c.saldo_capital > 0 for c in creditos_activos)
+    
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch)
+    elements = []
+    styles = getSampleStyleSheet()
+    
+    # Estilo del título
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=18,
+        textColor=colors.HexColor('#1e3a8a'),
+        spaceAfter=30,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold'
+    )
+    
+    # Encabezado
+    elements.append(Spacer(1, 0.5*inch))
+    elements.append(Paragraph("COOPERATIVA COOPEENORTOL", title_style))
+    elements.append(Paragraph("NIT: 900.XXX.XXX-X", styles['Normal']))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Título del certificado
+    cert_title = ParagraphStyle(
+        'CertTitle',
+        parent=styles['Heading1'],
+        fontSize=16,
+        textColor=colors.HexColor('#dc2626') if tiene_deudas else colors.HexColor('#059669'),
+        spaceAfter=20,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold'
+    )
+    
+    if tiene_deudas:
+        elements.append(Paragraph("CERTIFICADO DE ESTADO DE OBLIGACIONES", cert_title))
+    else:
+        elements.append(Paragraph("CERTIFICADO DE PAZ Y SALVO", cert_title))
+    
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Contenido
+    content_style = ParagraphStyle(
+        'Content',
+        parent=styles['Normal'],
+        fontSize=11,
+        leading=18,
+        alignment=TA_LEFT
+    )
+    
+    fecha_actual = datetime.now().strftime("%d de %B de %Y")
+    
+    texto = f"""
+    <para align=justify>
+    La Cooperativa COOPEENORTOL certifica que el(la) asociado(a) 
+    <b>{asociado.nombres} {asociado.apellidos}</b>, identificado(a) con 
+    cédula de ciudadanía No. <b>{asociado.numero_documento}</b>, 
+    {'' if tiene_deudas else 'se encuentra a <b>PAZ Y SALVO</b> por todo concepto con esta cooperativa.'}
+    </para>
+    """
+    
+    elements.append(Paragraph(texto, content_style))
+    elements.append(Spacer(1, 0.2*inch))
+    
+    if tiene_deudas:
+        # Mostrar obligaciones pendientes
+        elements.append(Paragraph("<b>Obligaciones Pendientes:</b>", content_style))
+        elements.append(Spacer(1, 0.1*inch))
+        
+        deudas_data = [['Número Crédito', 'Tipo', 'Saldo Capital', 'Saldo Total', 'Estado']]
+        total_deuda = Decimal("0.00")
+        
+        for credito in creditos_activos:
+            if credito.saldo_capital > 0:
+                saldo_total = (credito.saldo_capital or Decimal("0.00")) + \
+                             (credito.saldo_interes or Decimal("0.00")) + \
+                             (credito.saldo_mora or Decimal("0.00"))
+                total_deuda += saldo_total
+                
+                deudas_data.append([
+                    credito.numero_credito,
+                    credito.tipo_credito,
+                    f"${credito.saldo_capital:,.2f}",
+                    f"${saldo_total:,.2f}",
+                    credito.estado
+                ])
+        
+        deudas_data.append(['', '', '', f"<b>${total_deuda:,.2f}</b>", ''])
+        
+        deudas_table = Table(deudas_data, colWidths=[1.5*inch, 1.5*inch, 1.2*inch, 1.2*inch, 1*inch])
+        deudas_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#dc2626')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('ALIGN', (2, 1), (3, -1), 'RIGHT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 9),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+            ('BACKGROUND', (0, -1), (-1, -1), colors.HexColor('#fee2e2')),
+        ]))
+        elements.append(deudas_table)
+        elements.append(Spacer(1, 0.2*inch))
+        
+        elements.append(Paragraph(
+            "El asociado NO se encuentra a paz y salvo hasta cancelar las obligaciones mencionadas.",
+            content_style
+        ))
+    else:
+        elements.append(Paragraph(
+            "El presente certificado se expide a solicitud del interesado para los fines que estime convenientes.",
+            content_style
+        ))
+    
+    elements.append(Spacer(1, 0.5*inch))
+    elements.append(Paragraph(f"Fecha de expedición: {fecha_actual}", content_style))
+    elements.append(Spacer(1, inch))
+    
+    # Firmas
+    firma_data = [
+        ['_' * 30, '', '_' * 30],
+        ['Gerente General', '', 'Contador']
+    ]
+    
+    firma_table = Table(firma_data, colWidths=[2*inch, 1*inch, 2*inch])
+    firma_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+    ]))
+    elements.append(firma_table)
+    
+    doc.build(elements)
+    buffer.seek(0)
+    return buffer
+
+
+def generar_certificado_aportes(
+    db: Session,
+    numero_documento: str,
+    ano: Optional[int] = None
+) -> BytesIO:
+    """
+    Generar certificado de aportes de un asociado.
+    
+    Certifica el total de aportes realizados por el asociado.
+    """
+    # Buscar asociado
+    asociado = db.query(Asociado).filter(
+        Asociado.numero_documento == numero_documento
+    ).first()
+    
+    if not asociado:
+        raise ValueError(f"Asociado con documento {numero_documento} no encontrado")
+    
+    # Obtener aportes
+    query = db.query(Aporte).filter(Aporte.asociado_id == asociado.id)
+    
+    if ano:
+        fecha_inicio = date(ano, 1, 1)
+        fecha_fin = date(ano, 12, 31)
+        query = query.filter(
+            Aporte.fecha_aporte >= fecha_inicio,
+            Aporte.fecha_aporte <= fecha_fin
+        )
+    
+    aportes = query.all()
+    total_aportes = sum(a.valor for a in aportes)
+    
+    buffer = BytesIO()
+    doc = SimpleDocTemplate(buffer, pagesize=letter, topMargin=0.5*inch)
+    elements = []
+    styles = getSampleStyleSheet()
+    
+    # Estilo del título
+    title_style = ParagraphStyle(
+        'CustomTitle',
+        parent=styles['Heading1'],
+        fontSize=18,
+        textColor=colors.HexColor('#1e3a8a'),
+        spaceAfter=30,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold'
+    )
+    
+    # Encabezado
+    elements.append(Spacer(1, 0.5*inch))
+    elements.append(Paragraph("COOPERATIVA COOPEENORTOL", title_style))
+    elements.append(Paragraph("NIT: 900.XXX.XXX-X", styles['Normal']))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Título del certificado
+    cert_title = ParagraphStyle(
+        'CertTitle',
+        parent=styles['Heading1'],
+        fontSize=16,
+        textColor=colors.HexColor('#059669'),
+        spaceAfter=20,
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold'
+    )
+    
+    periodo_texto = f"AÑO {ano}" if ano else "HISTÓRICO"
+    elements.append(Paragraph(f"CERTIFICADO DE APORTES - {periodo_texto}", cert_title))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Contenido
+    content_style = ParagraphStyle(
+        'Content',
+        parent=styles['Normal'],
+        fontSize=11,
+        leading=18,
+        alignment=TA_LEFT
+    )
+    
+    fecha_actual = datetime.now().strftime("%d de %B de %Y")
+    
+    texto = f"""
+    <para align=justify>
+    La Cooperativa COOPEENORTOL certifica que el(la) asociado(a) 
+    <b>{asociado.nombres} {asociado.apellidos}</b>, identificado(a) con 
+    cédula de ciudadanía No. <b>{asociado.numero_documento}</b>, ha realizado 
+    aportes a la cooperativa {f'durante el año {ano}' if ano else 'desde su ingreso'} 
+    por un valor total de:
+    </para>
+    """
+    
+    elements.append(Paragraph(texto, content_style))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Total en recuadro destacado
+    total_style = ParagraphStyle(
+        'Total',
+        parent=styles['Normal'],
+        fontSize=24,
+        textColor=colors.HexColor('#059669'),
+        alignment=TA_CENTER,
+        fontName='Helvetica-Bold'
+    )
+    
+    elements.append(Paragraph(f"${total_aportes:,.2f}", total_style))
+    elements.append(Spacer(1, 0.3*inch))
+    
+    # Detalle si hay aportes
+    if aportes:
+        elements.append(Paragraph("<b>Detalle de Aportes:</b>", content_style))
+        elements.append(Spacer(1, 0.1*inch))
+        
+        aportes_data = [['Fecha', 'Valor', 'Tipo', 'Referencia']]
+        for aporte in aportes[-10:]:  # Últimos 10 aportes
+            aportes_data.append([
+                aporte.fecha_aporte.strftime("%Y-%m-%d"),
+                f"${aporte.valor:,.2f}",
+                aporte.tipo_aporte,
+                aporte.referencia or "N/A"
+            ])
+        
+        if len(aportes) > 10:
+            aportes_data.append(['...', '...', '...', '...'])
+        
+        aportes_table = Table(aportes_data, colWidths=[1.5*inch, 1.5*inch, 1.5*inch, 2*inch])
+        aportes_table.setStyle(TableStyle([
+            ('BACKGROUND', (0, 0), (-1, 0), colors.HexColor('#059669')),
+            ('TEXTCOLOR', (0, 0), (-1, 0), colors.whitesmoke),
+            ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+            ('ALIGN', (1, 1), (1, -1), 'RIGHT'),
+            ('FONTNAME', (0, 0), (-1, 0), 'Helvetica-Bold'),
+            ('FONTSIZE', (0, 0), (-1, -1), 9),
+            ('GRID', (0, 0), (-1, -1), 0.5, colors.grey),
+        ]))
+        elements.append(aportes_table)
+        elements.append(Spacer(1, 0.2*inch))
+        
+        if len(aportes) > 10:
+            elements.append(Paragraph(
+                f"(Mostrando los últimos 10 de {len(aportes)} aportes registrados)",
+                content_style
+            ))
+    
+    elements.append(Spacer(1, 0.3*inch))
+    elements.append(Paragraph(
+        "El presente certificado se expide a solicitud del interesado para los fines que estime convenientes.",
+        content_style
+    ))
+    
+    elements.append(Spacer(1, 0.3*inch))
+    elements.append(Paragraph(f"Fecha de expedición: {fecha_actual}", content_style))
+    elements.append(Spacer(1, inch))
+    
+    # Firmas
+    firma_data = [
+        ['_' * 30, '', '_' * 30],
+        ['Gerente General', '', 'Contador']
+    ]
+    
+    firma_table = Table(firma_data, colWidths=[2*inch, 1*inch, 2*inch])
+    firma_table.setStyle(TableStyle([
+        ('ALIGN', (0, 0), (-1, -1), 'CENTER'),
+        ('FONTSIZE', (0, 0), (-1, -1), 10),
+    ]))
+    elements.append(firma_table)
+    
+    doc.build(elements)
+    buffer.seek(0)
+    return buffer

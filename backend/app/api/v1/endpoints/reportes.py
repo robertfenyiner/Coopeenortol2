@@ -296,3 +296,69 @@ def exportar_estado_cuenta_excel(
             status_code=status.HTTP_404_NOT_FOUND,
             detail=str(e)
         )
+
+
+# ==================== CERTIFICADOS ====================
+
+@router.get("/certificados/paz-salvo/{numero_documento}")
+def generar_certificado_paz_salvo(
+    numero_documento: str,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:leer")),
+):
+    """
+    Generar Certificado de Paz y Salvo.
+    
+    Buscar por número de documento (cédula).
+    
+    Certifica si el asociado está a paz y salvo con la cooperativa
+    o muestra las obligaciones pendientes.
+    """
+    try:
+        pdf_content = service.generar_certificado_paz_salvo(db, numero_documento)
+        
+        return StreamingResponse(
+            pdf_content,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=paz_salvo_{numero_documento}_{date.today()}.pdf"
+            }
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
+
+
+@router.get("/certificados/aportes/{numero_documento}")
+def generar_certificado_aportes(
+    numero_documento: str,
+    ano: Optional[int] = Query(None, description="Año específico (default: histórico)"),
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(require_permission("reportes:leer")),
+):
+    """
+    Generar Certificado de Aportes.
+    
+    Buscar por número de documento (cédula).
+    
+    Certifica el total de aportes realizados por el asociado.
+    Si se especifica año, muestra solo aportes de ese año.
+    """
+    try:
+        pdf_content = service.generar_certificado_aportes(db, numero_documento, ano)
+        
+        periodo = f"_{ano}" if ano else "_historico"
+        return StreamingResponse(
+            pdf_content,
+            media_type="application/pdf",
+            headers={
+                "Content-Disposition": f"attachment; filename=certificado_aportes_{numero_documento}{periodo}_{date.today()}.pdf"
+            }
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail=str(e)
+        )
