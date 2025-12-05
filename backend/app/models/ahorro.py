@@ -97,6 +97,7 @@ class CuentaAhorro(Base):
     # Auditoría
     fecha_apertura = Column(DateTime, nullable=False, default=datetime.utcnow)
     fecha_cancelacion = Column(DateTime, nullable=True)
+    fecha_ultimo_interes = Column(DateTime, nullable=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow)
     updated_at = Column(
         DateTime,

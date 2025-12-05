@@ -280,3 +280,99 @@ def actualizar_configuracion_ahorros(
     
     config = AhorroService.actualizar_configuracion(db, datos)
     return ConfiguracionAhorroResponse.from_orm(config)
+
+
+# ==================== ENDPOINTS DE INTERESES ====================
+
+@router.post("/{cuenta_id}/calcular-intereses", response_model=MovimientoAhorroResponse)
+def calcular_intereses_cuenta(
+    cuenta_id: int,
+    fecha_calculo: Optional[date] = None,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_active_user)
+):
+    """
+    Calcular y aplicar intereses a una cuenta específica.
+    
+    Si no se proporciona fecha, se usa la fecha actual.
+    """
+    fecha = fecha_calculo or date.today()
+    
+    movimiento = AhorroService.calcular_intereses_cuenta(
+        db, cuenta_id, fecha, current_user.id
+    )
+    
+    if not movimiento:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No se pudieron calcular intereses para esta cuenta"
+        )
+    
+    return movimiento
+
+
+@router.post("/calcular-intereses-masivo", response_model=dict)
+def calcular_intereses_masivo(
+    fecha_calculo: Optional[date] = None,
+    tipo_ahorro: Optional[str] = None,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_active_user)
+):
+    """
+    Calcular intereses para todas las cuentas activas.
+    
+    - **fecha_calculo**: Fecha hasta la cual calcular (por defecto hoy)
+    - **tipo_ahorro**: Filtrar por tipo de ahorro (opcional)
+    
+    Solo usuarios con permisos de administrador.
+    """
+    if current_user.rol not in ["ADMIN", "SUPERUSUARIO"]:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="No tiene permisos para ejecutar esta operación"
+        )
+    
+    fecha = fecha_calculo or date.today()
+    resultado = AhorroService.calcular_intereses_masivo(
+        db, fecha, current_user.id, tipo_ahorro
+    )
+    
+    return resultado
+
+
+@router.post("/{cuenta_id}/aplicar-cuota-manejo", response_model=MovimientoAhorroResponse)
+def aplicar_cuota_manejo(
+    cuenta_id: int,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_active_user)
+):
+    """
+    Aplicar cuota de manejo mensual a una cuenta.
+    """
+    movimiento = AhorroService.aplicar_cuota_manejo(db, cuenta_id, current_user.id)
+    
+    if not movimiento:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="No se pudo aplicar la cuota de manejo"
+        )
+    
+    return movimiento
+
+
+@router.post("/{cuenta_id}/renovar-cdat", response_model=CuentaAhorroResponse)
+def renovar_cdat(
+    cuenta_id: int,
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_active_user)
+):
+    """
+    Renovar un CDAT vencido.
+    
+    Calcula intereses pendientes y renueva por el mismo plazo.
+    """
+    try:
+        cuenta = AhorroService.renovar_cdat(db, cuenta_id, current_user.id)
+        return cuenta
+    except ValueError as e:
+        raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(e))

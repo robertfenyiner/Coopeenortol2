@@ -2822,3 +2822,123 @@ INFO:     Finished server process [85655]
 INFO:     Started server process [85854]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  Unsupported upgrade request.
+WARNING:  No supported WebSocket library detected. Please use "pip install 'uvicorn[standard]'", or install 'websockets' or 'wsproto' manually.
+WARNING:  Invalid HTTP request received.
+INFO:     127.0.0.1:42164 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:49038 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+WARNING:  Unsupported upgrade request.
+WARNING:  No supported WebSocket library detected. Please use "pip install 'uvicorn[standard]'", or install 'websockets' or 'wsproto' manually.
+WARNING:  Invalid HTTP request received.
+INFO:     127.0.0.1:44928 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:58666 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+WARNING:  WatchFiles detected changes in 'app/services/ahorros.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [85854]
+INFO:     Started server process [87038]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/ahorros.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87038]
+INFO:     Started server process [87073]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/models/ahorro.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87073]
+INFO:     Started server process [87096]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'alembic/versions/bea13a3fdb87_add_fecha_ultimo_interes_to_cuentas_.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87096]
+INFO:     Started server process [87143]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'scripts/test_ahorros_completo.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87143]
+WARNING:  WatchFiles detected changes in 'scripts/test_ahorros_completo.py'. Reloading...
+INFO:     Started server process [87322]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Started server process [87331]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     127.0.0.1:57678 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+WARNING:  WatchFiles detected changes in 'scripts/test_ahorros_completo.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87331]
+INFO:     Started server process [87652]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/models/__init__.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [87652]
+INFO:     Started server process [87768]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:20955 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20953 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20954 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20959 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20953 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:20955 - "GET /api/v1/dashboard/kpis HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:20955 - "GET /api/v1/dashboard/kpis HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:20953 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 401 Unauthorized
+INFO:     190.108.77.114:20968 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "OPTIONS /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/auth/me HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "OPTIONS /api/v1/ahorros/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "OPTIONS /api/v1/ahorros/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20971 - "GET /api/v1/ahorros/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20968 - "GET /api/v1/ahorros/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20972 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20973 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20973 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20972 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK

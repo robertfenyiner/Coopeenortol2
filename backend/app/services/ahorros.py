@@ -566,3 +566,222 @@ class AhorroService:
         db.refresh(config)
         
         return config
+
+    @staticmethod
+    def calcular_intereses_cuenta(
+        db: Session,
+        cuenta_id: int,
+        fecha_calculo: date,
+        usuario_id: int
+    ) -> Optional[MovimientoAhorro]:
+        """
+        Calcular y aplicar intereses a una cuenta de ahorro.
+        
+        Fórmula: Interés = Saldo * (Tasa Anual / 360) * Días
+        """
+        cuenta = db.query(CuentaAhorro).filter(CuentaAhorro.id == cuenta_id).first()
+        if not cuenta or cuenta.estado != EstadoCuentaAhorro.ACTIVA.value:
+            return None
+        
+        # No calcular intereses para cuentas sin tasa
+        if cuenta.tasa_interes_anual <= Decimal("0"):
+            return None
+        
+        # Buscar último movimiento de interés
+        ultimo_interes = (
+            db.query(MovimientoAhorro)
+            .filter(
+                and_(
+                    MovimientoAhorro.cuenta_id == cuenta_id,
+                    MovimientoAhorro.tipo_movimiento == TipoMovimientoAhorro.INTERES.value
+                )
+            )
+            .order_by(MovimientoAhorro.fecha_movimiento.desc())
+            .first()
+        )
+        
+        # Determinar fecha desde la cual calcular
+        if ultimo_interes:
+            fecha_desde = ultimo_interes.fecha_movimiento.date()
+        else:
+            fecha_desde = cuenta.fecha_apertura.date() if isinstance(cuenta.fecha_apertura, datetime) else cuenta.fecha_apertura
+        
+        # Calcular días transcurridos
+        dias = (fecha_calculo - fecha_desde).days
+        
+        if dias <= 0:
+            return None
+        
+        # Calcular interés
+        # Interés = Saldo * (Tasa Anual / 360) * Días
+        tasa_diaria = cuenta.tasa_interes_anual / Decimal("360") / Decimal("100")
+        interes = (cuenta.saldo_disponible * tasa_diaria * Decimal(dias)).quantize(Decimal("0.01"))
+        
+        if interes <= Decimal("0"):
+            return None
+        
+        # Crear movimiento de interés
+        movimiento = AhorroService._crear_movimiento(
+            db=db,
+            cuenta=cuenta,
+            tipo_movimiento=TipoMovimientoAhorro.INTERES,
+            valor=interes,
+            descripcion=f"Intereses {dias} días al {cuenta.tasa_interes_anual}% E.A.",
+            referencia=None,
+            usuario_id=usuario_id
+        )
+        
+        # Actualizar saldo
+        cuenta.saldo_disponible += interes
+        cuenta.fecha_ultimo_interes = datetime.now()
+        
+        db.commit()
+        db.refresh(movimiento)
+        
+        return movimiento
+
+    @staticmethod
+    def calcular_intereses_masivo(
+        db: Session,
+        fecha_calculo: date,
+        usuario_id: int,
+        tipo_ahorro: Optional[str] = None
+    ) -> dict:
+        """
+        Calcular intereses para todas las cuentas activas.
+        
+        Args:
+            fecha_calculo: Fecha para el cálculo de intereses
+            usuario_id: Usuario que ejecuta el cálculo
+            tipo_ahorro: Filtrar por tipo de ahorro (opcional)
+        
+        Returns:
+            dict: Resumen del proceso
+        """
+        query = db.query(CuentaAhorro).filter(
+            CuentaAhorro.estado == EstadoCuentaAhorro.ACTIVA.value,
+            CuentaAhorro.tasa_interes_anual > Decimal("0")
+        )
+        
+        if tipo_ahorro:
+            query = query.filter(CuentaAhorro.tipo_ahorro == tipo_ahorro)
+        
+        cuentas = query.all()
+        
+        resultado = {
+            "total_cuentas": len(cuentas),
+            "cuentas_procesadas": 0,
+            "total_intereses": Decimal("0"),
+            "errores": []
+        }
+        
+        for cuenta in cuentas:
+            try:
+                movimiento = AhorroService.calcular_intereses_cuenta(
+                    db, cuenta.id, fecha_calculo, usuario_id
+                )
+                if movimiento:
+                    resultado["cuentas_procesadas"] += 1
+                    resultado["total_intereses"] += movimiento.valor
+            except Exception as e:
+                resultado["errores"].append({
+                    "cuenta_id": cuenta.id,
+                    "numero_cuenta": cuenta.numero_cuenta,
+                    "error": str(e)
+                })
+        
+        return resultado
+
+    @staticmethod
+    def aplicar_cuota_manejo(
+        db: Session,
+        cuenta_id: int,
+        usuario_id: int
+    ) -> Optional[MovimientoAhorro]:
+        """
+        Aplicar cuota de manejo mensual a una cuenta.
+        """
+        cuenta = db.query(CuentaAhorro).filter(CuentaAhorro.id == cuenta_id).first()
+        if not cuenta or cuenta.estado != EstadoCuentaAhorro.ACTIVA.value:
+            return None
+        
+        if cuenta.cuota_manejo <= Decimal("0"):
+            return None
+        
+        # Verificar que haya saldo suficiente
+        if cuenta.saldo_disponible < cuenta.cuota_manejo:
+            # Podría marcar la cuenta como bloqueada o enviar notificación
+            return None
+        
+        # Crear movimiento
+        movimiento = AhorroService._crear_movimiento(
+            db=db,
+            cuenta=cuenta,
+            tipo_movimiento=TipoMovimientoAhorro.CUOTA_MANEJO,
+            valor=cuenta.cuota_manejo,
+            descripcion="Cuota de manejo mensual",
+            referencia=None,
+            usuario_id=usuario_id
+        )
+        
+        # Descontar del saldo
+        cuenta.saldo_disponible -= cuenta.cuota_manejo
+        
+        db.commit()
+        db.refresh(movimiento)
+        
+        return movimiento
+
+    @staticmethod
+    def renovar_cdat(
+        db: Session,
+        cuenta_id: int,
+        usuario_id: int
+    ) -> CuentaAhorro:
+        """
+        Renovar un CDAT vencido.
+        
+        Si tiene renovación automática, se renueva por el mismo plazo.
+        """
+        cuenta = db.query(CuentaAhorro).filter(CuentaAhorro.id == cuenta_id).first()
+        if not cuenta:
+            raise ValueError("Cuenta no encontrada")
+        
+        if cuenta.tipo_ahorro != TipoAhorro.CDAT.value:
+            raise ValueError("Solo se pueden renovar CDTs")
+        
+        if cuenta.estado != EstadoCuentaAhorro.ACTIVA.value:
+            raise ValueError("La cuenta no está activa")
+        
+        if not cuenta.fecha_vencimiento_cdat or date.today() < cuenta.fecha_vencimiento_cdat:
+            raise ValueError("El CDAT no ha vencido aún")
+        
+        # Calcular intereses hasta la fecha de vencimiento si no se han calculado
+        ultimo_interes = (
+            db.query(MovimientoAhorro)
+            .filter(
+                and_(
+                    MovimientoAhorro.cuenta_id == cuenta_id,
+                    MovimientoAhorro.tipo_movimiento == TipoMovimientoAhorro.INTERES.value
+                )
+            )
+            .order_by(MovimientoAhorro.fecha_movimiento.desc())
+            .first()
+        )
+        
+        if not ultimo_interes or ultimo_interes.fecha_movimiento.date() < cuenta.fecha_vencimiento_cdat:
+            AhorroService.calcular_intereses_cuenta(
+                db, cuenta_id, cuenta.fecha_vencimiento_cdat, usuario_id
+            )
+        
+        # Renovar
+        nueva_apertura = date.today()
+        nuevo_vencimiento = nueva_apertura + timedelta(days=cuenta.plazo_dias)
+        
+        cuenta.fecha_apertura_cdat = nueva_apertura
+        cuenta.fecha_vencimiento_cdat = nuevo_vencimiento
+        
+        db.commit()
+        db.refresh(cuenta)
+        
+        return cuenta
