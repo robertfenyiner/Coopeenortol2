@@ -63,3 +63,4 @@ class Asociado(Base):
     # Relaciones
     documentos = relationship("Documento", back_populates="asociado")
     creditos = relationship("Credito", back_populates="asociado")
+    cuentas_ahorro = relationship("CuentaAhorro", back_populates="asociado")

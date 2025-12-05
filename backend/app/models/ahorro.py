@@ -179,8 +179,3 @@ class ConfiguracionAhorro(Base):
         default=datetime.utcnow,
         onupdate=datetime.utcnow,
     )
-
-
-# Actualizar relación en Asociado
-from app.models.asociado import Asociado
-Asociado.cuentas_ahorro = relationship("CuentaAhorro", back_populates="asociado")
