@@ -177,12 +177,12 @@ def crear_asociado(db: Session, asociado_in: AsociadoCrear) -> Asociado:
         hoja_vida_url=str(asociado_in.hoja_vida_url) if asociado_in.hoja_vida_url else None,
         foto_url=str(asociado_in.foto_url) if asociado_in.foto_url else None,
         observaciones=asociado_in.observaciones,
-        datos_personales=asociado_in.datos_personales.dict(),
-        datos_laborales=asociado_in.datos_laborales.dict(),
-        informacion_familiar=asociado_in.informacion_familiar.dict(),
-        informacion_financiera=asociado_in.informacion_financiera.dict(),
-        informacion_academica=asociado_in.informacion_academica.dict(),
-        informacion_vivienda=asociado_in.informacion_vivienda.dict(),
+        datos_personales=asociado_in.datos_personales.dict() if asociado_in.datos_personales else {},
+        datos_laborales=asociado_in.datos_laborales.dict() if asociado_in.datos_laborales else {},
+        informacion_familiar=asociado_in.informacion_familiar.dict() if asociado_in.informacion_familiar else {},
+        informacion_financiera=asociado_in.informacion_financiera.dict() if asociado_in.informacion_financiera else {},
+        informacion_academica=asociado_in.informacion_academica.dict() if asociado_in.informacion_academica else {},
+        informacion_vivienda=asociado_in.informacion_vivienda.dict() if asociado_in.informacion_vivienda else {},
     )
     
     db.add(db_asociado)
