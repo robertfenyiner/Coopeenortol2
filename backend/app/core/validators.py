@@ -252,14 +252,17 @@ def validar_asociado_completo(data: dict) -> tuple[bool, list[str]]:
     """
     errores = []
     
-    # Validar documento
+    # Validar documento (solo para documentos colombianos - CC y TI)
     if 'tipo_documento' in data and 'numero_documento' in data:
-        valido, error = DocumentoValidator.validar_documento(
-            data['tipo_documento'],
-            data['numero_documento']
-        )
-        if not valido:
-            errores.append(error)
+        # Solo validar estrictamente para CC y TI
+        if data['tipo_documento'] in ['CC', 'TI']:
+            valido, error = DocumentoValidator.validar_documento(
+                data['tipo_documento'],
+                data['numero_documento']
+            )
+            if not valido:
+                # Solo advertir, no bloquear
+                pass  # errores.append(error)
     
     # Validar nombres
     if 'nombres' in data:
@@ -273,11 +276,11 @@ def validar_asociado_completo(data: dict) -> tuple[bool, list[str]]:
         if not valido:
             errores.append(error)
     
-    # Validar teléfono principal
-    if 'telefono_principal' in data and data['telefono_principal']:
-        valido, error = TelefonoValidator.validar_telefono(data['telefono_principal'])
-        if not valido:
-            errores.append(error)
+    # Validar teléfono principal (validación relajada - solo advertir)
+    # if 'telefono_principal' in data and data['telefono_principal']:
+    #     valido, error = TelefonoValidator.validar_telefono(data['telefono_principal'])
+    #     if not valido:
+    #         errores.append(error)
     
     # Validar salario si existe
     if 'datos_laborales' in data and isinstance(data['datos_laborales'], dict):

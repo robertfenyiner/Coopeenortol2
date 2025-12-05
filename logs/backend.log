@@ -2373,3 +2373,159 @@ INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13542 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13542 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13554 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13514 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13514 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13520 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13520 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13551 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13554 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13553 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13553 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13553 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13511 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '31221231231', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13522 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'PA', 'numero_documento': '123345', 'nombres': 'nino', 'apellidos': 'nino', 'correo_electronico': 'nino@hotmail.com', 'telefono_principal': '312212312', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13522 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13525 - "POST /api/v1/asociados/ HTTP/1.1" 201 Created
+INFO:     190.108.77.114:13525 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13525 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/core/validators.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [82833]
+INFO:     Started server process [83274]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:13545 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13549 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13549 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60008 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13545 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13545 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/creditos/nuevo HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/creditos/nuevo
+Errores: [{'loc': ('path', 'credito_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13545 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/creditos/nuevo
+Errores: [{'loc': ('path', 'credito_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13547 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13545 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13550 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13551 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13545 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13550 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/core/validators.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83274]
+INFO:     Started server process [83490]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:13566 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13565 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13566 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13565 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13565 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13566 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13566 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13566 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13565 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13506 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13566 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/creditos/nuevo
+Errores: [{'loc': ('path', 'credito_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13566 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/creditos/nuevo
+Errores: [{'loc': ('path', 'credito_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13506 - "GET /api/v1/creditos/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13566 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13506 - "GET /api/v1/creditos/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13506 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13566 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13565 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13527 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13529 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13527 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13529 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/asociados.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [83490]
+INFO:     Started server process [83679]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
