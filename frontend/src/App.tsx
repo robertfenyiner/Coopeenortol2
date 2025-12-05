@@ -10,6 +10,7 @@ import AsociadoDetailPage from './pages/AsociadoDetailPage';
 import AsociadoEditPage from './pages/AsociadoEditPage';
 import CreditosPage from './pages/CreditosPage';
 import CreditoDetailPage from './pages/CreditoDetailPage';
+import CreditoNuevoPage from './pages/CreditoNuevoPage';
 import AhorrosPage from './pages/AhorrosPage';
 import CuentaAhorroDetailPage from './pages/CuentaAhorroDetailPage';
 import ReportesPage from './pages/ReportesPage';
@@ -126,6 +127,17 @@ function AppRoutes() {
           <ProtectedRoute>
             <MainLayout>
               <CreditosPage />
+            </MainLayout>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/creditos/nuevo"
+        element={
+          <ProtectedRoute>
+            <MainLayout>
+              <CreditoNuevoPage />
             </MainLayout>
           </ProtectedRoute>
         }
