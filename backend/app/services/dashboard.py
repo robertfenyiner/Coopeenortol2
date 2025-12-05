@@ -57,13 +57,17 @@ class DashboardService:
             )
         ).scalar() or Decimal("0")
         
-        # Total cartera de créditos (saldo pendiente)
-        total_cartera = db.query(func.sum(Credito.saldo_pendiente)).filter(
+        # Total cartera de créditos (suma de saldos)
+        total_cartera = db.query(
+            func.sum(Credito.saldo_capital + Credito.saldo_interes + Credito.saldo_mora)
+        ).filter(
             Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.EN_MORA.value])
         ).scalar() or Decimal("0")
         
         # Total cartera mes anterior
-        total_cartera_mes_anterior = db.query(func.sum(Credito.saldo_pendiente)).filter(
+        total_cartera_mes_anterior = db.query(
+            func.sum(Credito.saldo_capital + Credito.saldo_interes + Credito.saldo_mora)
+        ).filter(
             and_(
                 Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.EN_MORA.value]),
                 Credito.fecha_desembolso < primer_dia_mes
@@ -145,7 +149,7 @@ class DashboardService:
                 {
                     "id": c.id,
                     "numero_credito": c.numero_credito,
-                    "asociado_nombre": f"{c.asociado.primer_nombre} {c.asociado.primer_apellido}",
+                    "asociado_nombre": f"{c.asociado.nombres} {c.asociado.apellidos}",
                     "monto": float(c.monto_aprobado),
                     "estado": c.estado,
                     "fecha": c.fecha_desembolso.isoformat() if c.fecha_desembolso else None
@@ -157,7 +161,7 @@ class DashboardService:
                     "id": m.id,
                     "numero_movimiento": m.numero_movimiento,
                     "cuenta_numero": m.cuenta.numero_cuenta,
-                    "asociado_nombre": f"{m.cuenta.asociado.primer_nombre} {m.cuenta.asociado.primer_apellido}",
+                    "asociado_nombre": f"{m.cuenta.asociado.nombres} {m.cuenta.asociado.apellidos}",
                     "valor": float(m.valor),
                     "fecha": m.fecha_movimiento.isoformat()
                 }
@@ -168,7 +172,7 @@ class DashboardService:
                     "id": m.id,
                     "numero_movimiento": m.numero_movimiento,
                     "cuenta_numero": m.cuenta.numero_cuenta,
-                    "asociado_nombre": f"{m.cuenta.asociado.primer_nombre} {m.cuenta.asociado.primer_apellido}",
+                    "asociado_nombre": f"{m.cuenta.asociado.nombres} {m.cuenta.asociado.apellidos}",
                     "valor": float(m.valor),
                     "fecha": m.fecha_movimiento.isoformat()
                 }
@@ -178,7 +182,7 @@ class DashboardService:
                 {
                     "id": a.id,
                     "numero_documento": a.numero_documento,
-                    "nombre_completo": f"{a.primer_nombre} {a.primer_apellido}",
+                    "nombre_completo": f"{a.nombres} {a.apellidos}",
                     "estado": a.estado,
                     "fecha_ingreso": a.fecha_ingreso.isoformat()
                 }
