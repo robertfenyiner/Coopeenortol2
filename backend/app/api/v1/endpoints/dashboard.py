@@ -18,7 +18,7 @@ router = APIRouter()
 @router.get("/kpis")
 def obtener_kpis(
     db: Session = Depends(get_db),
-    current_user: Usuario = Depends(require_permission("dashboard:leer")),
+    current_user: Usuario = Depends(get_current_active_user),
 ) -> Dict:
     """
     Obtener KPIs principales del sistema.
@@ -37,7 +37,7 @@ def obtener_kpis(
 @router.get("/actividad-reciente")
 def obtener_actividad_reciente(
     db: Session = Depends(get_db),
-    current_user: Usuario = Depends(require_permission("dashboard:leer")),
+    current_user: Usuario = Depends(get_current_active_user),
 ) -> Dict:
     """
     Obtener actividad reciente del sistema.
@@ -54,7 +54,7 @@ def obtener_actividad_reciente(
 @router.get("/estadisticas-mensuales")
 def obtener_estadisticas_mensuales(
     db: Session = Depends(get_db),
-    current_user: Usuario = Depends(require_permission("dashboard:leer")),
+    current_user: Usuario = Depends(get_current_active_user),
 ) -> Dict:
     """
     Obtener estadísticas mensuales para gráficos.

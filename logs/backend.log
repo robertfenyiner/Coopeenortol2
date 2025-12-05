@@ -1,154 +1,82 @@
 nohup: ignoring input
 INFO:     Will watch for changes in these directories: ['/root/projects/Coopeenortol/backend']
 INFO:     Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-INFO:     Started reloader process [75209] using WatchFiles
-INFO:     Started server process [75217]
+INFO:     Started reloader process [77052] using WatchFiles
+INFO:     Started server process [77054]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     190.108.77.114:13546 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
-INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
-INFO:     190.108.77.114:13546 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
-INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
-INFO:     190.108.77.114:13547 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
-INFO:     190.108.77.114:13546 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:43546 - "GET /api/v1/ HTTP/1.1" 404 Not Found
-Error de validación en POST /api/v1/asociados/
-Errores: [{'loc': ('body', 'datos_personales'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'datos_laborales'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_familiar'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_financiera'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_academica'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_vivienda'), 'msg': 'field required', 'type': 'value_error.missing'}]
-Body recibido: b'{"tipo_documento":"TI","numero_documento":"231631321","nombres":"fanyi","apellidos":"paola","correo_electronico":"robertfenyiner@gmail.com","telefono_principal":"","estado":"activo","fecha_ingreso":"2025-12-05"}'
-INFO:     190.108.77.114:13549 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
-Error de validación en POST /api/v1/asociados/
-Errores: [{'loc': ('body', 'datos_personales'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'datos_laborales'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_familiar'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_financiera'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_academica'), 'msg': 'field required', 'type': 'value_error.missing'}, {'loc': ('body', 'informacion_vivienda'), 'msg': 'field required', 'type': 'value_error.missing'}]
-Body recibido: b'{"tipo_documento":"TI","numero_documento":"231631321","nombres":"fanyi","apellidos":"paola","correo_electronico":"robertfenyiner@gmail.com","telefono_principal":"","estado":"activo","fecha_ingreso":"2025-12-05","observaciones":"vff"}'
-INFO:     190.108.77.114:13549 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
-WARNING:  WatchFiles detected changes in 'app/schemas/asociado.py'. Reloading...
+INFO:     190.108.77.114:23295 - "POST /api/v1/asociados/ HTTP/1.1" 400 Bad Request
+INFO:     190.108.77.114:23295 - "POST /api/v1/asociados/ HTTP/1.1" 201 Created
+INFO:     190.108.77.114:23295 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23233 - "OPTIONS /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "OPTIONS /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "OPTIONS /api/v1/documentos?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23233 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23233 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23295 - "OPTIONS /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23295 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23233 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23241 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23241 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23241 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23246 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23246 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23239 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23242 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23246 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23246 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23246 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23246 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23246 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23246 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23242 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "OPTIONS /api/v1/asociados/6/foto HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "POST /api/v1/asociados/6/foto HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/documentos?asociado_id=6 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:23263 - "GET /uploads/fotos/asociado_6_ce2c3c9bffb1441d905d5dfd15bd97ff.png HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/documentos/?asociado_id=6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "OPTIONS /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "PUT /api/v1/asociados/6 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23244 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:23273 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23244 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23273 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 403 Forbidden
+INFO:     190.108.77.114:23244 - "GET /api/v1/dashboard/kpis HTTP/1.1" 403 Forbidden
+INFO:     127.0.0.1:57610 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/dashboard.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [75217]
-INFO:     Started server process [75623]
+INFO:     Finished server process [77054]
+INFO:     Started server process [77656]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
-INFO:     190.108.77.114:13552 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
-INFO:     190.108.77.114:13552 - "POST /api/v1/asociados/ HTTP/1.1" 500 Internal Server Error
-ERROR:    Exception in ASGI application
-Traceback (most recent call last):
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
-    return await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
-    await super().__call__(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
-    await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
-    await route.handle(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
-    await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
-    response = await func(request)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
-    raw_response = await run_endpoint_function(
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
-    return await run_in_threadpool(dependant.call, **values)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
-    return await anyio.to_thread.run_sync(func, *args)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
-    return await future
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
-    result = context.run(func, *args)
-  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/asociados.py", line 75, in crear_asociado
-    return service.crear_asociado(db, asociado_in)
-  File "/root/projects/Coopeenortol/backend/app/services/asociados.py", line 180, in crear_asociado
-    datos_personales=asociado_in.datos_personales.dict(),
-AttributeError: 'NoneType' object has no attribute 'dict'
-INFO:     190.108.77.114:13519 - "POST /api/v1/asociados/ HTTP/1.1" 500 Internal Server Error
-ERROR:    Exception in ASGI application
-Traceback (most recent call last):
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/protocols/http/httptools_impl.py", line 411, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/uvicorn/middleware/proxy_headers.py", line 69, in __call__
-    return await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/applications.py", line 1054, in __call__
-    await super().__call__(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/applications.py", line 123, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 186, in __call__
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 91, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/cors.py", line 146, in simple_response
-    await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/middleware/exceptions.py", line 62, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 758, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 778, in app
-    await route.handle(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 299, in handle
-    await self.app(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 79, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 64, in wrapped_app
-    raise exc
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/_exception_handler.py", line 53, in wrapped_app
-    await app(scope, receive, sender)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/routing.py", line 74, in app
-    response = await func(request)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 278, in app
-    raw_response = await run_endpoint_function(
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/fastapi/routing.py", line 193, in run_endpoint_function
-    return await run_in_threadpool(dependant.call, **values)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/starlette/concurrency.py", line 42, in run_in_threadpool
-    return await anyio.to_thread.run_sync(func, *args)
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/to_thread.py", line 61, in run_sync
-    return await get_async_backend().run_sync_in_worker_thread(
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 2525, in run_sync_in_worker_thread
-    return await future
-  File "/root/projects/Coopeenortol/backend/venv/lib/python3.10/site-packages/anyio/_backends/_asyncio.py", line 986, in run
-    result = context.run(func, *args)
-  File "/root/projects/Coopeenortol/backend/app/api/v1/endpoints/asociados.py", line 75, in crear_asociado
-    return service.crear_asociado(db, asociado_in)
-  File "/root/projects/Coopeenortol/backend/app/services/asociados.py", line 180, in crear_asociado
-    datos_personales=asociado_in.datos_personales.dict(),
-AttributeError: 'NoneType' object has no attribute 'dict'
-INFO:     190.108.77.114:13555 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
-INFO:     190.108.77.114:13556 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
-INFO:     190.108.77.114:13556 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
-WARNING:  WatchFiles detected changes in 'app/services/asociados.py'. Reloading...
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/dashboard.py'. Reloading...
 INFO:     Shutting down
 INFO:     Waiting for application shutdown.
 INFO:     Application shutdown complete.
-INFO:     Finished server process [75623]
-INFO:     Started server process [75942]
+INFO:     Finished server process [77656]
+INFO:     Started server process [77670]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/dashboard.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [77670]
+INFO:     Started server process [77695]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
