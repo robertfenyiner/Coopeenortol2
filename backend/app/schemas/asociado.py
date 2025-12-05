@@ -107,12 +107,12 @@ class AsociadoBase(BaseModel):
     hoja_vida_url: Optional[HttpUrl] = None
     foto_url: Optional[HttpUrl] = None
     observaciones: Optional[str] = None
-    datos_personales: DatosPersonales
-    datos_laborales: DatosLaborales
-    informacion_familiar: InformacionFamiliar
-    informacion_financiera: InformacionFinanciera
-    informacion_academica: InformacionAcademica
-    informacion_vivienda: InformacionVivienda
+    datos_personales: Optional[DatosPersonales] = None
+    datos_laborales: Optional[DatosLaborales] = None
+    informacion_familiar: Optional[InformacionFamiliar] = None
+    informacion_financiera: Optional[InformacionFinanciera] = None
+    informacion_academica: Optional[InformacionAcademica] = None
+    informacion_vivienda: Optional[InformacionVivienda] = None
 
 
 class AsociadoCrear(AsociadoBase):
