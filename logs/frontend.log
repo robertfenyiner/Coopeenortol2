@@ -1,57 +1,10 @@
 nohup: ignoring input
-Now using node v18.20.8 (npm v10.8.2)
 
 > coopeenortol-frontend@1.0.0 dev
-> vite
+> vite --host 0.0.0.0 --port 5173
 
 
-  VITE v5.4.21  ready in 332 ms
+  VITE v5.4.21  ready in 374 ms
 
-  ➜  Local:   http://localhost:3000/
-  ➜  Network: http://158.220.100.148:3000/
-4:29:16 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-4:29:16 PM [vite] hmr update /src/pages/CreditosPage.tsx, /src/index.css
-4:29:56 PM [vite] hmr update /src/pages/AhorrosPage.tsx, /src/index.css
-4:32:26 PM [vite] page reload src/types/index.ts
-4:32:42 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-4:37:40 PM [vite] page reload src/types/index.ts
-4:37:40 PM [vite] hmr update /src/pages/CreditosPage.tsx, /src/index.css
-4:37:40 PM [vite] hmr update /src/pages/AhorrosPage.tsx, /src/index.css
-4:37:40 PM [vite] hmr update /src/pages/DashboardPage.tsx, /src/index.css
-4:37:40 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-4:40:33 PM [vite] hmr update /src/App.tsx, /src/index.css
-4:40:44 PM [vite] hmr update /src/App.tsx, /src/index.css
-4:49:48 PM [vite] hmr update /src/pages/CreditoDetailPage.tsx, /src/index.css
-4:49:48 PM [vite] hmr update /src/pages/AsociadoDetailPage.tsx, /src/index.css
-4:49:48 PM [vite] hmr update /src/pages/CuentaAhorroDetailPage.tsx, /src/index.css
-4:50:07 PM [vite] hmr update /src/App.tsx, /src/index.css
-4:50:07 PM [vite] hmr update /src/pages/AsociadoDetailPage.tsx, /src/index.css
-4:50:07 PM [vite] hmr update /src/pages/CreditoDetailPage.tsx, /src/index.css
-4:50:07 PM [vite] hmr update /src/pages/CuentaAhorroDetailPage.tsx, /src/index.css
-4:55:08 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-4:55:20 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-4:56:13 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-4:58:59 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
-4:59:10 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-4:59:21 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:04:11 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
-5:04:22 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:04:34 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:07:21 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:07:21 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
-(node:36828) Warning: An error event has already been emitted on the socket. Please use the destroy method on the socket while handling a 'clientError' event.
-(Use `node --trace-warnings ...` to show where the warning was created)
-5:23:20 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
-5:23:36 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:23:47 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:24:28 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:26:57 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-5:33:03 PM [vite] hmr update /src/App.tsx, /src/index.css
-5:34:31 PM [vite] hmr update /src/App.tsx, /src/index.css
-5:34:42 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-5:34:43 PM [vite] hmr update /src/pages/AsociadosPage.tsx, /src/index.css
-5:37:13 PM [vite] hmr update /src/App.tsx, /src/index.css
-5:37:13 PM [vite] hmr update /src/components/layout/MainLayout.tsx, /src/index.css
-5:37:13 PM [vite] hmr update /src/pages/LoginPage.tsx, /src/index.css
-5:37:13 PM [vite] hmr update /src/pages/AsociadoEditPage.tsx, /src/index.css
-Killed
+  ➜  Local:   http://localhost:5173/
+  ➜  Network: http://158.220.100.148:5173/
