@@ -7,6 +7,7 @@ from .asociados import (
     obtener_asociado,
     obtener_por_documento,
 )
+from .dashboard import DashboardService
 
 __all__ = [
     "DocumentoDuplicadoError",
@@ -16,4 +17,5 @@ __all__ = [
     "listar_asociados",
     "obtener_asociado",
     "obtener_por_documento",
+    "DashboardService",
 ]

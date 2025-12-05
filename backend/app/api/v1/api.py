@@ -1,9 +1,10 @@
 from fastapi import APIRouter
 
-from .endpoints import ahorros, asociados, auth, auditoria, contabilidad, creditos, documentos, reportes
+from .endpoints import ahorros, asociados, auth, auditoria, contabilidad, creditos, dashboard, documentos, reportes
 
 api_router = APIRouter()
 api_router.include_router(auth.router, prefix="/auth", tags=["Autenticación"])
+api_router.include_router(dashboard.router, prefix="/dashboard", tags=["Dashboard"])
 api_router.include_router(asociados.router, prefix="/asociados", tags=["Asociados"])
 api_router.include_router(auditoria.router, prefix="/auditoria", tags=["Auditoría"])
 api_router.include_router(documentos.router, prefix="/documentos", tags=["Documentos"])
