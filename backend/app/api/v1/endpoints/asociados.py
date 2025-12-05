@@ -47,7 +47,7 @@ def listar_asociados(
     )
 
 
-@router.post("/", response_model=AsociadoEnDB, status_code=status.HTTP_201_CREATED)
+@router.post("/", response_model=AsociadoDetalle, status_code=status.HTTP_201_CREATED)
 def crear_asociado(
     asociado_in: AsociadoCrear,
     db: Session = Depends(get_db),
