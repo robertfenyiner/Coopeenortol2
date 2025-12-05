@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, DollarSign, Calendar, Percent, FileText } from 'lucide-react';
+import { ArrowLeft, Percent } from 'lucide-react';
 import Card from '../components/ui/Card';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -163,7 +163,7 @@ export default function CreditoNuevoPage() {
 
       <form onSubmit={handleSubmit} className="space-y-6">
         {/* Información del Asociado */}
-        <Card title="Información del Asociado" icon={FileText}>
+        <Card title="Información del Asociado">
           <div className="grid grid-cols-1 gap-6">
             <Select
               label="Asociado *"
@@ -183,7 +183,7 @@ export default function CreditoNuevoPage() {
         </Card>
 
         {/* Información del Crédito */}
-        <Card title="Información del Crédito" icon={DollarSign}>
+        <Card title="Información del Crédito">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <Select
               label="Tipo de Crédito *"
@@ -202,6 +202,7 @@ export default function CreditoNuevoPage() {
               required
               min="1"
               step="1000"
+              max="9999999999"
             />
 
             <Input
@@ -288,7 +289,7 @@ export default function CreditoNuevoPage() {
         </Card>
 
         {/* Detalles Adicionales */}
-        <Card title="Detalles Adicionales" icon={FileText}>
+        <Card title="Detalles Adicionales">
           <div className="grid grid-cols-1 gap-6">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
