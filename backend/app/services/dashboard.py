@@ -139,9 +139,9 @@ class DashboardService:
             MovimientoAhorro.tipo_movimiento == TipoMovimientoAhorro.RETIRO.value
         ).order_by(MovimientoAhorro.fecha_movimiento.desc()).limit(10).all()
         
-        # Últimos 10 asociados ingresados
+        # Últimos 10 asociados ingresados (ordenar por fecha de creación en el sistema)
         asociados_recientes = db.query(Asociado).order_by(
-            Asociado.fecha_ingreso.desc()
+            Asociado.created_at.desc()
         ).limit(10).all()
         
         return {

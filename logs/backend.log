@@ -2192,3 +2192,135 @@ INFO:     190.108.77.114:13511 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13510 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13511 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
 INFO:     190.108.77.114:13510 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13517 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13516 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13517 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13517 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13516 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59458 - "POST /api/v1/ahorros/movimientos/consignacion HTTP/1.1" 201 Created
+INFO:     190.108.77.114:13505 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42934 - "GET /api/v1/ahorros/estadisticas/general HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "OPTIONS /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "OPTIONS /api/v1/ahorros/nuevo HTTP/1.1" 200 OK
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13539 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+Error de validación en GET /api/v1/ahorros/nuevo
+Errores: [{'loc': ('path', 'cuenta_id'), 'msg': 'value is not a valid integer', 'type': 'type_error.integer'}]
+Body recibido: b''
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/nuevo HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13539 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/ahorros/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13547 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13550 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13557 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13557 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13557 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13557 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13553 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "OPTIONS /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "POST /api/v1/asociados/ HTTP/1.1" 201 Created
+INFO:     190.108.77.114:13560 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "OPTIONS /api/v1/asociados/7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "OPTIONS /api/v1/asociados/7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/asociados/7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "OPTIONS /api/v1/documentos?asociado_id=7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/asociados/7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/documentos?asociado_id=7 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:13505 - "GET /api/v1/documentos?asociado_id=7 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:13560 - "OPTIONS /api/v1/documentos/?asociado_id=7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/documentos/?asociado_id=7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/documentos/?asociado_id=7 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13505 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13560 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13509 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13510 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13509 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13510 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13557 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13510 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13509 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13507 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "OPTIONS /api/v1/asociados/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "OPTIONS /api/v1/asociados/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/asociados/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "OPTIONS /api/v1/documentos?asociado_id=8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "GET /api/v1/asociados/8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/documentos?asociado_id=8 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:13559 - "GET /api/v1/documentos?asociado_id=8 HTTP/1.1" 307 Temporary Redirect
+INFO:     190.108.77.114:13508 - "OPTIONS /api/v1/documentos/?asociado_id=8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "GET /api/v1/documentos/?asociado_id=8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/documentos/?asociado_id=8 HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13508 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13559 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47972 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:37822 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20949 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20950 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20951 - "OPTIONS /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20948 - "OPTIONS /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20949 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20950 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20951 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20948 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20956 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20956 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+WARNING:  WatchFiles detected changes in 'app/services/dashboard.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [80782]
+INFO:     Started server process [81748]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:20971 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20971 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20971 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:37388 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20981 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20981 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
