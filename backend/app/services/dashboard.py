@@ -61,7 +61,7 @@ class DashboardService:
         total_cartera = db.query(
             func.sum(Credito.saldo_capital + Credito.saldo_interes + Credito.saldo_mora)
         ).filter(
-            Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.EN_MORA.value])
+            Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.MORA.value])
         ).scalar() or Decimal("0")
         
         # Total cartera mes anterior
@@ -69,18 +69,18 @@ class DashboardService:
             func.sum(Credito.saldo_capital + Credito.saldo_interes + Credito.saldo_mora)
         ).filter(
             and_(
-                Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.EN_MORA.value]),
+                Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.MORA.value]),
                 Credito.fecha_desembolso < primer_dia_mes
             )
         ).scalar() or Decimal("0")
         
         # Créditos en mora
         total_creditos_mora = db.query(func.count(Credito.id)).filter(
-            Credito.estado == EstadoCredito.EN_MORA.value
+            Credito.estado == EstadoCredito.MORA.value
         ).scalar() or 0
         
         total_creditos_vigentes = db.query(func.count(Credito.id)).filter(
-            Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.EN_MORA.value])
+            Credito.estado.in_([EstadoCredito.AL_DIA.value, EstadoCredito.MORA.value])
         ).scalar() or 0
         
         # Índice de morosidad (porcentaje de créditos en mora)
