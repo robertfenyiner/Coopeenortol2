@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import List, Optional
 
-from pydantic import BaseModel, EmailStr, Field, HttpUrl
+from pydantic import BaseModel, Field, HttpUrl
 
 
 class ContactoEmergencia(BaseModel):
@@ -100,7 +100,7 @@ class AsociadoBase(BaseModel):
     numero_documento: str
     nombres: str
     apellidos: str
-    correo_electronico: Optional[EmailStr] = None
+    correo_electronico: Optional[str] = None
     telefono_principal: Optional[str] = None
     estado: str = Field(default="activo")
     fecha_ingreso: date
@@ -193,7 +193,7 @@ class AsociadoActualizar(BaseModel):
     numero_documento: Optional[str] = None
     nombres: Optional[str] = None
     apellidos: Optional[str] = None
-    correo_electronico: Optional[EmailStr] = None
+    correo_electronico: Optional[str] = None
     telefono_principal: Optional[str] = None
     estado: Optional[str] = None
     fecha_ingreso: Optional[date] = None
