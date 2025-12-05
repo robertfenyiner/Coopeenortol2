@@ -2324,3 +2324,52 @@ INFO:     190.108.77.114:20971 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unproces
 INFO:     127.0.0.1:37388 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
 INFO:     190.108.77.114:20981 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
 INFO:     190.108.77.114:20981 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20987 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20988 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20938 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20939 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20938 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20939 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20940 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20941 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:20950 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:20964 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     127.0.0.1:55682 - "GET /api/v1/ HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:36212 - "POST /api/v1/asociados/ HTTP/1.1" 201 Created
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+INFO:     190.108.77.114:13565 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+WARNING:  WatchFiles detected changes in 'app/api/v1/endpoints/asociados.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [81748]
+INFO:     Started server process [82718]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+Error de validación en POST /api/v1/asociados/
+Errores: ['Número de CC inválido. Debe tener entre 6 y 10 dígitos numéricos', 'Número de teléfono inválido. Debe ser un celular (10 dígitos iniciando con 3) o un fijo (7-10 dígitos)']
+Body recibido: {'tipo_documento': 'CC', 'numero_documento': '24151', 'nombres': 'FANNUY', 'apellidos': 'OSPINA', 'correo_electronico': 'sdsjknjkasd@hotmail.com', 'telefono_principal': '12345631', 'estado': 'activo', 'fecha_ingreso': datetime.date(2025, 12, 5), 'hoja_vida_url': None, 'foto_url': None, 'observaciones': None, 'datos_personales': None, 'datos_laborales': None, 'informacion_familiar': None, 'informacion_financiera': None, 'informacion_academica': None, 'informacion_vivienda': None}
+INFO:     190.108.77.114:13511 - "POST /api/v1/asociados/ HTTP/1.1" 422 Unprocessable Entity
+WARNING:  WatchFiles detected changes in 'app/schemas/asociado.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [82718]
+INFO:     Started server process [82833]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     190.108.77.114:13535 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13534 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13535 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13534 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13534 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13535 - "GET /api/v1/asociados/ HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13542 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13539 - "GET /api/v1/dashboard/kpis HTTP/1.1" 200 OK
+INFO:     190.108.77.114:13542 - "GET /api/v1/dashboard/actividad-reciente HTTP/1.1" 200 OK

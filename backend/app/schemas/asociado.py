@@ -100,7 +100,7 @@ class AsociadoBase(BaseModel):
     numero_documento: str
     nombres: str
     apellidos: str
-    correo_electronico: EmailStr
+    correo_electronico: Optional[EmailStr] = None
     telefono_principal: Optional[str] = None
     estado: str = Field(default="activo")
     fecha_ingreso: date

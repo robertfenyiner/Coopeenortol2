@@ -63,6 +63,11 @@ def crear_asociado(
     # Validar campos críticos
     es_valido, errores = validar_asociado_completo(asociado_in.dict())
     if not es_valido:
+        import logging
+        logger = logging.getLogger(__name__)
+        logger.error(f"Error de validación en POST /api/v1/asociados/")
+        logger.error(f"Errores: {errores}")
+        logger.error(f"Body recibido: {asociado_in.dict()}")
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail={
