@@ -60,24 +60,29 @@ def crear_asociado(
     requeridos estén presentes. Aplica validaciones personalizadas para
     documentos, teléfonos y otros campos críticos.
     """
-    # Validar campos críticos
-    es_valido, errores = validar_asociado_completo(asociado_in.dict())
-    if not es_valido:
+    # Validar campos y obtener advertencias (no bloquean la creación)
+    es_valido, advertencias = validar_asociado_completo(asociado_in.dict())
+    
+    # Log de advertencias si existen
+    if advertencias:
         import logging
         logger = logging.getLogger(__name__)
-        logger.error(f"Error de validación en POST /api/v1/asociados/")
-        logger.error(f"Errores: {errores}")
-        logger.error(f"Body recibido: {asociado_in.dict()}")
-        raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail={
-                "message": "Errores de validación en los datos del asociado",
-                "errors": errores
-            }
-        )
+        logger.warning(f"Advertencias de validación en POST /api/v1/asociados/")
+        logger.warning(f"Advertencias: {advertencias}")
     
     try:
-        return service.crear_asociado(db, asociado_in)
+        asociado_creado = service.crear_asociado(db, asociado_in)
+        
+        # Si hay advertencias, incluirlas en la respuesta
+        if advertencias:
+            return {
+                **AsociadoDetalle.from_orm(asociado_creado).dict(),
+                "warnings": advertencias,
+                "message": "Asociado creado exitosamente. Revisa las advertencias sobre los datos ingresados."
+            }
+        
+        return asociado_creado
+        
     except service.DocumentoDuplicadoError as error:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail=str(error)) from error
     except service.EmailDuplicadoError as error:

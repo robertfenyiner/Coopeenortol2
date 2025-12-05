@@ -252,35 +252,40 @@ def validar_asociado_completo(data: dict) -> tuple[bool, list[str]]:
     """
     errores = []
     
-    # Validar documento (solo para documentos colombianos - CC y TI)
+    # Validar documento
     if 'tipo_documento' in data and 'numero_documento' in data:
-        # Solo validar estrictamente para CC y TI
-        if data['tipo_documento'] in ['CC', 'TI']:
-            valido, error = DocumentoValidator.validar_documento(
-                data['tipo_documento'],
-                data['numero_documento']
-            )
-            if not valido:
-                # Solo advertir, no bloquear
-                pass  # errores.append(error)
+        valido, error = DocumentoValidator.validar_documento(
+            data['tipo_documento'],
+            data['numero_documento']
+        )
+        if not valido:
+            errores.append(f"⚠️ {error}")
     
     # Validar nombres
-    if 'nombres' in data:
+    if 'nombres' in data and data['nombres']:
         valido, error = CampoTextoValidator.validar_nombres(data['nombres'], "nombres")
         if not valido:
-            errores.append(error)
+            errores.append(f"⚠️ {error}")
     
     # Validar apellidos
-    if 'apellidos' in data:
+    if 'apellidos' in data and data['apellidos']:
         valido, error = CampoTextoValidator.validar_nombres(data['apellidos'], "apellidos")
         if not valido:
-            errores.append(error)
+            errores.append(f"⚠️ {error}")
     
-    # Validar teléfono principal (validación relajada - solo advertir)
-    # if 'telefono_principal' in data and data['telefono_principal']:
-    #     valido, error = TelefonoValidator.validar_telefono(data['telefono_principal'])
-    #     if not valido:
-    #         errores.append(error)
+    # Validar teléfono principal
+    if 'telefono_principal' in data and data['telefono_principal']:
+        valido, error = TelefonoValidator.validar_telefono(data['telefono_principal'])
+        if not valido:
+            errores.append(f"⚠️ {error}")
+    
+    # Validar correo electrónico si está presente
+    if 'correo_electronico' in data and data['correo_electronico']:
+        email = str(data['correo_electronico']).strip()
+        if email and '@' not in email:
+            errores.append(f"⚠️ Correo electrónico inválido: debe contener '@'")
+        elif email and '.' not in email.split('@')[-1]:
+            errores.append(f"⚠️ Correo electrónico inválido: dominio debe contener '.'")
     
     # Validar salario si existe
     if 'datos_laborales' in data and isinstance(data['datos_laborales'], dict):
@@ -289,6 +294,7 @@ def validar_asociado_completo(data: dict) -> tuple[bool, list[str]]:
                 data['datos_laborales']['salario_basico']
             )
             if not valido:
-                errores.append(error)
+                errores.append(f"⚠️ {error}")
     
-    return len(errores) == 0, errores
+    # Siempre retornar las advertencias, pero no bloquear la creación
+    return True, errores  # Cambio: siempre True para no bloquear, pero devuelve advertencias
