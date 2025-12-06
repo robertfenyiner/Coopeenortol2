@@ -52,7 +52,7 @@ export default function CreditoNuevoPage() {
       setAsociados(response.data.datos || []);
     } catch (error: any) {
       console.error('Error al cargar asociados:', error);
-      showToast('Error al cargar asociados', 'error');
+      showToast('error', 'Error al cargar asociados');
     } finally {
       setLoadingAsociados(false);
     }
@@ -67,7 +67,7 @@ export default function CreditoNuevoPage() {
 
   const handleSimular = async () => {
     if (!formData.monto_solicitado || !formData.plazo_meses || !formData.tasa_interes) {
-      showToast('Complete monto, plazo y tasa para simular', 'error');
+      showToast('error', 'Complete monto, plazo y tasa para simular');
       return;
     }
 
@@ -78,10 +78,10 @@ export default function CreditoNuevoPage() {
         tasa_interes: formData.tasa_interes
       });
       setSimulacion(resultado);
-      showToast('Simulación realizada correctamente', 'success');
+      showToast('success', 'Simulación realizada correctamente');
     } catch (error: any) {
       console.error('Error al simular:', error);
-      showToast(error.response?.data?.detail || 'Error al simular crédito', 'error');
+      showToast('error', error.response?.data?.detail || 'Error al simular crédito');
     }
   };
 
@@ -90,31 +90,49 @@ export default function CreditoNuevoPage() {
 
     // Validaciones
     if (!formData.asociado_id) {
-      showToast('Debe seleccionar un asociado', 'error');
+      showToast('error', 'Debe seleccionar un asociado');
       return;
     }
     if (!formData.monto_solicitado || formData.monto_solicitado <= 0) {
-      showToast('El monto debe ser mayor a 0', 'error');
+      showToast('error', 'El monto debe ser mayor a 0');
       return;
     }
     if (!formData.plazo_meses || formData.plazo_meses <= 0) {
-      showToast('El plazo debe ser mayor a 0', 'error');
+      showToast('error', 'El plazo debe ser mayor a 0');
       return;
     }
     if (!formData.destino.trim()) {
-      showToast('Debe indicar el destino del crédito', 'error');
+      showToast('error', 'Debe indicar el destino del crédito');
       return;
     }
 
     try {
       setLoading(true);
       await creditoService.solicitar(formData);
-      showToast('Solicitud de crédito creada exitosamente', 'success');
+      showToast('success', 'Solicitud de crédito creada exitosamente');
       navigate('/creditos');
     } catch (error: any) {
-      console.error('Error al crear solicitud:', error);
-      const mensaje = error.response?.data?.detail || 'Error al crear la solicitud de crédito';
-      showToast(mensaje, 'error');
+      console.error('Error completo:', error);
+      console.error('Error response:', error.response);
+      
+      let mensaje: string = 'Error al crear la solicitud de crédito';
+      
+      if (error.response?.data?.detail) {
+        // Si detail es un array (errores de validación de Pydantic)
+        if (Array.isArray(error.response.data.detail)) {
+          const errores = error.response.data.detail.map((e: any) => {
+            const campo = e.loc?.join(' > ') || 'Campo';
+            return `${campo}: ${e.msg}`;
+          }).join(', ');
+          mensaje = `Errores de validación: ${errores}`;
+        } else {
+          mensaje = String(error.response.data.detail);
+        }
+      } else if (error.message) {
+        mensaje = String(error.message);
+      }
+      
+      showToast('error', mensaje);
     } finally {
       setLoading(false);
     }
