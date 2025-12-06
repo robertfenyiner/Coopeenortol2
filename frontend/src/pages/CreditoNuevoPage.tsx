@@ -201,7 +201,7 @@ export default function CreditoNuevoPage() {
               placeholder="1000000"
               required
               min="1"
-              step="1000"
+              step="1"
               max="9999999999"
             />
 
