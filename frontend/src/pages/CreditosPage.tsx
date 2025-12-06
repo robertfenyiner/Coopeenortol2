@@ -33,10 +33,13 @@ export default function CreditosPage() {
     }
   };
 
-  const filteredCreditos = creditos.filter((credito) =>
-    credito.asociado?.nombre_completo?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    credito.id.toString().includes(searchTerm)
-  );
+  const filteredCreditos = creditos.filter((credito) => {
+    const nombreCompleto = credito.asociado 
+      ? `${credito.asociado.nombres} ${credito.asociado.apellidos}`
+      : '';
+    return nombreCompleto.toLowerCase().includes(searchTerm.toLowerCase()) ||
+           credito.id.toString().includes(searchTerm);
+  });
 
   const getEstadoBadge = (estado: string) => {
     const colors = {
@@ -66,7 +69,14 @@ export default function CreditosPage() {
     {
       key: 'asociado',
       label: 'Asociado',
-      render: (credito: Credito) => credito.asociado?.nombre_completo || 'N/A',
+      render: (credito: Credito) => credito.asociado 
+        ? `${credito.asociado.nombres} ${credito.asociado.apellidos}`
+        : 'N/A',
+    },
+    {
+      key: 'fecha_solicitud',
+      label: 'Fecha Solicitud',
+      render: (credito: Credito) => new Date(credito.fecha_solicitud).toLocaleDateString('es-CO'),
     },
     {
       key: 'tipo_credito',

@@ -112,6 +112,7 @@ async def subir_documento(
 @router.get("/", response_model=DocumentoListaResponse)
 def listar_documentos(
     asociado_id: Optional[int] = Query(None, description="Filtrar por asociado"),
+    credito_id: Optional[int] = Query(None, description="Filtrar por crédito"),
     tipo_documento: Optional[str] = Query(None, description="Filtrar por tipo de documento"),
     es_valido: Optional[bool] = Query(None, description="Filtrar por estado de validación"),
     skip: int = Query(default=0, ge=0, description="Registros a saltar"),
@@ -127,6 +128,7 @@ def listar_documentos(
     documentos, total = DocumentoService.listar_documentos(
         db=db,
         asociado_id=asociado_id,
+        credito_id=credito_id,
         tipo_documento=tipo_documento,
         es_valido=es_valido,
         skip=skip,

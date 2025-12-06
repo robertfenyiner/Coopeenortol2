@@ -18,6 +18,7 @@ from app.schemas.credito import (
     CreditoDesembolsar,
     CreditoEnDB,
     CreditoCompleto,
+    CreditoConAsociado,
     PagoCrear,
     PagoEnDB,
     EstadisticasCredito,
@@ -125,8 +126,11 @@ def listar_creditos(
         limit=limit
     )
     
+    # Convertir a schema con asociado
+    creditos_con_asociado = [CreditoConAsociado.from_orm(c) for c in creditos]
+    
     return {
-        "creditos": creditos,
+        "creditos": creditos_con_asociado,
         "total": total,
         "skip": skip,
         "limit": limit

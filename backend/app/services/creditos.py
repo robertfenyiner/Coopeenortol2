@@ -345,7 +345,7 @@ class CreditoService:
         limit: int = 100
     ) -> Tuple[List[Credito], int]:
         """Listar créditos con filtros."""
-        query = db.query(Credito)
+        query = db.query(Credito).options(joinedload(Credito.asociado))
         
         if asociado_id:
             query = query.filter(Credito.asociado_id == asociado_id)

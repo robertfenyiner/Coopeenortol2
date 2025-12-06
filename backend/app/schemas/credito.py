@@ -106,6 +106,25 @@ class CreditoEnDB(CreditoBase):
         orm_mode = True
 
 
+class AsociadoSimple(BaseModel):
+    """Schema simplificado de asociado para listados."""
+    id: int
+    numero_documento: str
+    nombres: str
+    apellidos: str
+    
+    class Config:
+        orm_mode = True
+
+
+class CreditoConAsociado(CreditoEnDB):
+    """Schema de crédito con información del asociado."""
+    asociado: Optional[AsociadoSimple] = None
+    
+    class Config:
+        orm_mode = True
+
+
 class CreditoCompleto(CreditoEnDB):
     """Schema completo de crédito con cuotas."""
     cuotas: List['CuotaEnDB'] = []

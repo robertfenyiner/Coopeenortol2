@@ -100,6 +100,7 @@ class DocumentoService:
     def listar_documentos(
         db: Session,
         asociado_id: Optional[int] = None,
+        credito_id: Optional[int] = None,
         tipo_documento: Optional[str] = None,
         es_valido: Optional[bool] = None,
         skip: int = 0,
@@ -111,6 +112,7 @@ class DocumentoService:
         Args:
             db: Sesión de base de datos
             asociado_id: Filtrar por asociado
+            credito_id: Filtrar por crédito
             tipo_documento: Filtrar por tipo de documento
             es_valido: Filtrar por estado de validación
             skip: Cantidad de registros a saltar
@@ -124,6 +126,9 @@ class DocumentoService:
         # Aplicar filtros
         if asociado_id is not None:
             query = query.filter(Documento.asociado_id == asociado_id)
+        
+        if credito_id is not None:
+            query = query.filter(Documento.credito_id == credito_id)
         
         if tipo_documento is not None:
             query = query.filter(Documento.tipo_documento == tipo_documento)

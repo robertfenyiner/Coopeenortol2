@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
-import { FileText, Download, Trash2, Eye, Image, File as FileIcon, CheckCircle, XCircle } from 'lucide-react';
+import { FileText, Download, Trash2, Eye, Image, File as FileIcon, CheckCircle, XCircle, Upload } from 'lucide-react';
 import Button from './ui/Button';
 import { useToast } from '../contexts/ToastContext';
 import api from '../lib/axios';
+import DocumentUploadModal from './DocumentUploadModal';
 
 interface Documento {
   id: number;
@@ -19,6 +20,8 @@ interface DocumentListProps {
   documentos: Documento[];
   onDocumentDeleted: () => void;
   editable?: boolean;
+  asociadoId?: number;
+  creditoId?: number;
 }
 
 // Modal de preview
@@ -107,8 +110,9 @@ function DocumentPreviewModal({
   );
 }
 
-export default function DocumentList({ documentos, onDocumentDeleted, editable = false }: DocumentListProps) {
+export default function DocumentList({ documentos, onDocumentDeleted, editable = false, asociadoId, creditoId }: DocumentListProps) {
   const [previewDoc, setPreviewDoc] = useState<Documento | null>(null);
+  const [showUploadModal, setShowUploadModal] = useState(false);
   const { showToast } = useToast();
 
   const handleDownload = async (documento: Documento) => {
@@ -207,22 +211,29 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
     otro: 'Otros Documentos',
   };
 
-  if (documentos.length === 0) {
-    return (
-      <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
-        <FileIcon className="w-12 h-12 mx-auto text-gray-400 mb-3" />
-        <p className="text-gray-600 font-medium">No hay documentos subidos</p>
-        <p className="text-sm text-gray-500 mt-1">
-          Haz clic en "Subir Documento" para agregar archivos
-        </p>
-      </div>
-    );
-  }
-
   return (
     <>
-      <div className="space-y-6">
-        {Object.entries(groupedDocs).map(([tipo, docs]) => (
+      {/* Botón para subir documentos */}
+      {editable && (asociadoId || creditoId) && (
+        <div className="mb-4">
+          <Button onClick={() => setShowUploadModal(true)}>
+            <Upload className="w-4 h-4 mr-2" />
+            Subir Documento
+          </Button>
+        </div>
+      )}
+
+      {documentos.length === 0 ? (
+        <div className="text-center py-12 bg-gray-50 rounded-lg border-2 border-dashed border-gray-300">
+          <FileIcon className="w-12 h-12 mx-auto text-gray-400 mb-3" />
+          <p className="text-gray-600 font-medium">No hay documentos subidos</p>
+          <p className="text-sm text-gray-500 mt-1">
+            {editable && (asociadoId || creditoId) ? 'Haz clic en "Subir Documento" para agregar archivos' : 'No hay documentos disponibles'}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-6">
+          {Object.entries(groupedDocs).map(([tipo, docs]) => (
           <div key={tipo} className="border rounded-lg overflow-hidden">
             <div className="bg-gray-50 px-4 py-3 border-b">
               <h4 className="font-medium text-gray-900">
@@ -332,7 +343,8 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
             </div>
           </div>
         ))}
-      </div>
+        </div>
+      )}
 
       {/* Modal de preview */}
       {previewDoc && (
@@ -341,6 +353,18 @@ export default function DocumentList({ documentos, onDocumentDeleted, editable =
           onClose={() => setPreviewDoc(null)}
         />
       )}
+
+      {/* Modal de subir documento */}
+      <DocumentUploadModal
+        isOpen={showUploadModal}
+        onClose={() => setShowUploadModal(false)}
+        asociadoId={asociadoId}
+        creditoId={creditoId}
+        onUploadSuccess={() => {
+          setShowUploadModal(false);
+          onDocumentDeleted(); // Recargar lista
+        }}
+      />
     </>
   );
 }

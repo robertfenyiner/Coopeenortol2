@@ -8,7 +8,8 @@ import api from '../lib/axios';
 interface DocumentUploadModalProps {
   isOpen: boolean;
   onClose: () => void;
-  asociadoId: number;
+  asociadoId?: number;
+  creditoId?: number;
   onUploadSuccess: () => void;
 }
 
@@ -27,6 +28,7 @@ export default function DocumentUploadModal({
   isOpen,
   onClose,
   asociadoId,
+  creditoId,
   onUploadSuccess,
 }: DocumentUploadModalProps) {
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -65,7 +67,12 @@ export default function DocumentUploadModal({
     setUploading(true);
     const formData = new FormData();
     formData.append('file', selectedFile);
-    formData.append('asociado_id', asociadoId.toString());
+    if (asociadoId) {
+      formData.append('asociado_id', asociadoId.toString());
+    }
+    if (creditoId) {
+      formData.append('credito_id', creditoId.toString());
+    }
     formData.append('tipo_documento', tipoDocumento);
     if (descripcion) {
       formData.append('descripcion', descripcion);
